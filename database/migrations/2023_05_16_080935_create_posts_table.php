@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->string('image');
+            $table->string('image')->primary();
             $table->decimal('latitude', 20, 15);
             $table->float('longitude', 20, 15);
             $table->timestamps();

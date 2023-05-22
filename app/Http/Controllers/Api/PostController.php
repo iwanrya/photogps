@@ -14,6 +14,8 @@ use App\Http\Resources\PostResource;
 //import Facade "Validator"
 use Illuminate\Support\Facades\Validator;
 
+use Image;
+
 class PostController extends Controller
 {
     /**
@@ -49,17 +51,34 @@ class PostController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        //upload image
+        //upload original image
         $image = $request->file('image');
-        $image->storeAs('public/posts', $image->getClientOriginalName());
+
+        $upload_image_name = time().'.'.$image->extension();
+
+        $image->storeAs('private/posts', $upload_image_name);
 
         $geotag = $this->get_image_location($image);
 
         $post = Post::create([
-            'image' => $image->getClientOriginalName(),
-            'latitude' => $geotag['latitude'],
-            'longitude' => $geotag['longitude']
+            'image' => $upload_image_name,
+            'latitude' => $geotag ? $geotag['latitude'] : 0.0,
+            'longitude' => $geotag ? $geotag['longitude'] : 0.0
         ]);
+
+        // create public image
+        $public_path = storage_path('app/public/posts/');
+
+        $img = Image::make($image->path());
+        $img->save($public_path . $upload_image_name);
+
+        // create public thumbnail
+        $public_thumbnail_path = storage_path('app/public/thumbnail/posts/');
+
+        $img = Image::make($image->path());
+        $img->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($public_thumbnail_path . $upload_image_name);
 
         //return response
         return new PostResource(true, 'Image successfully uploaded', $post);
@@ -101,5 +120,20 @@ class PostController extends Controller
         if(count($parts) == 1)
         return $parts[0];
         return floatval($parts[0]) / floatval($parts[1]);
+    }
+
+    /**
+     * show
+     *
+     * @param  mixed $post
+     * @return void
+     */
+    public function show($image_name)
+    {
+        //find post by image name
+        $post = Post::where('image', $image_name)->get();
+
+        //return single post as a resource
+        return new PostResource(true, 'Detail Data Post!', $post);
     }
 }
