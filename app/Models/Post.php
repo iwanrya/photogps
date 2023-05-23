@@ -11,6 +11,10 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = null;
+
+    public $incrementing = false;
+
     /**
      * fillable
      * 
