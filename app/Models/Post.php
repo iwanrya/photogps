@@ -22,16 +22,18 @@ class Post extends Model
         'longitude',
     ];
 
-    /**
-     * image
-     *
-     * @return Attribute
-     */
-    protected function image(): Attribute
+    protected $appends = [
+        'image_thumbnail'
+    ];
+
+    protected function getImageAttribute($value)
     {
-        return Attribute::make(
-            get: fn ($image) => asset('/storage/posts/' . $image),
-        );
+        return asset('/storage/posts/' . $value);
+    }
+
+    public function getImageThumbnailAttribute()
+    {
+        return asset('/storage/thumbnail/posts/' . $this->getRawOriginal('image'));
     }
 
 }
