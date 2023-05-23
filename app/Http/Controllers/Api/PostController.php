@@ -41,47 +41,51 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
-        //define validation rules
-        $validator = Validator::make($request->all(), [
-            'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8000',
-        ]);
+        try {
+            //define validation rules
+            $validator = Validator::make($request->all(), [
+                'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8000',
+            ]);
 
-        //check if validation fails
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            //check if validation fails
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+
+            //upload original image
+            $image = $request->file('image');
+
+            $upload_image_name = time().'.'.$image->extension();
+
+            $image->storeAs('private/posts', $upload_image_name);
+
+            $geotag = $this->get_image_location($image);
+
+            $post = Post::create([
+                'image' => $upload_image_name,
+                'latitude' => $geotag ? $geotag['latitude'] : 0.0,
+                'longitude' => $geotag ? $geotag['longitude'] : 0.0
+            ]);
+
+            // create public image
+            $public_path = storage_path('app/public/posts/');
+
+            $img = Image::make($image->path());
+            $img->save($public_path . $upload_image_name);
+
+            // create public thumbnail
+            $public_thumbnail_path = storage_path('app/public/thumbnail/posts/');
+
+            $img = Image::make($image->path());
+            $img->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($public_thumbnail_path . $upload_image_name);
+
+            //return response
+            return new PostResource(true, 'Image successfully uploaded', $post);
+        } catch (Exception $ex) {
+            return response("Exception: " . $ex->getMessage());
         }
-
-        //upload original image
-        $image = $request->file('image');
-
-        $upload_image_name = time().'.'.$image->extension();
-
-        $image->storeAs('private/posts', $upload_image_name);
-
-        $geotag = $this->get_image_location($image);
-
-        $post = Post::create([
-            'image' => $upload_image_name,
-            'latitude' => $geotag ? $geotag['latitude'] : 0.0,
-            'longitude' => $geotag ? $geotag['longitude'] : 0.0
-        ]);
-
-        // create public image
-        $public_path = storage_path('app/public/posts/');
-
-        $img = Image::make($image->path());
-        $img->save($public_path . $upload_image_name);
-
-        // create public thumbnail
-        $public_thumbnail_path = storage_path('app/public/thumbnail/posts/');
-
-        $img = Image::make($image->path());
-        $img->resize(100, 100, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($public_thumbnail_path . $upload_image_name);
-
-        //return response
-        return new PostResource(true, 'Image successfully uploaded', $post);
 
     }
 
