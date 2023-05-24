@@ -71,18 +71,14 @@ class PostController extends Controller
             // create public image
             $public_path = storage_path('app/public/posts/');
 
-            Image::configure(['driver' => 'imagick']);
-
             $img = Image::make($image->path());
-            $img->rotate($rotation);
-            $img->save($public_path . $upload_image_name);
+            $img->rotate($rotation)->save($public_path . $upload_image_name);
 
             // create public thumbnail
             $public_thumbnail_path = storage_path('app/public/thumbnail/posts/');
 
             $img = Image::make($image->path());
-            $img->rotate($rotation);
-            $img->resize(100, 100, function ($constraint) {
+            $img->rotate($rotation)->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($public_thumbnail_path . $upload_image_name);
 
