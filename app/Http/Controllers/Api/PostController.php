@@ -60,6 +60,7 @@ class PostController extends Controller
             $image->storeAs('private/posts', $upload_image_name);
 
             $geotag = $this->get_image_location($image);
+            $rotation = $this->get_image_rotation($image);
 
             $post = Post::create([
                 'image' => $upload_image_name,
@@ -70,13 +71,17 @@ class PostController extends Controller
             // create public image
             $public_path = storage_path('app/public/posts/');
 
+            Image::configure(['driver' => 'imagick']);
+
             $img = Image::make($image->path());
+            $img->rotate($rotation);
             $img->save($public_path . $upload_image_name);
 
             // create public thumbnail
             $public_thumbnail_path = storage_path('app/public/thumbnail/posts/');
 
             $img = Image::make($image->path());
+            $img->rotate($rotation);
             $img->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($public_thumbnail_path . $upload_image_name);
@@ -115,6 +120,26 @@ class PostController extends Controller
         }else{
             return false;
         }
+    }
+
+    private function get_image_rotation($image = ''){
+        $exif = exif_read_data($image, 0, true);
+
+        if (!empty($exif['Orientation'])) {
+            switch ($exif['Orientation']) {
+                case 3:
+                    return 180;
+                
+                case 6:
+                    return 90;
+                
+                case 8:
+                    return -90;
+            }
+        }
+
+        return 0;
+
     }
 
     private function gps2Num($coordPart){
