@@ -73,6 +73,7 @@ class PostController extends Controller
 
             $img = Image::make($image->path());
             $img->rotate($rotation)->save($public_path . $upload_image_name);
+            $img->destroy();
 
             // create public thumbnail
             $public_thumbnail_path = storage_path('app/public/thumbnail/posts/');
@@ -81,6 +82,7 @@ class PostController extends Controller
             $img->rotate($rotation)->resize(100, 100, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($public_thumbnail_path . $upload_image_name);
+            $img->destroy();
 
             //return response
             return new PostResource(true, 'Image successfully uploaded', $post);
