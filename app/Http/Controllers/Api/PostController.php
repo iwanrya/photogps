@@ -42,6 +42,7 @@ class PostController extends Controller
     {
 
         try {
+            ini_set('memory_limit', '512M');
             //define validation rules
             $validator = Validator::make($request->all(), [
                 'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8000',
