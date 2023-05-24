@@ -60,7 +60,7 @@ class PostController extends Controller
             $image->storeAs('private/posts', $upload_image_name);
 
             $geotag = $this->get_image_location($image);
-            $rotation = $this->get_image_rotation($image);
+            $rotation = $this->get_image_rotation($image) * -1;
 
             $post = Post::create([
                 'image' => $upload_image_name,
@@ -123,8 +123,9 @@ class PostController extends Controller
     private function get_image_rotation($image = ''){
         $exif = exif_read_data($image, 0, true);
 
-        if (!empty($exif['Orientation'])) {
-            switch ($exif['Orientation']) {
+        if($exif && isset($exif['IFD0'])){
+            $orientation = $exif['IFD0']['Orientation'];
+            switch ($orientation) {
                 case 3:
                     return 180;
                 
