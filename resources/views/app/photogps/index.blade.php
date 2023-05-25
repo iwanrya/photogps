@@ -13,7 +13,7 @@
         <td><img src="{{ $post->image_thumbnail }}"></td>
         <td>{{ $post->latitude }}</td>
         <td>{{ $post->longitude }}</td>
-        <td>{{ $post->created_at }}</td>
+        <td>{{ $post->created_at_formatted }}</td>
     </tr>
     @endforeach
 

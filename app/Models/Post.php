@@ -24,7 +24,9 @@ class Post extends Model
     protected $dateFormat = 'Y/m/d H:i:s';
 
     protected $appends = [
-        'image_thumbnail'
+        'image_thumbnail',
+        'created_at_formatted',
+        'modified_at_formatted'
     ];
 
     protected function getImageAttribute($value)
@@ -37,14 +39,14 @@ class Post extends Model
         return asset('/storage/thumbnail/posts/' . $this->getRawOriginal('image'));
     }
 
-    protected function getCreatedAtAttribute($value)
+    public function getCreatedAtFormattedAttribute()
     {
-        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value)->format($this->dateFormat);
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->getRawOriginal('created_at'))->format($this->dateFormat);
     }
 
-    protected function getUpdatedAtAttribute($value)
+    public function getUpdatedAtFormattedAttribute()
     {
-        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value)->format($this->dateFormat);
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->getRawOriginal('updated_at'))->format($this->dateFormat);
     }
 
 }
