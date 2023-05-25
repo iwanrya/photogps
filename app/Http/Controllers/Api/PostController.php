@@ -92,14 +92,18 @@ class PostController extends Controller
             return new PostResource(true, 'Image successfully uploaded', $post);
         } catch (Exception $ex) {
             ini_set('memory_limit', $ini_memory_limit);
-            return response("Exception: " . $ex->getMessage());
+            return abort(500, "Exception: " . $ex->getMessage());
         }
 
     }
 
     private function get_image_location($image = ''){
+
         $exif = exif_read_data($image, 0, true);
-        if($exif && isset($exif['GPS'])){
+        if($exif && isset($exif['GPS']) 
+            && isset($exif['GPS']['GPSLatitudeRef']) && isset($exif['GPS']['GPSLatitude']) 
+            && isset($exif['GPS']['GPSLongitudeRef']) && isset($exif['GPS']['GPSLongitude'])){
+
             $GPSLatitudeRef = $exif['GPS']['GPSLatitudeRef'];
             $GPSLatitude    = $exif['GPS']['GPSLatitude'];
             $GPSLongitudeRef= $exif['GPS']['GPSLongitudeRef'];
@@ -126,9 +130,10 @@ class PostController extends Controller
     }
 
     private function get_image_rotation($image = ''){
-        $exif = exif_read_data($image, 0, true);
 
-        if($exif && isset($exif['IFD0'])){
+        $exif = exif_read_data($image, 0, true);
+        if($exif && isset($exif['IFD0']) && isset($exif['IFD0']['Orientation'])){
+            
             $orientation = $exif['IFD0']['Orientation'];
             switch ($orientation) {
                 case 3:
