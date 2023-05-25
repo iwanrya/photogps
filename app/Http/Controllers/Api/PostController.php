@@ -40,9 +40,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $ini_memory_limit = ini_get('memory_limit');
 
         try {
-            ini_set('memory_limit', '512M');
+            ini_set('memory_limit', '2G');
             //define validation rules
             $validator = Validator::make($request->all(), [
                 'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8000',
@@ -85,9 +86,12 @@ class PostController extends Controller
             })->save($public_thumbnail_path . $upload_image_name);
             $img->destroy();
 
+            ini_set('memory_limit', $ini_memory_limit);
+
             //return response
             return new PostResource(true, 'Image successfully uploaded', $post);
         } catch (Exception $ex) {
+            ini_set('memory_limit', $ini_memory_limit);
             return response("Exception: " . $ex->getMessage());
         }
 

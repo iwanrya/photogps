@@ -15,16 +15,13 @@ class Post extends Model
 
     public $incrementing = false;
 
-    /**
-     * fillable
-     * 
-     * @var array
-     */
     protected $fillable = [
         'image',
         'latitude',
         'longitude',
     ];
+
+    protected $dateFormat = 'Y/m/d H:i:s';
 
     protected $appends = [
         'image_thumbnail'
@@ -38,6 +35,16 @@ class Post extends Model
     public function getImageThumbnailAttribute()
     {
         return asset('/storage/thumbnail/posts/' . $this->getRawOriginal('image'));
+    }
+
+    protected function getCreatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value)->format($this->dateFormat);
+    }
+
+    protected function getUpdatedAtAttribute($value)
+    {
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value)->format($this->dateFormat);
     }
 
 }
