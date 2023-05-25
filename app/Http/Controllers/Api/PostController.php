@@ -51,7 +51,7 @@ class PostController extends Controller
 
             //check if validation fails
             if ($validator->fails()) {
-                return response()->json($validator->errors(), 422);
+                return response()->json(new PostResource(false, $validator->errors(), null), 422);
             }
 
             //upload original image
@@ -87,12 +87,11 @@ class PostController extends Controller
             $img->destroy();
 
             ini_set('memory_limit', $ini_memory_limit);
-
             //return response
-            return new PostResource(true, 'Image successfully uploaded', $post);
+            return response()->json(new PostResource(true, "Image successfully uploaded", $post), 200);
         } catch (Exception $ex) {
             ini_set('memory_limit', $ini_memory_limit);
-            return abort(500, "Exception: " . $ex->getMessage());
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), 500);
         }
 
     }
