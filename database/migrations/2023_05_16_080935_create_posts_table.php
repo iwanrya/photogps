@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->string('image')->primary();
             $table->decimal('latitude', 20, 15);
-            $table->float('longitude', 20, 15);
+            $table->decimal('longitude', 20, 15);
             $table->timestamps();
         });
     }
