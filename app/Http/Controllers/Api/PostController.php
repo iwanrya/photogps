@@ -46,11 +46,16 @@ class PostController extends Controller
             ini_set('memory_limit', '512M');
             //define validation rules
             $validator = Validator::make($request->all(), [
-                'image'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:8000',
+                'image'     => 'required|image|mimes:jpeg,jpg|max:8000',
             ]);
 
+            $image = $request->file('image');
+
+            error_log($image);
+            error_log($image->extension());
             //check if validation fails
             if ($validator->fails()) {
+                error_log($validator->errors());
                 return response()->json(new PostResource(false, $validator->errors(), null), 422);
             }
 
