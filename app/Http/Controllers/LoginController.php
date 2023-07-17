@@ -28,18 +28,10 @@ class LoginController extends Controller
 
         Auth::login($user);
 
-        return $this->authenticated($request, $user);
+        return $this->authenticated();
     }
 
-    /**
-     * Handle response after user authenticated
-     * 
-     * @param Request $request
-     * @param Auth $user
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    protected function authenticated(Request $request, $user)
+    protected function authenticated()
     {
         return redirect()->intended();
     }

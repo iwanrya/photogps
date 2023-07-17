@@ -24,13 +24,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(SessionController::class)
     ->prefix('session')
-    ->as('session')
     ->group(function () {
 
         Route::post('/get_access_token', 'get_access_token');
+        Route::get('/logout', 'logout');
 
-        Route::middleware('auth:sanctum')->group(function () {
-            Route::post('/login_as', 'login_as');
-            Route::post('/logout', 'logout');
+        Route::middleware('auth:api')->group(function () {
+            Route::get('/login_as', 'login_as');
+        });
+    });
+
+Route::controller(SessionController::class)
+    ->prefix('login')
+    ->group(function () {
+
+        Route::post('/get_access_token', 'get_access_token');
+        Route::get('/logout', 'logout');
+
+        Route::middleware('auth:api')->group(function () {
+            Route::get('/login_as', 'login_as');
         });
     });
