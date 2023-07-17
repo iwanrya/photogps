@@ -1,0 +1,74 @@
+@font-face {
+    font-family: "Meiryo Reguler";
+    src: url('fonts/Meiryo.ttf');
+}
+
+@font-face {
+    font-family: "Meiryo Bold";
+    src: url('fonts/Meiryo\ Bold.ttf');
+}
+
+body {
+    font-family: "Meiryo Reguler";
+    font-size: 14px;
+    background: #f4f6f9;
+}
+
+.meiryo-bold {
+    font-family: "Meiryo Bold";
+}
+
+.login-page,
+.register-page {
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100vh;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.login-box,
+.register-box {
+    width: 360px;
+}
+
+@media (max-width: 576px) {
+
+    .login-box,
+    .register-box {
+        margin-top: .5rem;
+        width: 90%;
+    }
+}
+
+
+label {
+    font-size: 14px;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.btn {
+    font-weight: bold !important;
+}
+
+#modal_user_info #tbl_user_info {
+    width: 100%;
+}
+
+#modal_user_info #tbl_user_info .first_column {
+    width: 30%;
+}
+
+#modal_user_info #tbl_user_info .second_column {
+    width: 5%;
+}
+
+#modal_user_info #tbl_user_info .third_column {
+    width: 65%;
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SessionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,16 @@ Route::apiResource('/tests', App\Http\Controllers\Api\TestController::class);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::controller(SessionController::class)
+    ->prefix('session')
+    ->as('session')
+    ->group(function () {
+
+        Route::post('/get_access_token', 'get_access_token');
+
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('/login_as', 'login_as');
+            Route::post('/logout', 'logout');
+        });
+    });

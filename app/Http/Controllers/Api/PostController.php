@@ -10,7 +10,7 @@ use App\Models\Post;
 
 //import Resource "PostResource"
 use App\Http\Resources\PostResource;
-
+use Exception;
 //import Facade "Validator"
 use Illuminate\Support\Facades\Validator;
 

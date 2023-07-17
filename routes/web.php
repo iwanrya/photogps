@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +17,11 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
 
-Route::resource('/posts', PostController::class);
+Route::get('/login', [LoginController::class, 'index'], 'login')->middleware('guest')->name('login');
+Route::post('/login/check', [LoginController::class, 'check'])->middleware('guest');
+
+Route::get('/logout', [LogoutController::class, 'index'])->middleware('auth')->name('logout');
+Route::resource('/photo', PostController::class)->middleware('auth');

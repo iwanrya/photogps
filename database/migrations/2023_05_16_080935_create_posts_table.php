@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('image')->primary();
             $table->decimal('latitude', 20, 15);
             $table->decimal('longitude', 20, 15);
+            $table->string('photographer');
+            $table->timestamp('shoot_datetime')->nullable();
             $table->timestamps();
         });
     }
