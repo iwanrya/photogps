@@ -19,7 +19,7 @@ class SessionController extends Controller
 
         $token = auth('api')->attempt($credentials);
         if (!$token) {
-            return response()->json(new AccessTokenResource(false, null, 'Unauthorized'), 401);
+            return response()->json(new AccessTokenResource(false, null, 'Username password does not match / not exist'));
         }
 
         $payload = array(
