@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\AccessTokenResource;
 use App\Http\Resources\BaseResource;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -15,7 +16,6 @@ class SessionController extends Controller
     function get_access_token(LoginRequest $request)
     {
         $credentials = $request->getCredentials();
-
 
         $token = auth('api')->attempt($credentials);
         if (!$token) {
@@ -34,6 +34,7 @@ class SessionController extends Controller
     function login_as()
     {
         $user = Auth::user();
+
         return response()->json(new BaseResource(true, '', array("current_user" => $user)));
     }
 
