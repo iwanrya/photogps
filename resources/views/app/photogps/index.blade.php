@@ -121,6 +121,6 @@
 @endsection
 
 @section('js')
-<script src="{{asset('js/app/url.js')}}"></script>
-<script src="{{asset('js/posts/index.js')}}"></script>
+<script src="{{asset('assets/js/app/url.js')}}"></script>
+<script src="{{asset('assets/js/posts/index.js')}}"></script>
 @endsection
