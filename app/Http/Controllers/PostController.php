@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //import Model "Post"
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -15,11 +16,11 @@ class PostController extends Controller
     public function index()
     {
         //get all posts
-        $posts = Post::latest()->get();
+        $photographers = DB::table('posts')->select('photographer as name', 'photographer_username as code')->distinct()->get();
 
         return response()
             ->view('app/photogps/index', [
-                "posts" => $posts
+                'photographers' => $photographers
             ], 200);
     }
 }

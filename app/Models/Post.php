@@ -2,26 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use DB;
+use Illuminate\Support\Facades\DB;
 
-class Post extends Model
+class Post extends BaseModel
 {
     use HasFactory;
-
-    protected $primaryKey = null;
-
-    public $incrementing = false;
 
     protected $fillable = [
         'image',
         'latitude',
         'longitude',
+        'shoot_datetime',
+        'photographer',
+        'photographer_username',
     ];
-
-    protected $dateFormat = 'Y/m/d H:i:s';
 
     protected $appends = [
         'image_thumbnail',
@@ -39,14 +35,30 @@ class Post extends Model
         return asset('/storage/thumbnail/posts/' . $this->getRawOriginal('image'));
     }
 
-    protected function getCreatedAtFormattedAttribute()
+    /**
+     * @return Builder $builder
+     */
+    public static function read($photographers, $shoot_date_start, $shoot_date_end, $comment)
     {
-        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format($this->dateFormat);
-    }
+        //find post by image name
+        $builder = DB::table('posts', 'p')->join('post_comments as pc', 'p.post_id', '=', 'pc.post_id');
 
-    protected function getUpdatedAtFormattedAttribute()
-    {
-        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->format($this->dateFormat);
-    }
+        if(!empty($photographers)) {
+            $builder->whereIn('p.photographer', $photographers);
+        }
 
+        if(!empty($shoot_date_start)) {
+            $builder->where('p.shoot_datetime', '>=', $shoot_date_start);
+        }
+
+        if(!empty($shoot_date_end)) {
+            $builder->where('p.shoot_datetime', '<=', $shoot_date_end);
+        }
+
+        if(!empty($comment)) {
+            $builder->where('pc.comment', 'like', "%{$comment}%");
+        }
+
+        return $builder;
+    }
 }

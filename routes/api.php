@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SessionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,12 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('/posts', App\Http\Controllers\Api\PostController::class);
 Route::apiResource('/tests', App\Http\Controllers\Api\TestController::class);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::controller(PostController::class)
+    ->prefix('photo_mobile')
+    ->group(function () {
+        Route::middleware('auth:api')->group(function () {
+            Route::post('/insert', 'store');
+            Route::get('/read', 'read');
+            Route::get('/read_one', 'read_one');
+        });
+    });
 
 Route::controller(SessionController::class)
     ->prefix('session')

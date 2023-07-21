@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use Faker\Factory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeders extends Seeder
 {
@@ -27,6 +25,13 @@ class UsersTableSeeders extends Seeder
                 'password' => bcrypt('password')
             ];
         }
+        $data[] = [
+            'name' => 'admin',
+            'email' => 'test1@sakura-global.co.id',
+            'username' => 'admin',
+            'email_verified_at' => now(),
+            'password' => bcrypt('password')
+        ];
 
         DB::table('users')->insert($data);
     }

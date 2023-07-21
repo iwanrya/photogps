@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Core\exceptions\BadRequestException;
+use App\Core\general\image\AddExifToImage;
+use App\Core\general\image\DuplicateImage;
+use App\Core\general\image\ExifImage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,11 +14,16 @@ use App\Models\Post;
 
 //import Resource "PostResource"
 use App\Http\Resources\PostResource;
-use Exception;
-//import Facade "Validator"
+use App\Models\PostComment;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
-use Image;
+use DateTime;
+use DateTimeZone;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class PostController extends Controller
 {
@@ -40,142 +49,178 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $ini_memory_limit = ini_get('memory_limit');
 
         try {
-            ini_set('memory_limit', '512M');
+
             //define validation rules
             $validator = Validator::make($request->all(), [
-                'image'     => 'required|image|mimes:jpeg,jpg|max:8000',
+                'photo'             => 'required|image|mimes:jpeg,jpg|max:8000',
+                'shoot_datetime'    => 'required',
+                'separate_exif'     => 'required',
             ]);
 
-            $image = $request->file('image');
-
-            error_log($image);
-            error_log($image->extension());
             //check if validation fails
             if ($validator->fails()) {
                 error_log($validator->errors());
-                return response()->json(new PostResource(false, $validator->errors(), null), 422);
+                throw new BadRequestException($validator->errors());
             }
 
-            //upload original image
-            $image = $request->file('image');
+            $separate_exif = $request->post('separate_exif') === 'true';
+            $lat = 0.0;
+            $long = 0.0;
 
-            $upload_image_name = time().'.'.$image->extension();
+            if ($separate_exif) {
+                $lat = (float) $request->post('latitude');
+                $long = (float) $request->post('longitude');
+            }
+
+            $comment = $request->post('comment') ? trim($request->post('comment')) : '';
+
+            // convert shoot_datetime from timestamp (string) to DateTime
+            $shoot_timestamp = (float)$request->post('shoot_datetime');
+            $datetime = DateTime::createFromFormat('U.u', $shoot_timestamp);
+            date_timezone_set($datetime, new DateTimeZone(date_default_timezone_get()));
+
+            // upload original image
+            $image = $request->file('photo');
+
+            $upload_image_name = time() . '.' . $image->extension();
+
+            $filepath = storage_path('app/private/posts/') . $upload_image_name;
 
             $image->storeAs('private/posts', $upload_image_name);
 
-            $geotag = $this->get_image_location($image);
-            $rotation = $this->get_image_rotation($image) * -1;
+            // create photo with exif from external
+            $this->save_photo($filepath, $separate_exif, $lat, $long);
 
-            $post = Post::create([
-                'image' => $upload_image_name,
-                'latitude' => $geotag ? $geotag['latitude'] : 0.0,
-                'longitude' => $geotag ? $geotag['longitude'] : 0.0
-            ]);
+            // extract exif data from original image
+            $extracted_exif_data = $this->extract_exif_data($filepath);
 
-            // create public image
-            $public_path = storage_path('app/public/posts/');
+            if ($extracted_exif_data) {
+                DuplicateImage::duplicate_photo($filepath, $upload_image_name, $extracted_exif_data->rotation);
 
-            $img = Image::make($image->path());
-            $img->rotate($rotation)->save($public_path . $upload_image_name);
-            $img->destroy();
+                $user = Auth::user();
 
-            // create public thumbnail
-            $public_thumbnail_path = storage_path('app/public/thumbnail/posts/');
+                $post = Post::create([
+                    'photographer' => $user->name,
+                    'photographer_username' => $user->username,
+                    'image' => $upload_image_name,
+                    'shoot_datetime' => $datetime->format('Y-m-d H:i:s.u'),
+                    'latitude' => $extracted_exif_data->latitude,
+                    'longitude' => $extracted_exif_data->longitude,
+                ]);
 
-            $img = Image::make($image->path());
-            $img->rotate($rotation)->resize(100, 100, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($public_thumbnail_path . $upload_image_name);
-            $img->destroy();
+                if (!empty($comment)) {
+                    $post_comment = PostComment::create([
+                        'post_id' => $post->id,
+                        'comment' => $comment,
+                    ]);
+                }
+            } else {
+                throw new BadRequestException("Can not extract exif information from image");
+            }
 
-            ini_set('memory_limit', $ini_memory_limit);
-            //return response
-            return response()->json(new PostResource(true, "Image successfully uploaded", $post), 200);
+            // //return response
+            return response()->json(new PostResource(true, "Image successfully uploaded", $post), Response::HTTP_OK);
+        } catch (BadRequestException $ex) {
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
         } catch (Exception $ex) {
-            ini_set('memory_limit', $ini_memory_limit);
-            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), 500);
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
     }
 
-    private function get_image_location($image = ''){
+    private function save_photo($filepath, $separate_exif, $lat, $long)
+    {
+        if ($separate_exif === true) {
+            AddExifToImage::addGpsInfo($filepath, $filepath, $lat, $long);
+        }
+    }
 
-        $exif = exif_read_data($image, 0, true);
-        if($exif && isset($exif['GPS']) 
-            && isset($exif['GPS']['GPSLatitudeRef']) && isset($exif['GPS']['GPSLatitude']) 
-            && isset($exif['GPS']['GPSLongitudeRef']) && isset($exif['GPS']['GPSLongitude'])){
+    private function extract_exif_data($image)
+    {
+        if (1 === 1) {
 
-            $GPSLatitudeRef = $exif['GPS']['GPSLatitudeRef'];
-            $GPSLatitude    = $exif['GPS']['GPSLatitude'];
-            $GPSLongitudeRef= $exif['GPS']['GPSLongitudeRef'];
-            $GPSLongitude   = $exif['GPS']['GPSLongitude'];
-            
-            $lat_degrees = count($GPSLatitude) > 0 ? $this->gps2Num($GPSLatitude[0]) : 0;
-            $lat_minutes = count($GPSLatitude) > 1 ? $this->gps2Num($GPSLatitude[1]) : 0;
-            $lat_seconds = count($GPSLatitude) > 2 ? $this->gps2Num($GPSLatitude[2]) : 0;
-            
-            $lon_degrees = count($GPSLongitude) > 0 ? $this->gps2Num($GPSLongitude[0]) : 0;
-            $lon_minutes = count($GPSLongitude) > 1 ? $this->gps2Num($GPSLongitude[1]) : 0;
-            $lon_seconds = count($GPSLongitude) > 2 ? $this->gps2Num($GPSLongitude[2]) : 0;
-            
-            $lat_direction = ($GPSLatitudeRef == 'W' or $GPSLatitudeRef == 'S') ? -1 : 1;
-            $lon_direction = ($GPSLongitudeRef == 'W' or $GPSLongitudeRef == 'S') ? -1 : 1;
-            
-            $latitude = $lat_direction * ($lat_degrees + ($lat_minutes / 60) + ($lat_seconds / (60*60)));
-            $longitude = $lon_direction * ($lon_degrees + ($lon_minutes / 60) + ($lon_seconds / (60*60)));
-    
-            return array('latitude'=>$latitude, 'longitude'=>$longitude);
-        }else{
+            $geotag = ExifImage::get_image_location($image);
+            $rotation = ExifImage::get_image_rotation($image) * -1;
+
+            $exif_data = new stdClass();
+            $exif_data->latitude = $geotag ? $geotag['latitude'] : 0.0;
+            $exif_data->longitude = $geotag ? $geotag['longitude'] : 0.0;
+            $exif_data->shoot_datetime = time();
+            $exif_data->rotation = $rotation;
+
+            return $exif_data;
+        } else {
             return false;
         }
-    }
-
-    private function get_image_rotation($image = ''){
-
-        $exif = exif_read_data($image, 0, true);
-        if($exif && isset($exif['IFD0']) && isset($exif['IFD0']['Orientation'])){
-            
-            $orientation = $exif['IFD0']['Orientation'];
-            switch ($orientation) {
-                case 3:
-                    return 180;
-                
-                case 6:
-                    return 90;
-                
-                case 8:
-                    return -90;
-            }
-        }
-
-        return 0;
-
-    }
-
-    private function gps2Num($coordPart){
-        $parts = explode('/', $coordPart);
-        if(count($parts) <= 0)
-        return 0;
-        if(count($parts) == 1)
-        return $parts[0];
-        return floatval($parts[0]) / floatval($parts[1]);
     }
 
     /**
      * show
      *
-     * @param  mixed $post
+     * @param  Request $request
      * @return void
      */
-    public function show($image_name)
+    public function read(Request $request)
     {
-        //find post by image name
-        $post = Post::where('image', $image_name)->get();
+        try {
+            //define validation rules
+            $validator = Validator::make($request->all(), []);
 
-        //return single post as a resource
-        return new PostResource(true, 'Detail Data Post!', $post);
+            //check if validation fails
+            if ($validator->fails()) {
+                error_log($validator->errors());
+                return response()->json(new PostResource(false, $validator->errors(), null), Response::HTTP_BAD_REQUEST);
+            }
+
+            $photographers = $request->get('photographer') ?: [];
+            $shoot_date_start = $request->get('shoot_date_start') ?: "";
+            $shoot_date_end = $request->get('shoot_date_end') ?: "";
+            $comment = $request->get('comment') ?: "";
+
+            $posts = Post::read($photographers, $shoot_date_start, $shoot_date_end, $comment)->get();
+
+            //return single post as a resource
+            return new PostResource(true, '', $posts);
+        } catch (BadRequestException $ex) {
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
+        } catch (Exception $ex) {
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * show
+     *
+     * @param  Request $request
+     * @return void
+     */
+    public function read_one(Request $request)
+    {
+
+        try {
+            //define validation rules
+            $validator = Validator::make($request->all(), [
+                'photo_mobile_id' => 'required',
+            ]);
+
+            //check if validation fails
+            if ($validator->fails()) {
+                error_log($validator->errors());
+                return response()->json(new PostResource(false, $validator->errors(), null), Response::HTTP_BAD_REQUEST);
+            }
+
+            $posts_id = $request->get('photo_mobile_id');
+
+            //find post by image name
+            $post = Post::where('post_id', $posts_id)->first();
+
+            //return single post as a resource
+            return new PostResource(true, '', $post);
+        } catch (BadRequestException $ex) {
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
+        } catch (Exception $ex) {
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
