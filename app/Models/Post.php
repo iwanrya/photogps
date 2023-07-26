@@ -65,4 +65,14 @@ class Post extends BaseModel
     {
         return asset('/storage/thumbnail/posts/' . $this->getRawOriginal('image'));
     }
+
+    protected function getLatitudeAttribute($value)
+    {
+        return floatval($value);
+    }
+
+    protected function getLongitudeAttribute($value)
+    {
+        return floatval($value);
+    }
 }

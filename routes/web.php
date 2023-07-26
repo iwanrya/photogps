@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\MapController;
 use App\Http\Middleware\SessionOrJWTAuth;
 
 /*
@@ -24,6 +25,7 @@ use App\Http\Middleware\SessionOrJWTAuth;
 
 Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
+Route::get('/maps', [MapController::class, 'index']);
 
 Route::get('/login', [LoginController::class, 'index'], 'login')->middleware('guest')->name('login');
 Route::post('/login/check', [LoginController::class, 'check'])->middleware('guest');
