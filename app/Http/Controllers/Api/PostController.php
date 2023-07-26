@@ -61,7 +61,6 @@ class PostController extends Controller
 
             //check if validation fails
             if ($validator->fails()) {
-                error_log($validator->errors());
                 throw new BadRequestException($validator->errors());
             }
 
@@ -102,6 +101,7 @@ class PostController extends Controller
                 $user = Auth::user();
 
                 $post = Post::create([
+                    'create_user_id' => $user->id,
                     'photographer' => $user->name,
                     'photographer_username' => $user->username,
                     'image' => $upload_image_name,
@@ -112,6 +112,7 @@ class PostController extends Controller
 
                 if (!empty($comment)) {
                     $post_comment = PostComment::create([
+                        'create_user_id' => $user->id,
                         'post_id' => $post->id,
                         'comment' => $comment,
                     ]);
@@ -123,8 +124,10 @@ class PostController extends Controller
             // //return response
             return response()->json(new PostResource(true, "Image successfully uploaded", $post), Response::HTTP_OK);
         } catch (BadRequestException $ex) {
+            error_log($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
         } catch (Exception $ex) {
+            error_log($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -164,27 +167,46 @@ class PostController extends Controller
     public function read(Request $request)
     {
         try {
-            //define validation rules
+            // define validation rules
             $validator = Validator::make($request->all(), []);
 
-            //check if validation fails
+            // check if validation fails
             if ($validator->fails()) {
-                error_log($validator->errors());
-                return response()->json(new PostResource(false, $validator->errors(), null), Response::HTTP_BAD_REQUEST);
+                throw new BadRequestException($validator->errors());
             }
 
+            // get filters
             $photographers = $request->get('photographer') ?: [];
             $shoot_date_start = $request->get('shoot_date_start') ?: "";
             $shoot_date_end = $request->get('shoot_date_end') ?: "";
             $comment = $request->get('comment') ?: "";
 
-            $posts = Post::read($photographers, $shoot_date_start, $shoot_date_end, $comment)->get();
+            // get data rows
+            $builder = Post::with('postComment');
+            if (!empty($photographers)) {
+                $builder->whereIn('photographer', $photographers);
+            }
 
-            //return single post as a resource
+            if (!empty($shoot_date_start)) {
+                $builder->where('shoot_datetime', '>=', $shoot_date_start);
+            }
+
+            if (!empty($shoot_date_end)) {
+                $builder->where('shoot_datetime', '<=', $shoot_date_end);
+            }
+
+            if (!empty($comment)) {
+                $builder->whereRelation('postComment', 'comment', 'like', "%{$comment}%");
+            }
+
+            $posts = $builder->get();
+
             return new PostResource(true, '', $posts);
         } catch (BadRequestException $ex) {
+            error_log($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
         } catch (Exception $ex) {
+            error_log($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -206,20 +228,58 @@ class PostController extends Controller
 
             //check if validation fails
             if ($validator->fails()) {
-                error_log($validator->errors());
-                return response()->json(new PostResource(false, $validator->errors(), null), Response::HTTP_BAD_REQUEST);
+                throw new BadRequestException($validator->errors());
             }
 
-            $posts_id = $request->get('photo_mobile_id');
+            $post_id = $request->get('photo_mobile_id');
 
             //find post by image name
-            $post = Post::where('post_id', $posts_id)->first();
+            $post = Post::find($post_id);
 
             //return single post as a resource
             return new PostResource(true, '', $post);
         } catch (BadRequestException $ex) {
+            error_log($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
         } catch (Exception $ex) {
+            error_log($ex->getMessage());
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    /**
+     * show
+     *
+     * @param  Request $request
+     * @return void
+     */
+    public function delete(Request $request)
+    {
+        try {
+            //define validation rules
+            $validator = Validator::make($request->all(), [
+                'photo_mobile_id' => 'required',
+            ]);
+
+            //check if validation fails
+            if ($validator->fails()) {
+                throw new BadRequestException($validator->errors());
+            }
+
+            $post_id = $request->get('photo_mobile_id');
+
+            // delete the post using flag
+            $post = Post::find($post_id);
+            $post->delete();
+
+            //return single post as a resource
+            return new PostResource(true, 'データが削除されました。');
+        } catch (BadRequestException $ex) {
+            error_log($ex->getMessage());
+            return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
+        } catch (Exception $ex) {
+            error_log($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

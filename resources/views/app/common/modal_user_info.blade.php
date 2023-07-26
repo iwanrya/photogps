@@ -1,4 +1,4 @@
-<div id="modal_user_info" class="modal" tabindex="-1">
+<div id="modal_user_info" class="modal modal-additional-bg" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">

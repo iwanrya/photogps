@@ -1,5 +1,5 @@
 function getQueryString(sParam) {
-    var sPageURL = window.location.search.substring(1),
+    let sPageURL = window.location.search.substring(1),
         sURLVariables = sPageURL.split('&'),
         sParameterName,
         i,
@@ -64,7 +64,7 @@ function getURLParamExternal(url_ref, index, removeKres) {
 }
 
 function replaceURLParam(key, value) {
-	var cur_value = getQueryString(key);
+	let cur_value = getQueryString(key);
 	if (location.href.indexOf(key + '=') > -1) {
 		history.pushState({}, document.getElementsByTagName("title")[0].innerHTML, location.href.replace(key + '=' + cur_value, key + '=' + value));
 
@@ -75,7 +75,7 @@ function replaceURLParam(key, value) {
 }
 
 $.urlParam = function (name) {
-	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 	if (results == null) {
 		return null;
 	}

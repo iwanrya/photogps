@@ -12,24 +12,36 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('post_id');
+            $table->increments('id');
+            $table->bigInteger('create_user_id')->unsigned();
             $table->string('image');
-            $table->decimal('latitude', 20, 15);
-            $table->decimal('longitude', 20, 15);
+            $table->float('latitude');
+            $table->float('longitude');
             $table->string('photographer');
             $table->string('photographer_username');
             $table->timestamp('shoot_datetime')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('create_user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
 
         Schema::create('post_comments', function (Blueprint $table) {
-            $table->increments('post_comment_id');
+            $table->increments('id');
             $table->integer('post_id')->unsigned();
+            $table->bigInteger('create_user_id')->unsigned();
             $table->text('comment');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('post_id')
-                ->references('post_id')->on('posts')
+                ->references('id')->on('posts')
+                ->onDelete('cascade');
+
+            $table->foreign('create_user_id')
+                ->references('id')->on('users')
                 ->onDelete('cascade');
         });
     }

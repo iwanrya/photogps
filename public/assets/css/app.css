@@ -45,3 +45,18 @@ label {
 #modal_user_info #tbl_user_info .third_column {
     width: 65%;
 }
+
+.bordered-box {
+    padding: 10px;
+    border: solid #d0d0d0 2px;
+}
+
+.button-small-font {
+    font-size: 0.8rem
+}
+
+.modal-additional-bg {
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1072 !important;
+    padding: 100px
+}

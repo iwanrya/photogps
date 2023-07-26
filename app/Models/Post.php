@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Post extends BaseModel
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'image',
@@ -17,48 +20,49 @@ class Post extends BaseModel
         'shoot_datetime',
         'photographer',
         'photographer_username',
+        'create_user_id',
     ];
 
     protected $appends = [
-        'image_thumbnail',
+        'original',
+        'photo',
+        'thumbnail',
         'created_at_formatted',
         'updated_at_formatted'
     ];
+
+    public function postComment(): HasMany
+    {
+        return $this->hasMany(PostComment::class, 'post_id', 'id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'create_user_id', 'id');
+    }
+
+    protected function getPhotographerAttribute($value)
+    {
+        return Str::title($value);
+    }
 
     protected function getImageAttribute($value)
     {
         return asset('/storage/posts/' . $value);
     }
 
-    protected function getImageThumbnailAttribute()
+    protected function getPhotoAttribute()
     {
-        return asset('/storage/thumbnail/posts/' . $this->getRawOriginal('image'));
+        return asset('/storage/posts/' . $this->getRawOriginal('image'));
     }
 
-    /**
-     * @return Builder $builder
-     */
-    public static function read($photographers, $shoot_date_start, $shoot_date_end, $comment)
+    protected function getOriginalAttribute()
     {
-        //find post by image name
-        $builder = DB::table('posts', 'p')->join('post_comments as pc', 'p.post_id', '=', 'pc.post_id');
+        // return asset('/storage/posts/' . $this->getRawOriginal('image'));
+    }
 
-        if(!empty($photographers)) {
-            $builder->whereIn('p.photographer', $photographers);
-        }
-
-        if(!empty($shoot_date_start)) {
-            $builder->where('p.shoot_datetime', '>=', $shoot_date_start);
-        }
-
-        if(!empty($shoot_date_end)) {
-            $builder->where('p.shoot_datetime', '<=', $shoot_date_end);
-        }
-
-        if(!empty($comment)) {
-            $builder->where('pc.comment', 'like', "%{$comment}%");
-        }
-
-        return $builder;
+    protected function getThumbnailAttribute()
+    {
+        return asset('/storage/thumbnail/posts/' . $this->getRawOriginal('image'));
     }
 }

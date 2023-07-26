@@ -14,7 +14,7 @@ class BaseRequest extends FormRequest
         if ($this->expectsJson()) {
             throw new HttpResponseException(response()->json($validator->errors(), 400));
         } else {
-            parent::failedAuthorization($validator);
+            parent::failedValidation($validator);
         }
     }
 }

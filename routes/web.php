@@ -1,10 +1,15 @@
 <?php
 
+use App\Http\Controllers\Api\PostCommentController as ApiPostCommentController;
+use App\Http\Controllers\Api\PostController as ApiPostController;
+use App\Http\Controllers\Api\SessionController as ApiSessionController;
+use App\Http\Controllers\Api\TestController as ApiTestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Middleware\SessionOrJWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +30,53 @@ Route::post('/login/check', [LoginController::class, 'check'])->middleware('gues
 
 Route::get('/logout', [LogoutController::class, 'index'])->middleware('auth')->name('logout');
 Route::resource('/photo', PostController::class)->middleware('auth');
+
+
+
+
+// === API ===
+Route::apiResource('/tests', ApiTestController::class);
+
+Route::controller(ApiSessionController::class)
+    ->prefix('api/session')
+    ->group(function () {
+
+        Route::post('/get_access_token', 'get_access_token');
+        Route::get('/logout', 'logout');
+
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::get('/login_as', 'login_as');
+        });
+    });
+
+Route::controller(ApiSessionController::class)
+    ->prefix('api/login')
+    ->group(function () {
+
+        Route::post('/get_access_token', 'get_access_token');
+        Route::get('/logout', 'logout');
+
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::get('/login_as', 'login_as');
+        });
+    });
+
+Route::controller(ApiPostController::class)
+    ->prefix('api/photo_mobile')
+    ->group(function () {
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::post('/insert', 'store');
+            Route::get('/read', 'read');
+            Route::get('/read_one', 'read_one');
+            Route::post('/delete', 'delete');
+        });
+    });
+
+Route::controller(ApiPostCommentController::class)
+    ->prefix('api/photo_mobile_comment')
+    ->group(function () {
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::post('/insert', 'insert');
+            Route::get('/read', 'read');
+        });
+    });

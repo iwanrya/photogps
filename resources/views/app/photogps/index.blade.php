@@ -20,7 +20,6 @@
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">撮影者</label>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="photographer" class="form-control" multiple="multiple">
-                                    <option value='aaaaa'>asfasodj</option>
                                     <?php
                                     for ($i = 0; $i < count($photographers); $i++) {
                                         $photographer = $photographers[$i];
@@ -97,17 +96,15 @@
                 <div class="col-12">
                     <div class="table-responsive-wrapper">
                         <div id="dvSearchResult">
-                            <table class="table">
+                            <table id="tblResult" class="table table-bordered table-soft-dark">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">{{ __('message.content') }}</th>
-                                        <th class="text-center">{{ __('message.photograph') }}</th>
+                                        <th class="text-center" width=80%>内容</th>
+                                        <th class="text-center">写真</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
@@ -120,7 +117,12 @@
 </section>
 @endsection
 
-@section('js')
+@push('modals')
+@include('app.photogps.popup.detail')
+@endpush
+
+@push('js')
 <script src="{{asset('assets/js/app/url.js')}}"></script>
 <script src="{{asset('assets/js/posts/index.js')}}"></script>
-@endsection
+<script src="{{asset('assets/js/posts/datatable.js')}}"></script>
+@endpush

@@ -1,3 +1,5 @@
+let x_cnt_ld = 0;
+
 function loading_start() {
     if (x_cnt_ld == 0) {
         $("#div_loading_page").css('display', 'table');

@@ -36,7 +36,7 @@ function lpad(words, length, text){
 
 	words = (words + "");
 
-    var x = '';
+    let x = '';
     for(y=0; y<length; y++){
         x += text;
     }
@@ -48,7 +48,7 @@ function rpad(words, length, text){
 
 	words = (words + "");
 
-    var x = '';
+    let x = '';
     for(y=0; y<length; y++){
         x += text;
     }
@@ -58,13 +58,13 @@ function rpad(words, length, text){
 
 function countCharLeft(maxLength, text){
 
-	var newLines = (text.match(/(\r\n|\n|\r)/g) == null ? 0 : text.match(/(\r\n|\n|\r)/g).length);
+	let newLines = (text.match(/(\r\n|\n|\r)/g) == null ? 0 : text.match(/(\r\n|\n|\r)/g).length);
 
 	return maxLength - (text.length + newLines);
 }
 
 function conv_1b_to_2b(e) {
-    var newText = "";
+    let newText = "";
     for(i=0; i<e.length; i++){
 
     	if(e.charCodeAt(i) > 255){
@@ -78,7 +78,7 @@ function conv_1b_to_2b(e) {
 
 function seperateSizeNumber(x){
 	x = lpad(x, 4, "0");
-	var sizeNumber = [0, 0, 0];
+	let sizeNumber = [0, 0, 0];
 	
 	sizeNumber[0] = parseInt(x.substr(0, 2));
 	sizeNumber[1] = parseInt(x.substr(2, 1));
@@ -143,9 +143,9 @@ function to_yyyymm_japan(date) {
 }
 
 function get_spesific_date(year, month, p_date, cur_date){
-	var date = new Date();
+	let date = new Date();
 	
-	var new_date = new Date();
+	let new_date = new Date();
 	
 	if(cur_date !== undefined){
 		date = cur_date;
@@ -174,9 +174,9 @@ function get_spesific_date(year, month, p_date, cur_date){
 }
 
 function get_spesific_date_as_date(year, month, p_date, cur_date){
-	var date = new Date();
+	let date = new Date();
 	
-	var new_date = new Date();
+	let new_date = new Date();
 	
 	if(cur_date !== undefined){
 		date = cur_date;
@@ -205,22 +205,22 @@ function get_spesific_date_as_date(year, month, p_date, cur_date){
 }
 
 function get_today_date(){
-	var date = new Date();
+	let date = new Date();
 	return date.getFullYear() + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2);
 }
 
 function get_first_date_of_month(dt){
-	var date = new Date(dt.getFullYear(), dt.getMonth()+1, 0);
+	let date = new Date(dt.getFullYear(), dt.getMonth()+1, 0);
 	return date.getFullYear() + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/01';
 }
 
 function get_last_date_of_month(dt){
-	var date = new Date(dt.getFullYear(), dt.getMonth()+1, 0);
+	let date = new Date(dt.getFullYear(), dt.getMonth()+1, 0);
 	return date.getFullYear() + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2);
 }
 
 function add_space_right_left(text, length){
-	var new_text = text;
+	let new_text = text;
 	for(k=0; k<(length-text.length)/2; k++){
 		new_text = " " + new_text + " ";
 	}
@@ -237,8 +237,8 @@ function check_valid_birthdate(date){
 }
 
 function calculateAge(birthday) { // birthday is a date
-    var ageDifMs = Date.now() - birthday.getTime();
-    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    let ageDifMs = Date.now() - birthday.getTime();
+    let ageDate = new Date(ageDifMs); // miliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
@@ -260,7 +260,7 @@ function phoneFormat(){
 }
 
 function zipcode_focus(text){
-	var x = $(text).val();
+	let x = $(text).val();
 	$(text).val(x.replace("-", ""));
 }
 
@@ -291,8 +291,8 @@ function unicode_only(text){
 }
 
 function findMultibyte(str) {
-	var x_found = false;
-	var x_cnt = 0;
+	let x_found = false;
+	let x_cnt = 0;
 	while(!x_found && x_cnt < str.length){
 		if(str.charCodeAt(x_cnt) > 195){
 			x_found = true;
@@ -351,7 +351,7 @@ function findMultibyte(str) {
 })();
 
 function valid_date_on_month(month, date){
-	var x = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	let x = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	
 	if(date > x[month-1]){
 		return false;
@@ -375,8 +375,8 @@ function file_size_in_text(size){
 }
 
 function parse_obj_to_querystring(data) { 
-    var s = ""; 
-    for (var key in data) { 
+    let s = ""; 
+    for (let key in data) { 
         if (s != "") { 
             s += "&"; 
         } 
