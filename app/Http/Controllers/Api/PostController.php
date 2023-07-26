@@ -192,7 +192,7 @@ class PostController extends Controller
             }
 
             if (!empty($shoot_date_end)) {
-                $builder->where('shoot_datetime', '<=', $shoot_date_end);
+                $builder->where('shoot_datetime', '<=', $shoot_date_end . ' 23:59:59.9999');
             }
 
             if (!empty($comment)) {

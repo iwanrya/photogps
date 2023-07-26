@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 class Post extends BaseModel
@@ -24,7 +25,7 @@ class Post extends BaseModel
     ];
 
     protected $appends = [
-        'original',
+        'photo_original',
         'photo',
         'thumbnail',
         'created_at_formatted',
@@ -56,9 +57,9 @@ class Post extends BaseModel
         return asset('/storage/posts/' . $this->getRawOriginal('image'));
     }
 
-    protected function getOriginalAttribute()
+    protected function getPhotoOriginalAttribute()
     {
-        // return asset('/storage/posts/' . $this->getRawOriginal('image'));
+        return URL::to('/photo/original_image/' . $this->id);
     }
 
     protected function getThumbnailAttribute()

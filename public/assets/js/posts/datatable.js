@@ -3,7 +3,7 @@ $(document).ready(function () {
     if ($('#tblResult').length > 0) {
 
         tblResult = $('#tblResult').DataTable({
-            "dom": "Brltip",
+            "dom": "Brltp",
             "buttons": [],
             "columns": [
                 { className: "text-left" },
@@ -11,7 +11,7 @@ $(document).ready(function () {
             ],
             "ordering": false,
             "oLanguage": {
-                "sLengthMenu": "_MENU_ <span class='ml-10'>件表示</span><span class='ml-10'><span id='hit_count' class='text-danger'>0件</span><span class='ml-10'>のデータが該当しました。</span></span>",
+                "sLengthMenu": "_MENU_ <span class='ms-2'>件表示</span><span class='ms-2'><span id='hit_count' class='text-danger'>0件</span><span class='ml-10'>のデータが該当しました。</span></span>",
             },
             "language": {
                 "emptyTable": "検索に該当するデータがありません",

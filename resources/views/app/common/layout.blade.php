@@ -5,9 +5,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Photo GPS</title>
+    <title>{{ __('app.name')}}</title>
 
     <link href="{{asset('assets/css/app.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/datatable_custom.css')}}" rel="stylesheet">
     <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet" type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -15,7 +16,7 @@
     <link href="{{asset('assets/css/bootstrap-multiselect.min.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" />
     <link href="{{asset('assets/plugins/timepicker/css/jquery.timepicker.min.css')}}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.css" rel="stylesheet">
 
     @stack('css')
 </head>
@@ -72,7 +73,7 @@
     <script src="{{asset('assets/js/bootstrap-multiselect.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
     <script src="{{asset('assets/plugins/timepicker/js/jquery.timepicker.min.js')}}"></script>
-    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.js"></script>
 
     <script src="{{asset('assets/js/app/text_formating.js')}}"></script>
     <script src="{{asset('assets/js/app/loading.js')}}"></script>

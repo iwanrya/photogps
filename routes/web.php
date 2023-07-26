@@ -31,7 +31,15 @@ Route::get('/login', [LoginController::class, 'index'], 'login')->middleware('gu
 Route::post('/login/check', [LoginController::class, 'check'])->middleware('guest');
 
 Route::get('/logout', [LogoutController::class, 'index'])->middleware('auth')->name('logout');
-Route::resource('/photo', PostController::class)->middleware('auth');
+
+Route::controller(ApiSessionController::class)
+    ->group(function () {
+
+        Route::middleware("auth")->group(function () {
+            Route::get('/photo', [PostController::class, 'index'])->middleware('auth');
+            Route::get('/photo/original_image/{id}', [PostController::class, 'original_image'])->middleware('auth');
+        });
+    });
 
 
 
