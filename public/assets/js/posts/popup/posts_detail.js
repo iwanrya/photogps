@@ -112,11 +112,15 @@ function pmdDrawDetail(item) {
 	$("#pmd_image_no_exif").attr('href', item.photo);
 
 	// maps
-	$("#pmd_maps").html("<iframe width=\"100%\" min-height=\"150\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"" +
-		"src=\"https://www.openstreetmap.org/export/embed.html?bbox=" + (item.longitude - 0.002) + "," + (item.latitude - 0.002) + "," + (item.longitude + 0.002) + "," + (item.latitude + 0.002) + "&layer=mapnik&marker=" + item.latitude + "," + item.longitude + "\" style=\"border: 1px solid black\">" +
-		"</iframe>" +
-		"<br />" +
-		"<small><a target=\"_blank\" href=\"" + base_url + "maps?lat=" + item.latitude + "&long=" + item.longitude + "\">地図を拡大</a></small>");
+	if (item.latitude === 0.0 && item.longitude === 0.0) {
+		$("#pmd_maps").html("<div class=\"no-gps-info\">位置情報が特定できないため、地図が表示できません</div>");
+	} else {
+		$("#pmd_maps").html("<iframe width=\"100%\" min-height=\"150\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"" +
+			"src=\"https://www.openstreetmap.org/export/embed.html?bbox=" + (item.longitude - 0.002) + "," + (item.latitude - 0.002) + "," + (item.longitude + 0.002) + "," + (item.latitude + 0.002) + "&layer=mapnik&marker=" + item.latitude + "," + item.longitude + "\" style=\"border: 1px solid black\">" +
+			"</iframe>" +
+			"<br />" +
+			"<small><a target=\"_blank\" href=\"" + base_url + "maps?lat=" + item.latitude + "&long=" + item.longitude + "\">地図を拡大</a></small>");
+	}
 
 	// thumbnail
 	// $("#pmd_image").html("<a target=\"_blank\" href=\"" + item.photo + "\"><img src=\"" + item.thumbnail + "\"/></a>");

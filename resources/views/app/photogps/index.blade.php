@@ -4,12 +4,12 @@
 <section>
     <div class="row">
         <div class="col-12">
-            <div class="card card-white">
+            <div class="card card-white mt-2">
                 <div class="card-header">
-                    <h3 class="card-title with-left-border text-bold">写真共有ツール</h3>
+                    <h3 class="card-title with-left-border text-bold">{{ __('photogps.title')}}</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool btn-show-hide" data-card-widget="collapse">
-                            <i class="fa fa-minus"> <span class="sh-text">非表示</span></i>
+                            <i class="fa fa-minus"> <span class="sh-text">{{ __('button.hidden')}}</span></i>
                         </button>
                     </div>
                 </div>
@@ -17,7 +17,7 @@
                     <form action="">
                         <!-- 1 -->
                         <div class="form-group row">
-                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">撮影者</label>
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.photographer')}}</label>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="photographer" class="form-control" multiple="multiple">
                                     <?php
@@ -31,7 +31,7 @@
                         </div>
                         <!-- 2 -->
                         <div class="form-group row">
-                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">撮影日時</label>
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.shoot_datetime')}}</label>
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="row">
                                     <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -55,10 +55,10 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-5 xs-mt-10 md-mt-10">
                                 <div class="form-inline">
-                                    <button data-btn-date="1" data-val="1" type="button" class="btn <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '1' ? 'btn-success' : 'btn-default'; ?> btn-onoff ml-1" <?= isset($_GET['order_date_not_null']) && $_GET['order_date_not_null'] === 'true' ? 'disabled' : '' ?>>本日</button>
-                                    <button data-btn-date="1" data-val="2" type="button" class="btn <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '2' ? 'btn-success' : 'btn-default'; ?> btn-onoff ml-1" <?= isset($_GET['order_date_not_null']) && $_GET['order_date_not_null'] === 'true' ? 'disabled' : '' ?>>1週間前</button>
-                                    <button data-btn-date="1" data-val="3" type="button" class="btn <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '3' ? 'btn-success' : 'btn-default'; ?> btn-onoff ml-1" <?= isset($_GET['order_date_not_null']) && $_GET['order_date_not_null'] === 'true' ? 'disabled' : '' ?>>1カ月前</button>
-                                    <button data-btn-date="1" data-val="4" type="button" class="btn <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '4' ? 'btn-success' : 'btn-default'; ?> btn-onoff ml-1" <?= isset($_GET['order_date_not_null']) && $_GET['order_date_not_null'] === 'true' ? 'disabled' : '' ?>>3カ月前</button>
+                                    <button data-btn-date="1" data-val="1" type="button" class="btn <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '1' ? 'btn-success' : 'btn-default'; ?> btn-onoff ml-1" <?= isset($_GET['order_date_not_null']) && $_GET['order_date_not_null'] === 'true' ? 'disabled' : '' ?>>{{ __('button.today')}}</button>
+                                    <button data-btn-date="1" data-val="2" type="button" class="btn <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '2' ? 'btn-success' : 'btn-default'; ?> btn-onoff ml-1" <?= isset($_GET['order_date_not_null']) && $_GET['order_date_not_null'] === 'true' ? 'disabled' : '' ?>>{{ __('button.one_week_ago')}}</button>
+                                    <button data-btn-date="1" data-val="3" type="button" class="btn <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '3' ? 'btn-success' : 'btn-default'; ?> btn-onoff ml-1" <?= isset($_GET['order_date_not_null']) && $_GET['order_date_not_null'] === 'true' ? 'disabled' : '' ?>>{{ __('button.one_month_ago')}}</button>
+                                    <button data-btn-date="1" data-val="4" type="button" class="btn <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '4' ? 'btn-success' : 'btn-default'; ?> btn-onoff ml-1" <?= isset($_GET['order_date_not_null']) && $_GET['order_date_not_null'] === 'true' ? 'disabled' : '' ?>>{{ __('button.three_month_ago')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -75,10 +75,10 @@
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                        <button type="button" id="b_clear" class="btn btn-default btn-block xs-btn-block">クリア</button>
+                                        <button type="button" id="b_clear" class="btn btn-default btn-block xs-btn-block">{{ __('button.reset')}}</button>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                        <button type="button" id="b_search" class="btn btn-success btn-block xs-btn-block xs-mt-10">検　索</button>
+                                        <button type="button" id="b_search" class="btn btn-success btn-block xs-btn-block xs-mt-10">{{ __('button.search')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -99,8 +99,8 @@
                             <table id="tblResult" class="table table-bordered table-soft-dark">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" width=80%>内容</th>
-                                        <th class="text-center">写真</th>
+                                        <th class="text-center" width=80%>{{ __('photogps.content')}}</th>
+                                        <th class="text-center">{{ __('photogps.photograph')}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
