@@ -60,3 +60,11 @@ label {
     z-index: 1072 !important;
     padding: 100px
 }
+
+.no-gps-info {
+    font-weight: bold;
+    text-align: center;
+    border: solid 3px lightgrey;
+    padding: 15px;
+    color: grey;
+}
