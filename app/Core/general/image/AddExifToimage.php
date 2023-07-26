@@ -21,14 +21,14 @@ class AddExifToImage
      * @param string $output
      *            the output filename. An updated copy of the input
      *            image is saved here.
-     * @param float $longitude
-     *            expressed as a fractional number of degrees,
-     *            e.g. 12.345�. Negative values denotes degrees west of Greenwich.
      * @param float $latitude
      *            expressed as for longitude. Negative values
      *            denote degrees south of equator.
+     * @param float $longitude
+     *            expressed as a fractional number of degrees,
+     *            e.g. 12.345�. Negative values denotes degrees west of Greenwich.
      */
-    static function addGpsInfo($input, $output, $longitude, $latitude)
+    static function addGpsInfo($input, $output, $latitude, $longitude)
     {
         $jpeg = new PelJpeg($input);
 
