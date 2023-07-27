@@ -99,7 +99,8 @@
                             <table id="tblResult" class="table table-bordered table-soft-dark">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" width=80%>{{ __('photogps.content')}}</th>
+                                        <th class="text-center"></th>
+                                        <th class="text-center" width=70%>{{ __('photogps.content')}}</th>
                                         <th class="text-center">{{ __('photogps.photograph')}}</th>
                                     </tr>
                                 </thead>

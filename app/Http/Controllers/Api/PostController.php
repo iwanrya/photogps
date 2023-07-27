@@ -199,7 +199,7 @@ class PostController extends Controller
                 $builder->whereRelation('postComment', 'comment', 'like', "%{$comment}%");
             }
 
-            $posts = $builder->get();
+            $posts = $builder->latest()->get();
 
             return new PostResource(true, '', $posts);
         } catch (BadRequestException $ex) {

@@ -6,6 +6,11 @@ $(document).ready(function () {
             "dom": "Brltp",
             "buttons": [],
             "columns": [
+                {
+                    render: (data, type, row) =>
+                        data[0] + '<br><input value="' + data[1].id + '" class="select-checkbox" type="checkbox">',
+                    className: 'dt-body-center'
+                },
                 { className: "text-left" },
                 { className: "text-center align-middle" },
             ],
@@ -34,6 +39,10 @@ $(document).ready(function () {
             },
             scrollY: 500,
             scrollCollapse: true,
+        });
+
+        tblResult.on('change', 'input.select-checkbox', function (e) {
+            console.log(e.currentTarget.value);
         });
     }
 
@@ -86,8 +95,9 @@ function populate_search_data(data) {
             let photo = "<img src='" + c_data.thumbnail + "' style='max-width: 120px; max-heigth: 120px;'/>";
 
             tblResult.row.add([
-                dv_info
-                , photo
+                [i+1, c_data],
+                dv_info,
+                photo
             ]);
         }
     }
