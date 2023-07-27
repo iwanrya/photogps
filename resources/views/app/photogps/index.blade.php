@@ -23,7 +23,7 @@
                                     <?php
                                     for ($i = 0; $i < count($photographers); $i++) {
                                         $photographer = $photographers[$i];
-                                        echo "<option value='" . $photographer->code . "'" . (isset($_GET['photographer']) && $_GET['photographer'] === $photographer->code ? 'selected' : '') . ">" . '(' . $photographer->code . ')' . $photographer->name . "</option>";
+                                        echo "<option value='" . $photographer->code . "'" . (isset($_GET['photographer']) && $_GET['photographer'] === $photographer->code ? 'selected' : '') . ">({$photographer->username}){$photographer->name}</option>";
                                     }
                                     ?>
                                 </select>

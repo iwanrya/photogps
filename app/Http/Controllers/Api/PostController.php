@@ -184,7 +184,7 @@ class PostController extends Controller
             // get data rows
             $builder = Post::with('postComment');
             if (!empty($photographers)) {
-                $builder->whereIn('photographer', $photographers);
+                $builder->whereIn('create_user_id', $photographers);
             }
 
             if (!empty($shoot_date_start)) {
