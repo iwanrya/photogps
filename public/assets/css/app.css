@@ -5,7 +5,7 @@
 
 @font-face {
     font-family: "Meiryo Bold";
-    src: url('fonts/Meiryo\ Bold.ttf');
+    src: url('../fonts/Meiryo\ Bold.ttf');
 }
 
 body {
