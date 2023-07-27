@@ -113,8 +113,11 @@ function pmdDrawDetail(item) {
 
 	// maps
 	if (item.latitude === 0.0 && item.longitude === 0.0) {
-		$("#pmd_maps").html("<div class=\"no-gps-info\">位置情報が特定できないため、地図が表示できません</div>");
+		$("#pmd_maps").addClass("d-none");
+		$("#pmd_no_gps_info").removeClass("d-none");
 	} else {
+		$("#pmd_maps").removeClass("d-none");
+		$("#pmd_no_gps_info").addClass("d-none");
 		$("#pmd_maps").html("<iframe width=\"100%\" min-height=\"150\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"" +
 			"src=\"https://www.openstreetmap.org/export/embed.html?bbox=" + (item.longitude - 0.002) + "," + (item.latitude - 0.002) + "," + (item.longitude + 0.002) + "," + (item.latitude + 0.002) + "&layer=mapnik&marker=" + item.latitude + "," + item.longitude + "\" style=\"border: 1px solid black\">" +
 			"</iframe>" +

@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Meiryo Reguler";
-    src: url('fonts/Meiryo.ttf');
+    src: url('../fonts/Meiryo.ttf');
 }
 
 @font-face {
@@ -61,10 +61,15 @@ label {
     padding: 100px
 }
 
+.button-small-font {
+    font-size: 0.8rem;
+}
+
 .no-gps-info {
     font-weight: bold;
     text-align: center;
     border: solid 3px lightgrey;
     padding: 15px;
     color: grey;
+    font-size: 0.8rem;
 }

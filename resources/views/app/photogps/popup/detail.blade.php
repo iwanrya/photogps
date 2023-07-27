@@ -19,6 +19,7 @@
                                 </div>
                             </div>
                             <div class="col-4">
+                                <div id="pmd_no_gps_info" class="no-gps-info">{{ __('photogps.no_gps_info_1')}}<br>{{ __('photogps.no_gps_info_2')}}</div>
                                 <div id="pmd_maps"></div>
                                 <div id="pmd_image" class="text-center mt-2 mb-2">
                                     <img />

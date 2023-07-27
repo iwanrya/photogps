@@ -7,4 +7,7 @@ return [
     
     'content' => '内容',
     'photograph' => '写真',
+
+    'no_gps_info_1' => '位置情報が特定できないため、',
+    'no_gps_info_2' => '地図が表示できません',
 ];
