@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-primary-soft">
                 <div>
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">閉じる</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">{{ __('button.close')}}</button>
                 </div>
             </div>
             <div class="modal-body">
@@ -15,7 +15,7 @@
                                 </div>
                                 <textarea class="form-control mb-1 mt-2" id="pmd_new_comment" rows="3"></textarea>
                                 <div class="text-right">
-                                    <button id="ppmd_add_comment" class="btn btn-primary button-small-font">コメント入力</button>
+                                    <button id="ppmd_add_comment" class="btn btn-primary button-small-font">{{ __('photogps.submit_comment')}}</button>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -24,9 +24,9 @@
                                 <div id="pmd_image" class="text-center mt-2 mb-2">
                                     <img />
                                 </div>
-                                <a id='pmd_image_original' class="btn btn-primary button-small-font w-100 mb-2" download>写真ダウンロード(GPS情報付)</a>
-                                <a id='pmd_image_no_exif' class="btn btn-primary button-small-font w-100 mb-2" download>写真ダウンロード(GPS情報無)</a>
-                                <button id="ppmd_delete" class="btn btn-danger text-white button-small-font w-100"><i class="fa fa-trash"></i> 削除</button>
+                                <a id='pmd_image_original' class="btn btn-primary button-small-font w-100 mb-2" download>{{ __('photogps.download_original_image')}}</a>
+                                <a id='pmd_image_no_exif' class="btn btn-primary button-small-font w-100 mb-2" download>{{ __('photogps.download_noexif_image')}}</a>
+                                <button id="ppmd_delete" class="btn btn-danger text-white button-small-font w-100"><i class="fa fa-trash"></i> {{ __('photogps.delete')}}</button>
                             </div>
                         </div>
                     </div>

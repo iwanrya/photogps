@@ -64,7 +64,7 @@
                         </div>
                         <!-- 3 -->
                         <div class="form-group row">
-                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">コメント</label>
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.comment')}}</label>
                             <div class="col-12 col-sm-7">
                                 <input type="text" class="form-control" id="comment" value="<?= isset($_GET['comment']) && $_GET['comment'] !== '' ? $_GET['comment'] : '' ?>">
                             </div>
@@ -99,8 +99,8 @@
                             <table id="tblResult" class="table table-bordered table-soft-dark">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"></th>
-                                        <th class="text-center" width=70%>{{ __('photogps.content')}}</th>
+                                        <th class="text-center" width=40px>{{ Str::title(__('photogps.no'))}}</th>
+                                        <th class="text-center" width=75%>{{ __('photogps.content')}}</th>
                                         <th class="text-center">{{ __('photogps.photograph')}}</th>
                                     </tr>
                                 </thead>
