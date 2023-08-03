@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\CustomerController as ApiCustomerController;
 use App\Http\Controllers\Api\PostCommentController as ApiPostCommentController;
 use App\Http\Controllers\Api\PostController as ApiPostController;
+use App\Http\Controllers\Api\ProjectController as ApiProjectController;
 use App\Http\Controllers\Api\SessionController as ApiSessionController;
+use App\Http\Controllers\Api\StatusController as ApiStatusController;
 use App\Http\Controllers\Api\TestController as ApiTestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -88,5 +91,30 @@ Route::controller(ApiPostCommentController::class)
         Route::middleware(SessionOrJWTAuth::class)->group(function () {
             Route::post('/insert', 'insert');
             Route::get('/read', 'read');
+        });
+    });
+
+
+Route::controller(ApiCustomerController::class)
+    ->prefix('api/customer')
+    ->group(function () {
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::get('/dropdown', 'dropdown');
+        });
+    });
+
+Route::controller(ApiProjectController::class)
+    ->prefix('api/project')
+    ->group(function () {
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::get('/dropdown', 'dropdown');
+        });
+    });
+
+Route::controller(ApiStatusController::class)
+    ->prefix('api/status')
+    ->group(function () {
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::get('/dropdown', 'dropdown');
         });
     });

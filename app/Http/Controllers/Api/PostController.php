@@ -57,6 +57,9 @@ class PostController extends Controller
                 'photo'             => 'required|image|mimes:jpeg,jpg|max:8000',
                 'shoot_datetime'    => 'required',
                 'separate_exif'     => 'required',
+                // 'project_id'        => 'required',
+                // 'customer_id'       => 'required',
+                // 'status'            => 'required',
             ]);
 
             //check if validation fails
@@ -68,11 +71,15 @@ class PostController extends Controller
             $lat = 0.0;
             $long = 0.0;
 
+
             if ($separate_exif) {
-                $lat = (float) $request->post('latitude');
-                $long = (float) $request->post('longitude');
+                $lat = $request->post('latitude');
+                $long = $request->post('longitude');
             }
 
+            $project_id = $request->post('project_id') ? trim($request->post('project_id')) : null;
+            $customer_id = $request->post('customer_id') ? trim($request->post('customer_id')) : null;
+            $status = $request->post('status') ? trim($request->post('status')) : null;
             $comment = $request->post('comment') ? trim($request->post('comment')) : '';
 
             // convert shoot_datetime from timestamp (string) to DateTime
@@ -108,6 +115,9 @@ class PostController extends Controller
                     'shoot_datetime' => $datetime->format('Y-m-d H:i:s.u'),
                     'latitude' => $extracted_exif_data->latitude,
                     'longitude' => $extracted_exif_data->longitude,
+                    'project_id' => $project_id,
+                    'customer_id' => $customer_id,
+                    'status' => $status
                 ]);
 
                 if (!empty($comment)) {

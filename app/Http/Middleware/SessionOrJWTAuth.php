@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,8 +30,12 @@ class SessionOrJWTAuth
         } else {
 
             if ($request->acceptsJson()) {
-                if ($user = JWTAuth::parseToken()->authenticate()) {
-                    return $next($request);
+                try {
+                    if ($user = JWTAuth::parseToken()->authenticate()) {
+                        return $next($request);
+                    }
+                } catch (Exception $ex) {
+                    
                 }
             }
         }

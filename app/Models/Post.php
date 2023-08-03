@@ -22,6 +22,9 @@ class Post extends BaseModel
         'photographer',
         'photographer_username',
         'create_user_id',
+        'project_id',
+        'customer_id',
+        'status',
     ];
 
     protected $appends = [
@@ -69,11 +72,26 @@ class Post extends BaseModel
 
     protected function getLatitudeAttribute($value)
     {
-        return floatval($value);
+        return $value !== null ? floatval($value) : null;
     }
 
     protected function getLongitudeAttribute($value)
     {
-        return floatval($value);
+        return $value !== null ? floatval($value) : null;
+    }
+
+    protected function getProjectIdAttribute($value)
+    {
+        return $value != null ? intval($value) : null;
+    }
+
+    protected function getCustomerIdAttribute($value)
+    {
+        return $value != null ? intval($value) : null;
+    }
+
+    protected function getStatusAttribute($value)
+    {
+        return $value != null ? intval($value) : null;
     }
 }
