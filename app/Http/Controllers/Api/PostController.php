@@ -120,6 +120,8 @@ class PostController extends Controller
                     'status' => $status
                 ]);
 
+                $post->hideInternalFields();
+
                 if (!empty($comment)) {
                     $post_comment = PostComment::create([
                         'create_user_id' => $user->id,
@@ -132,7 +134,7 @@ class PostController extends Controller
             }
 
             // //return response
-            return response()->json(new PostResource(true, "Image successfully uploaded", $post), Response::HTTP_OK);
+            return response()->json(new PostResource(true, "Image successfully uploaded"), Response::HTTP_OK);
         } catch (BadRequestException $ex) {
             error_log($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
@@ -211,6 +213,14 @@ class PostController extends Controller
 
             $posts = $builder->latest()->get();
 
+            foreach ($posts as $post) {
+                $post->hideInternalFields();
+
+                foreach ($post->postComment as $comment) {
+                    $comment->hideInternalFields();
+                }
+            }
+
             return new PostResource(true, '', $posts);
         } catch (BadRequestException $ex) {
             error_log($ex->getMessage());
@@ -244,7 +254,22 @@ class PostController extends Controller
             $post_id = $request->get('photo_mobile_id');
 
             //find post by image name
-            $post = Post::find($post_id);
+            $builder = Post::with(['postComment', 'customer', 'project', 'statusItem']);
+            $post = $builder->find($post_id);
+
+            $post->hideInternalFields();
+
+            if (!empty($post->project)) {
+                $post->project->hideInternalFields();
+            }
+
+            if (!empty($post->customer)) {
+                $post->customer->hideInternalFields();
+            }
+
+            if (!empty($post->statusItem)) {
+                $post->statusItem->hideInternalFields();
+            }
 
             //return single post as a resource
             return new PostResource(true, '', $post);

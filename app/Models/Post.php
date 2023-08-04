@@ -45,6 +45,21 @@ class Post extends BaseModel
         return $this->belongsTo(User::class, 'create_user_id', 'id');
     }
 
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class, 'project_id', 'id');
+    }
+
+    public function statusItem(): BelongsTo
+    {
+        return $this->belongsTo(Status::class, 'status', 'id');
+    }
+
     protected function getPhotographerAttribute($value)
     {
         return Str::title($value);

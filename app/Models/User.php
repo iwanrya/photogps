@@ -69,4 +69,16 @@ class User extends Authenticatable implements JWTSubject
     {
         return Str::title($value);
     }
+
+    function hideInternalFields()
+    {
+        $this->makeHidden([
+            'created_at',
+            'updated_at',
+            'created_at_formatted',
+            'updated_at_formatted',
+            'deleted_at',
+            'create_user_id'
+        ]);
+    }
 }
