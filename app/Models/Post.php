@@ -31,6 +31,7 @@ class Post extends BaseModel
         'photo_original',
         'photo',
         'thumbnail',
+        'shoot_datetime_formatted',
         'created_at_formatted',
         'updated_at_formatted'
     ];
@@ -63,6 +64,14 @@ class Post extends BaseModel
     protected function getPhotographerAttribute($value)
     {
         return Str::title($value);
+    }
+
+    protected function getShootDatetimeFormattedAttribute() {
+        if (!empty($this->updated_at)) {
+            return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->shoot_datetime)->format($this->dateFormat);
+        } else {
+            return '';
+        }
     }
 
     protected function getImageAttribute($value)

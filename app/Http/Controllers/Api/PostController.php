@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Validator;
 use DateTime;
 use DateTimeZone;
 use Exception;
-use Illuminate\Support\Facades\DB;
 use stdClass;
 
 class PostController extends Controller
@@ -189,6 +188,9 @@ class PostController extends Controller
 
             // get filters
             $photographers = $request->get('photographer') ?: [];
+            $customers = $request->get('customer') ?: [];
+            $projects = $request->get('project') ?: [];
+            $status = $request->get('status') ?: [];
             $shoot_date_start = $request->get('shoot_date_start') ?: "";
             $shoot_date_end = $request->get('shoot_date_end') ?: "";
             $comment = $request->get('comment') ?: "";
@@ -197,6 +199,18 @@ class PostController extends Controller
             $builder = Post::with('postComment');
             if (!empty($photographers)) {
                 $builder->whereIn('create_user_id', $photographers);
+            }
+
+            if (!empty($customers)) {
+                $builder->whereIn('customer_id', $customers);
+            }
+
+            if (!empty($projects)) {
+                $builder->whereIn('project_id', $projects);
+            }
+
+            if (!empty($status)) {
+                $builder->whereIn('status', $status);
             }
 
             if (!empty($shoot_date_start)) {
@@ -257,8 +271,10 @@ class PostController extends Controller
             $builder = Post::with(['postComment', 'customer', 'project', 'statusItem']);
             $post = $builder->find($post_id);
 
-            $post->hideInternalFields();
-
+            if (!empty($post)) {
+                $post->hideInternalFields();
+            }
+            
             if (!empty($post->project)) {
                 $post->project->hideInternalFields();
             }

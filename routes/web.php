@@ -36,17 +36,10 @@ Route::post('/login/check', [LoginController::class, 'check'])->middleware('gues
 
 Route::get('/logout', [LogoutController::class, 'index'])->middleware('auth')->name('logout');
 
-Route::controller(ApiSessionController::class)
-    ->group(function () {
-
-        Route::middleware("auth")->group(function () {
-            Route::get('/photo', [PostController::class, 'index'])->middleware('auth');
-            Route::get('/photo/original_image/{id}', [PostController::class, 'original_image'])->middleware('auth');
-        });
-    });
-
-
-
+Route::middleware(SessionOrJWTAuth::class)->group(function () {
+    Route::get('/photo', [PostController::class, 'index'])->middleware('auth');
+    Route::get('/photo/original_image/{id}', [PostController::class, 'original_image']);
+});
 
 // === API ===
 Route::apiResource('/tests', ApiTestController::class);

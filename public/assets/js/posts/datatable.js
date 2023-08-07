@@ -73,7 +73,7 @@ function populate_search_data(data) {
                 "<strong>撮影日時</strong>" +
                 "</div>" +
                 "<div class='col-8'>" +
-                c_data.shoot_datetime +
+                c_data.shoot_datetime_formatted +
                 "</div>" +
                 "</div>" +
 
