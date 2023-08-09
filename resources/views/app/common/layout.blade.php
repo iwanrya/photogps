@@ -28,7 +28,7 @@
     @endauth
 
     <div class="d-flex justify-content-center container">
-        <div class="container-fluid">
+        <div class="container-fluid pt-2">
             @yield('content')
         </div>
     </div>

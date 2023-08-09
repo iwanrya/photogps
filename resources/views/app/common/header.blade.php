@@ -7,6 +7,7 @@
             <ul class="dropdown-menu" aria-labelledby="ddmenu">
                 <li><a class="dropdown-item" href="{{ url('/') }}">{{ __('menu.home') }}</a></li>
                 <li><a class="dropdown-item" href="{{ url('/photo') }}">{{ __('menu.photo_sharing') }}</a></li>
+                <li><a class="dropdown-item" href="{{ url('/area') }}">{{ __('menu.area') }}</a></li>
             </ul>
         </div>
         <div class="d-flex">

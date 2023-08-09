@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AreaController;
+use App\Http\Controllers\Api\AreaController as ApiAreaController;
 use App\Http\Controllers\Api\CustomerController as ApiCustomerController;
 use App\Http\Controllers\Api\PhotographerController;
 use App\Http\Controllers\Api\PostCommentController as ApiPostCommentController;
@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ProjectController as ApiProjectController;
 use App\Http\Controllers\Api\SessionController as ApiSessionController;
 use App\Http\Controllers\Api\StatusController as ApiStatusController;
 use App\Http\Controllers\Api\TestController as ApiTestController;
+use App\Http\Controllers\AreaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
@@ -41,6 +42,10 @@ Route::middleware(SessionOrJWTAuth::class)->group(function () {
     Route::get('/photo', [PostController::class, 'index'])->middleware('auth');
     Route::get('/photo/original_image/{id}', [PostController::class, 'original_image']);
 });
+
+Route::resources([
+    'area' => AreaController::class,
+]);
 
 // === API ===
 Route::apiResource('/tests', ApiTestController::class);
@@ -122,7 +127,7 @@ Route::controller(PhotographerController::class)
         });
     });
 
-Route::controller(AreaController::class)
+Route::controller(ApiAreaController::class)
     ->prefix('api/area')
     ->group(function () {
         Route::middleware(SessionOrJWTAuth::class)->group(function () {

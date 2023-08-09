@@ -10,6 +10,11 @@ class Area extends BaseModel
     use HasFactory;
     use SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'create_user_id',
+    ];
+
     protected $appends = [
         'created_at_formatted',
         'updated_at_formatted'
