@@ -22,6 +22,7 @@ class Post extends BaseModel
         'photographer',
         'photographer_username',
         'create_user_id',
+        'area_id',
         'project_id',
         'customer_id',
         'status',
@@ -44,6 +45,11 @@ class Post extends BaseModel
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'create_user_id', 'id');
+    }
+
+    public function area(): BelongsTo
+    {
+        return $this->belongsTo(Area::class, 'area_id', 'id');
     }
 
     public function customer(): BelongsTo

@@ -76,6 +76,7 @@ class PostController extends Controller
                 $long = $request->post('longitude');
             }
 
+            $area_id = $request->post('area_id') ? trim($request->post('area_id')) : null;
             $project_id = $request->post('project_id') ? trim($request->post('project_id')) : null;
             $customer_id = $request->post('customer_id') ? trim($request->post('customer_id')) : null;
             $status = $request->post('status') ? trim($request->post('status')) : null;
@@ -114,6 +115,7 @@ class PostController extends Controller
                     'shoot_datetime' => $datetime->format('Y-m-d H:i:s.u'),
                     'latitude' => $extracted_exif_data->latitude,
                     'longitude' => $extracted_exif_data->longitude,
+                    'area_id' => $area_id,
                     'project_id' => $project_id,
                     'customer_id' => $customer_id,
                     'status' => $status
@@ -188,6 +190,7 @@ class PostController extends Controller
 
             // get filters
             $photographers = $request->get('photographer') ?: [];
+            $areas = $request->get('area') ?: [];
             $customers = $request->get('customer') ?: [];
             $projects = $request->get('project') ?: [];
             $status = $request->get('status') ?: [];
@@ -199,6 +202,10 @@ class PostController extends Controller
             $builder = Post::with('postComment');
             if (!empty($photographers)) {
                 $builder->whereIn('create_user_id', $photographers);
+            }
+
+            if (!empty($areas)) {
+                $builder->whereIn('area_id', $areas);
             }
 
             if (!empty($customers)) {
@@ -268,19 +275,23 @@ class PostController extends Controller
             $post_id = $request->get('photo_mobile_id');
 
             //find post by image name
-            $builder = Post::with(['postComment', 'customer', 'project', 'statusItem']);
+            $builder = Post::with(['postComment', 'area', 'customer', 'project', 'statusItem']);
             $post = $builder->find($post_id);
 
             if (!empty($post)) {
                 $post->hideInternalFields();
             }
-            
-            if (!empty($post->project)) {
-                $post->project->hideInternalFields();
+
+            if (!empty($post->area)) {
+                $post->area->hideInternalFields();
             }
 
             if (!empty($post->customer)) {
                 $post->customer->hideInternalFields();
+            }
+            
+            if (!empty($post->project)) {
+                $post->project->hideInternalFields();
             }
 
             if (!empty($post->statusItem)) {

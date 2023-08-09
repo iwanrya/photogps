@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AreaController;
 use App\Http\Controllers\Api\CustomerController as ApiCustomerController;
 use App\Http\Controllers\Api\PhotographerController;
 use App\Http\Controllers\Api\PostCommentController as ApiPostCommentController;
@@ -115,6 +116,14 @@ Route::controller(ApiStatusController::class)
 
 Route::controller(PhotographerController::class)
     ->prefix('api/photographer')
+    ->group(function () {
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::get('/dropdown', 'dropdown');
+        });
+    });
+
+Route::controller(AreaController::class)
+    ->prefix('api/area')
     ->group(function () {
         Route::middleware(SessionOrJWTAuth::class)->group(function () {
             Route::get('/dropdown', 'dropdown');

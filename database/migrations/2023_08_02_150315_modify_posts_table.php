@@ -39,7 +39,7 @@ return new class extends Migration
     {
         //
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropIndex('posts_customer_id_foreign');
+            $table->dropForeign('posts_customer_id_foreign');
             $table->dropIndex('posts_customer_id_foreign');
 
             $table->dropForeign('posts_project_id_foreign');
