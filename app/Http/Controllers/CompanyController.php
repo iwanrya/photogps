@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Models\Company;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,19 +11,19 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
-class ProjectController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // get all the project
-        $project = Project::all();
+        // get all the company
+        $company = Company::all();
 
-        // load the view and pass the project
-        return View::make('app.project.index')
-            ->with('projects', $project);
+        // load the view and pass the company
+        return View::make('app.company.index')
+            ->with('companys', $company);
     }
 
     /**
@@ -31,7 +31,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return View::make('app.project.create');
+        return View::make('app.company.create');
     }
 
     /**
@@ -48,27 +48,29 @@ class ProjectController extends Controller
 
             // check if validation fails
             if ($validator->fails()) {
-                return redirect()->to('project/create')
+                return redirect()->to('company/create')
                     ->withErrors($validator)
                     ->withInput();
                 die();
             }
 
             $name = $request->get('name') ?: null;
+            $is_system_owner = $request->get('is_system_owner') ? true : false;
 
             $user = Auth::user();
 
-            $project = Project::create([
+            $company = Company::create([
                 'name' => $name,
+                'is_system_owner' => $is_system_owner,
                 'create_user_id' => $user->id
             ]);
 
             // redirect
-            Session::flash('message', 'Successfully created project!');
-            return redirect()->to('project');
+            Session::flash('message', 'Successfully created company!');
+            return redirect()->to('company');
         } catch (Exception $ex) {
             error_log($ex->getMessage());
-            return redirect()->to('project/create')
+            return redirect()->to('company/create')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -79,12 +81,12 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        // get the project
-        $project = Project::find($id);
+        // get the company
+        $company = Company::find($id);
 
-        // show the view and pass the project to it
-        return View::make('app.project.show')
-            ->with('project', $project);
+        // show the view and pass the company to it
+        return View::make('app.company.show')
+            ->with('company', $company);
     }
 
     /**
@@ -92,17 +94,12 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        // get the project
-        $project = Project::find($id);
+        // get the company
+        $company = Company::find($id);
 
-        if (empty($project)) {
-            return Redirect::to('project');
-            die();
-        }
-
-        // show the edit form and pass the project
-        return View::make('app.project.edit')
-            ->with('project', $project);
+        // show the edit form and pass the company
+        return View::make('app.company.edit')
+            ->with('company', $company);
     }
 
     /**
@@ -116,40 +113,24 @@ class ProjectController extends Controller
 
         // check if validation fails
         if ($validator->fails()) {
-            return redirect()->to('project/' . $id . '/edit')
+            return redirect()->to('company/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput();
             die();
         }
 
         $name = $request->get('name') ?: null;
+        $is_system_owner = $request->get('is_system_owner') ? true : false;
 
         // store
-        $project = Project::find($id);
-        $project->name = $name;
-        $project->save();
+        $company = Company::find($id);
+        $company->name = $name;
+        $company->is_system_owner = $is_system_owner;
+        $company->save();
 
         // redirect
-        Session::flash('message', 'Successfully updated project!');
-        return Redirect::to('project');
-    }
-
-    /**
-     * Show the form for deleting the specified resource.
-     */
-    public function delete(string $id)
-    {
-        // get the project
-        $project = Project::find($id);
-
-        if (empty($project)) {
-            return Redirect::to('project');
-            die();
-        }
-
-        // show the edit form and pass the project
-        return View::make('app.project.delete')
-            ->with('project', $project);
+        Session::flash('message', 'Successfully updated company!');
+        return Redirect::to('company');
     }
 
     /**
@@ -157,11 +138,11 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        $project = Project::find($id);
-        $project->delete();
+        $company = Company::find($id);
+        $company->delete();
 
         // redirect
-        Session::flash('message', 'Successfully deleted the project!');
-        return Redirect::to('project');
+        Session::flash('message', 'Successfully deleted the company!');
+        return Redirect::to('company');
     }
 }

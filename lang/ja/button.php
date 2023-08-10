@@ -8,6 +8,7 @@ return [
     'submit' => '送信',
     'detail' => 'Detail',
     'edit' => 'Edit',
+    'delete' => 'Delete',
 
     'today' => '本日',
     'one_week_ago' => '1週間前',

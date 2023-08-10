@@ -10,6 +10,9 @@
                 <li><a class="dropdown-item" href="{{ url('/customer') }}">{{ __('menu.customer') }}</a></li>
                 <li><a class="dropdown-item" href="{{ url('/project') }}">{{ __('menu.project') }}</a></li>
                 <li><a class="dropdown-item" href="{{ url('/area') }}">{{ __('menu.area') }}</a></li>
+                <li><a class="dropdown-item" href="{{ url('/user') }}">{{ __('menu.user') }}</a></li>
+                <li><a class="dropdown-item" href="{{ url('/user_auth') }}">{{ __('menu.user_auth') }}</a></li>
+                <li><a class="dropdown-item" href="{{ url('/company') }}">{{ __('menu.company') }}</a></li>
             </ul>
         </div>
         <div class="d-flex">
