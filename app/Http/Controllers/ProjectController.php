@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Area;
+use App\Models\Project;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,19 +11,19 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
-class AreaController extends Controller
+class ProjectController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // get all the area
-        $area = Area::all();
+        // get all the project
+        $project = Project::all();
 
-        // load the view and pass the area
-        return View::make('app.area.index')
-            ->with('areas', $area);
+        // load the view and pass the project
+        return View::make('app.project.index')
+            ->with('projects', $project);
     }
 
     /**
@@ -31,7 +31,7 @@ class AreaController extends Controller
      */
     public function create()
     {
-        return View::make('app.area.create');
+        return View::make('app.project.create');
     }
 
     /**
@@ -48,7 +48,7 @@ class AreaController extends Controller
 
             // check if validation fails
             if ($validator->fails()) {
-                return redirect()->to('area/create')
+                return redirect()->to('project/create')
                     ->withErrors($validator)
                     ->withInput();
                 die();
@@ -58,17 +58,17 @@ class AreaController extends Controller
 
             $user = Auth::user();
 
-            $area = Area::create([
+            $project = Project::create([
                 'name' => $name,
                 'create_user_id' => $user->id
             ]);
 
             // redirect
-            Session::flash('message', 'Successfully created area!');
-            return redirect()->to('area');
+            Session::flash('message', 'Successfully created project!');
+            return redirect()->to('project');
         } catch (Exception $ex) {
             error_log($ex->getMessage());
-            return redirect()->to('area/create')
+            return redirect()->to('project/create')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -79,12 +79,12 @@ class AreaController extends Controller
      */
     public function show(string $id)
     {
-        // get the area
-        $area = Area::find($id);
+        // get the project
+        $project = Project::find($id);
 
-        // show the view and pass the area to it
-        return View::make('app.area.show')
-            ->with('area', $area);
+        // show the view and pass the project to it
+        return View::make('app.project.show')
+            ->with('project', $project);
     }
 
     /**
@@ -92,12 +92,12 @@ class AreaController extends Controller
      */
     public function edit(string $id)
     {
-        // get the area
-        $area = Area::find($id);
+        // get the project
+        $project = Project::find($id);
 
-        // show the edit form and pass the area
-        return View::make('app.area.edit')
-            ->with('area', $area);
+        // show the edit form and pass the project
+        return View::make('app.project.edit')
+            ->with('project', $project);
     }
 
     /**
@@ -111,7 +111,7 @@ class AreaController extends Controller
 
         // check if validation fails
         if ($validator->fails()) {
-            return redirect()->to('area/' . $id . '/edit')
+            return redirect()->to('project/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput();
             die();
@@ -120,13 +120,13 @@ class AreaController extends Controller
         $name = $request->get('name') ?: null;
 
         // store
-        $area = Area::find($id);
-        $area->name = $name;
-        $area->save();
+        $project = Project::find($id);
+        $project->name = $name;
+        $project->save();
 
         // redirect
-        Session::flash('message', 'Successfully updated area!');
-        return Redirect::to('area');
+        Session::flash('message', 'Successfully updated project!');
+        return Redirect::to('project');
     }
 
     /**
@@ -134,11 +134,11 @@ class AreaController extends Controller
      */
     public function destroy(string $id)
     {
-        $area = Area::find($id);
-        $area->delete();
+        $project = Project::find($id);
+        $project->delete();
 
         // redirect
-        Session::flash('message', 'Successfully deleted the area!');
-        return Redirect::to('area');
+        Session::flash('message', 'Successfully deleted the project!');
+        return Redirect::to('project');
     }
 }

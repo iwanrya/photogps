@@ -73,3 +73,23 @@ label {
     color: grey;
     font-size: 0.8rem;
 }
+
+.w-1 {
+    width: 1% !important;
+}
+
+.w-5 {
+    width: 5% !important;
+}
+
+.w-10 {
+    width: 10% !important;
+}
+
+.w-15 {
+    width: 15% !important;
+}
+
+.w-20 {
+    width: 20% !important;
+}

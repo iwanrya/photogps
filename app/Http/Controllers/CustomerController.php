@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Area;
+use App\Models\Customer;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,19 +11,19 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 
-class AreaController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // get all the area
-        $area = Area::all();
+        // get all the customer
+        $customer = Customer::all();
 
-        // load the view and pass the area
-        return View::make('app.area.index')
-            ->with('areas', $area);
+        // load the view and pass the customer
+        return View::make('app.customer.index')
+            ->with('customers', $customer);
     }
 
     /**
@@ -31,7 +31,7 @@ class AreaController extends Controller
      */
     public function create()
     {
-        return View::make('app.area.create');
+        return View::make('app.customer.create');
     }
 
     /**
@@ -48,7 +48,7 @@ class AreaController extends Controller
 
             // check if validation fails
             if ($validator->fails()) {
-                return redirect()->to('area/create')
+                return redirect()->to('customer/create')
                     ->withErrors($validator)
                     ->withInput();
                 die();
@@ -58,17 +58,17 @@ class AreaController extends Controller
 
             $user = Auth::user();
 
-            $area = Area::create([
+            $customer = Customer::create([
                 'name' => $name,
                 'create_user_id' => $user->id
             ]);
 
             // redirect
-            Session::flash('message', 'Successfully created area!');
-            return redirect()->to('area');
+            Session::flash('message', 'Successfully created customer!');
+            return redirect()->to('customer');
         } catch (Exception $ex) {
             error_log($ex->getMessage());
-            return redirect()->to('area/create')
+            return redirect()->to('customer/create')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -79,12 +79,12 @@ class AreaController extends Controller
      */
     public function show(string $id)
     {
-        // get the area
-        $area = Area::find($id);
+        // get the customer
+        $customer = Customer::find($id);
 
-        // show the view and pass the area to it
-        return View::make('app.area.show')
-            ->with('area', $area);
+        // show the view and pass the customer to it
+        return View::make('app.customer.show')
+            ->with('customer', $customer);
     }
 
     /**
@@ -92,12 +92,12 @@ class AreaController extends Controller
      */
     public function edit(string $id)
     {
-        // get the area
-        $area = Area::find($id);
+        // get the customer
+        $customer = Customer::find($id);
 
-        // show the edit form and pass the area
-        return View::make('app.area.edit')
-            ->with('area', $area);
+        // show the edit form and pass the customer
+        return View::make('app.customer.edit')
+            ->with('customer', $customer);
     }
 
     /**
@@ -111,7 +111,7 @@ class AreaController extends Controller
 
         // check if validation fails
         if ($validator->fails()) {
-            return redirect()->to('area/' . $id . '/edit')
+            return redirect()->to('customer/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput();
             die();
@@ -120,13 +120,13 @@ class AreaController extends Controller
         $name = $request->get('name') ?: null;
 
         // store
-        $area = Area::find($id);
-        $area->name = $name;
-        $area->save();
+        $customer = Customer::find($id);
+        $customer->name = $name;
+        $customer->save();
 
         // redirect
-        Session::flash('message', 'Successfully updated area!');
-        return Redirect::to('area');
+        Session::flash('message', 'Successfully updated customer!');
+        return Redirect::to('customer');
     }
 
     /**
@@ -134,11 +134,11 @@ class AreaController extends Controller
      */
     public function destroy(string $id)
     {
-        $area = Area::find($id);
-        $area->delete();
+        $customer = Customer::find($id);
+        $customer->delete();
 
         // redirect
-        Session::flash('message', 'Successfully deleted the area!');
-        return Redirect::to('area');
+        Session::flash('message', 'Successfully deleted the customer!');
+        return Redirect::to('customer');
     }
 }

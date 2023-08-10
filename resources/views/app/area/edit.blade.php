@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">{{ __('area.submit')}}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('button.submit')}}</button>
                         </div>
 
                     </form>

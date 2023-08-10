@@ -10,12 +10,14 @@ use App\Http\Controllers\Api\SessionController as ApiSessionController;
 use App\Http\Controllers\Api\StatusController as ApiStatusController;
 use App\Http\Controllers\Api\TestController as ApiTestController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Middleware\SessionOrJWTAuth;
 
 /*
@@ -45,6 +47,8 @@ Route::middleware(SessionOrJWTAuth::class)->group(function () {
 
 Route::resources([
     'area' => AreaController::class,
+    'customer' => CustomerController::class,
+    'project' => ProjectController::class,
 ]);
 
 // === API ===

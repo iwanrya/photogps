@@ -5,6 +5,9 @@ return [
     'hidden' => '非表示',
     'reset' => 'クリア',
     'search' => '検　索',
+    'submit' => '送信',
+    'detail' => 'Detail',
+    'edit' => 'Edit',
 
     'today' => '本日',
     'one_week_ago' => '1週間前',
