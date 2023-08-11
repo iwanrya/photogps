@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\AccessTokenResource;
 use App\Http\Resources\BaseResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -28,7 +29,26 @@ class SessionController extends Controller
         );
         $token = JWTAuth::claims($payload)->attempt($credentials);
 
-        return response()->json(new AccessTokenResource(true, $token));
+        $current_user = Auth::user();
+
+        $user = User::with('companyUser')->with('companyUser.company')
+            ->with('companyUser.userAuth')
+            ->find($current_user->id);
+
+        $user->hideInternalFields();
+
+        if (!empty($user->companyUser)) {
+            $user->companyUser->hideInternalFields();
+
+            if (!empty($user->companyUser->company)) {
+                $user->companyUser->company->hideInternalFields();
+            }
+            if (!empty($user->companyUser->userAuth)) {
+                $user->companyUser->userAuth->hideInternalFields();
+            }
+        }
+
+        return response()->json(new AccessTokenResource(true, $token, '', array("user" => $user)));
     }
 
     function login_as()

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Core\exceptions\BadRequestException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CustomerResource;
-use App\Models\Customer;
+use App\Models\Company;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -31,7 +31,7 @@ class CustomerController extends Controller
                 throw new BadRequestException($validator->errors());
             }
 
-            $customers = Customer::select('id', 'name')->get();
+            $customers = Company::select('id', 'name')->where('is_system_owner', false)->get();
 
             //return single post as a resource
             return new CustomerResource(true, '', $customers->makeHidden(['created_at_formatted', 'updated_at_formatted']));

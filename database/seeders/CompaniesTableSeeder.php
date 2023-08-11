@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Company;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,6 +18,8 @@ class CompaniesTableSeeder extends Seeder
             ['name' => 'Nakamura', 'create_user_id' => 1, 'is_system_owner' => true],
         );
 
+        $companies = array_merge($companies, Company::faker(5)->make());
+
         DB::table('companies')->insert($companies);
 
         $company_users = array(
@@ -25,6 +27,7 @@ class CompaniesTableSeeder extends Seeder
             ['company_id' => 1, 'user_id' => 2, 'auth' => 2],
             ['company_id' => 1, 'user_id' => 3, 'auth' => 3],
         );
+
 
         DB::table('company_users')->insert($company_users);
     }

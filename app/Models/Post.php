@@ -25,6 +25,7 @@ class Post extends BaseModel
         'area_id',
         'project_id',
         'customer_id',
+        'company_id',
         'status',
     ];
 
@@ -55,6 +56,11 @@ class Post extends BaseModel
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
     public function project(): BelongsTo

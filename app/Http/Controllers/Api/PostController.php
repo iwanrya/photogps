@@ -15,6 +15,7 @@ use App\Models\Post;
 //import Resource "PostResource"
 use App\Http\Resources\PostResource;
 use App\Models\PostComment;
+use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -79,6 +80,7 @@ class PostController extends Controller
             $area_id = $request->post('area_id') ? trim($request->post('area_id')) : null;
             $project_id = $request->post('project_id') ? trim($request->post('project_id')) : null;
             $customer_id = $request->post('customer_id') ? trim($request->post('customer_id')) : null;
+            $company_id = $request->post('company_id') ? trim($request->post('company_id')) : null;
             $status = $request->post('status') ? trim($request->post('status')) : null;
             $comment = $request->post('comment') ? trim($request->post('comment')) : '';
 
@@ -105,7 +107,14 @@ class PostController extends Controller
             if ($extracted_exif_data) {
                 DuplicateImage::duplicate_photo($filepath, $upload_image_name, $extracted_exif_data->rotation);
 
-                $user = Auth::user();
+                $current_user = Auth::user();
+                $user = User::with('companyUser')->with('companyUser.company')
+                    ->with('companyUser.userAuth')
+                    ->find($current_user->id);
+
+                if ($user->companyUser->userAuth->is_system_owner == false) {
+                    $company_id = $user->companyUser->company_id;
+                }
 
                 $post = Post::create([
                     'create_user_id' => $user->id,
@@ -118,6 +127,7 @@ class PostController extends Controller
                     'area_id' => $area_id,
                     'project_id' => $project_id,
                     'customer_id' => $customer_id,
+                    'company_id' => $company_id,
                     'status' => $status
                 ]);
 
@@ -191,7 +201,7 @@ class PostController extends Controller
             // get filters
             $photographers = $request->get('photographer') ?: [];
             $areas = $request->get('area') ?: [];
-            $customers = $request->get('customer') ?: [];
+            $companies = $request->get('company') ?: [];
             $projects = $request->get('project') ?: [];
             $status = $request->get('status') ?: [];
             $shoot_date_start = $request->get('shoot_date_start') ?: "";
@@ -209,7 +219,7 @@ class PostController extends Controller
             }
 
             if (!empty($customers)) {
-                $builder->whereIn('customer_id', $customers);
+                $builder->whereIn('company_id', $companies);
             }
 
             if (!empty($projects)) {
@@ -280,22 +290,26 @@ class PostController extends Controller
 
             if (!empty($post)) {
                 $post->hideInternalFields();
-            }
 
-            if (!empty($post->area)) {
-                $post->area->hideInternalFields();
-            }
+                if (!empty($post->area)) {
+                    $post->area->hideInternalFields();
+                }
 
-            if (!empty($post->customer)) {
-                $post->customer->hideInternalFields();
-            }
-            
-            if (!empty($post->project)) {
-                $post->project->hideInternalFields();
-            }
+                if (!empty($post->customer)) {
+                    $post->customer->hideInternalFields();
+                }
 
-            if (!empty($post->statusItem)) {
-                $post->statusItem->hideInternalFields();
+                if (!empty($post->company)) {
+                    $post->company->hideInternalFields();
+                }
+
+                if (!empty($post->project)) {
+                    $post->project->hideInternalFields();
+                }
+
+                if (!empty($post->statusItem)) {
+                    $post->statusItem->hideInternalFields();
+                }
             }
 
             //return single post as a resource
