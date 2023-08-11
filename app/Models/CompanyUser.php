@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class CompanyUser extends BaseModel
 {
     use HasFactory;
+    
+    protected $primaryKey = null;
+
+    public $incrementing = false;
 
     public function company(): BelongsTo
     {
