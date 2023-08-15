@@ -43,6 +43,11 @@ class Post extends BaseModel
         return $this->hasMany(PostComment::class, 'post_id', 'id');
     }
 
+    public function postPhoto(): HasMany
+    {
+        return $this->hasMany(PostPhoto::class, 'post_id', 'id');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'create_user_id', 'id');
@@ -79,7 +84,7 @@ class Post extends BaseModel
     }
 
     protected function getShootDatetimeFormattedAttribute() {
-        if (!empty($this->updated_at)) {
+        if (!empty($this->shoot_datetime)) {
             return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->shoot_datetime)->format($this->dateFormat);
         } else {
             return '';

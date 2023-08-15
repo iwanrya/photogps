@@ -21,4 +21,9 @@ class UserAuth extends BaseModel
         'updated_at_formatted'
     ];
 
+    protected function getIsSystemOwnerAttribute($value)
+    {
+        return $value == 1;
+    }
+
 }

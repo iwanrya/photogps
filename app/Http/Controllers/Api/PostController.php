@@ -15,7 +15,9 @@ use App\Models\Post;
 //import Resource "PostResource"
 use App\Http\Resources\PostResource;
 use App\Models\PostComment;
+use App\Models\PostPhoto;
 use App\Models\User;
+use App\Rules\PostImages;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -54,9 +56,12 @@ class PostController extends Controller
 
             //define validation rules
             $validator = Validator::make($request->all(), [
-                'photo'             => 'required|image|mimes:jpeg,jpg|max:8000',
-                'shoot_datetime'    => 'required',
-                'separate_exif'     => 'required',
+                // 'photo'             => 'required|image|mimes:jpeg,jpg|max:8000',
+                'photo'                => ['required', new PostImages],
+                'shoot_datetime'       => 'required',
+                'separate_exif'        => 'required',
+                'latitude'             => 'required',
+                'longitude'            => 'required',
                 // 'project_id'        => 'required',
                 // 'customer_id'       => 'required',
                 // 'status'            => 'required',
@@ -67,15 +72,11 @@ class PostController extends Controller
                 throw new BadRequestException($validator->errors());
             }
 
-            $separate_exif = $request->post('separate_exif') === 'true';
-            $lat = 0.0;
-            $long = 0.0;
+            $current_user = Auth::user();
 
-
-            if ($separate_exif) {
-                $lat = $request->post('latitude');
-                $long = $request->post('longitude');
-            }
+            $user = User::with('companyUser')->with('companyUser.company')
+                ->with('companyUser.userAuth')
+                ->find($current_user->id);
 
             $area_id = $request->post('area_id') ? trim($request->post('area_id')) : null;
             $project_id = $request->post('project_id') ? trim($request->post('project_id')) : null;
@@ -84,67 +85,84 @@ class PostController extends Controller
             $status = $request->post('status') ? trim($request->post('status')) : null;
             $comment = $request->post('comment') ? trim($request->post('comment')) : '';
 
-            // convert shoot_datetime from timestamp (string) to DateTime
-            $shoot_timestamp = (float)$request->post('shoot_datetime');
-            $datetime = DateTime::createFromFormat('U.u', $shoot_timestamp);
-            date_timezone_set($datetime, new DateTimeZone(date_default_timezone_get()));
+            $images = $request->file('photo');
+            $shoot_timestamps = $request->post('shoot_datetime');
+            $separate_exifs = $request->post('separate_exif');
+            $lats = $request->post('latitude');
+            $longs = $request->post('longitude');
 
-            // upload original image
-            $image = $request->file('photo');
+            $post_photos = array(); // using it for inserting data to DB
 
-            $upload_image_name = time() . '.' . $image->extension();
+            foreach ($images as $index => $image) {
+                $separate_exif = $separate_exifs[$index] == "true";
+                $lat = $lats[$index];
+                $long = $longs[$index];
 
-            $filepath = storage_path('app/private/posts/') . $upload_image_name;
+                // convert shoot_datetime from timestamp (string) to DateTime
+                $shoot_timestamp = (float)$shoot_timestamps[$index];
+                $shoot_datetime = DateTime::createFromFormat('U.u', $shoot_timestamp);
+                date_timezone_set($shoot_datetime, new DateTimeZone(date_default_timezone_get()));
 
-            $image->storeAs('private/posts', $upload_image_name);
+                // upload original image
+                $upload_image_name = time() . "-" . ($index + 1) . '.' . $image->extension();
 
-            // create photo with exif from external
-            $this->save_photo($filepath, $separate_exif, $lat, $long);
+                $filepath = storage_path('app/private/posts/') . $upload_image_name;
 
-            // extract exif data from original image
-            $extracted_exif_data = $this->extract_exif_data($filepath);
+                $image->storeAs('private/posts', $upload_image_name);
 
-            if ($extracted_exif_data) {
-                DuplicateImage::duplicate_photo($filepath, $upload_image_name, $extracted_exif_data->rotation);
+                // create photo with exif from external
+                $this->save_photo($filepath, $separate_exif, $lat, $long);
 
-                $current_user = Auth::user();
-                $user = User::with('companyUser')->with('companyUser.company')
-                    ->with('companyUser.userAuth')
-                    ->find($current_user->id);
+                // extract exif data from original image
+                $extracted_exif_data = $this->extract_exif_data($filepath);
 
-                if ($user->companyUser->userAuth->is_system_owner == false) {
-                    $company_id = $user->companyUser->company_id;
+
+                if ($extracted_exif_data) {
+
+                    DuplicateImage::duplicate_photo($filepath, $upload_image_name, $extracted_exif_data->rotation);
+
+                    $post_photos[] = [
+                        'image' => $upload_image_name,
+                        'shoot_datetime' => $shoot_datetime->format('Y-m-d H:i:s.u'),
+                        'latitude' => $extracted_exif_data->latitude,
+                        'longitude' => $extracted_exif_data->longitude,
+                        'create_user_id' => $current_user->id
+                    ];
+                } else {
+                    throw new BadRequestException("Can not extract exif information from image");
                 }
-
-                $post = Post::create([
-                    'create_user_id' => $user->id,
-                    'photographer' => $user->name,
-                    'photographer_username' => $user->username,
-                    'image' => $upload_image_name,
-                    'shoot_datetime' => $datetime->format('Y-m-d H:i:s.u'),
-                    'latitude' => $extracted_exif_data->latitude,
-                    'longitude' => $extracted_exif_data->longitude,
-                    'area_id' => $area_id,
-                    'project_id' => $project_id,
-                    'customer_id' => $customer_id,
-                    'company_id' => $company_id,
-                    'status' => $status
-                ]);
-
-                $post->hideInternalFields();
-
-                if (!empty($comment)) {
-                    $post_comment = PostComment::create([
-                        'create_user_id' => $user->id,
-                        'post_id' => $post->id,
-                        'comment' => $comment,
-                    ]);
-                }
-            } else {
-                throw new BadRequestException("Can not extract exif information from image");
             }
 
-            // //return response
+            if ($user->companyUser->userAuth->is_system_owner == false) {
+                $company_id = $user->companyUser->company_id;
+            }
+
+            $post = Post::create([
+                'create_user_id' => $user->id,
+                'photographer' => $user->name,
+                'photographer_username' => $user->username,
+                'area_id' => $area_id,
+                'project_id' => $project_id,
+                'customer_id' => $customer_id,
+                'company_id' => $company_id,
+                'status' => $status
+            ]);
+
+            $post->hideInternalFields();
+
+            foreach ($post_photos as $post_photo) {
+                $post_photo['post_id'] = $post->id;
+                PostPhoto::create($post_photo);
+            }
+
+            if (!empty($comment)) {
+                PostComment::create([
+                    'create_user_id' => $user->id,
+                    'post_id' => $post->id,
+                    'comment' => $comment,
+                ]);
+            }
+
             return response()->json(new PostResource(true, "Image successfully uploaded"), Response::HTTP_OK);
         } catch (BadRequestException $ex) {
             error_log($ex->getMessage());
@@ -209,7 +227,7 @@ class PostController extends Controller
             $comment = $request->get('comment') ?: "";
 
             // get data rows
-            $builder = Post::with('postComment');
+            $builder = Post::with('postComment')->with('postPhoto');
             if (!empty($photographers)) {
                 $builder->whereIn('create_user_id', $photographers);
             }
@@ -231,11 +249,11 @@ class PostController extends Controller
             }
 
             if (!empty($shoot_date_start)) {
-                $builder->where('shoot_datetime', '>=', $shoot_date_start);
+                $builder->whereRelation('postPhoto', 'shoot_datetime', '>=', $shoot_date_start);
             }
 
             if (!empty($shoot_date_end)) {
-                $builder->where('shoot_datetime', '<=', $shoot_date_end . ' 23:59:59.9999');
+                $builder->whereRelation('postPhoto', 'shoot_datetime', '<=', $shoot_date_end . ' 23:59:59.9999');
             }
 
             if (!empty($comment)) {
@@ -285,7 +303,7 @@ class PostController extends Controller
             $post_id = $request->get('photo_mobile_id');
 
             //find post by image name
-            $builder = Post::with(['postComment', 'area', 'customer', 'project', 'statusItem']);
+            $builder = Post::with(['postComment', 'postPhoto', 'area', 'customer', 'project', 'statusItem']);
             $post = $builder->find($post_id);
 
             if (!empty($post)) {
