@@ -34,32 +34,32 @@ class PostImages implements ValidationRule
             }
         }
 
-        $shoot_datetime = Request()->post('shoot_datetime');
-        $lat = Request()->post('latitude');
-        $long = Request()->post('longitude');
-        $separate_exif = Request()->post('separate_exif');
+        // $shoot_datetime = Request()->post('shoot_datetime');
+        // $lat = Request()->post('latitude');
+        // $long = Request()->post('longitude');
+        // $separate_exif = Request()->post('separate_exif');
 
-        $unmatched = [];
+        // $unmatched = [];
 
-        if ($separate_exif == null || count($photos) != count($separate_exif)) {
-            $unmatched[] = 'separate_exif';
-        }
+        // if ($separate_exif == null || count($photos) != count($separate_exif)) {
+        //     $unmatched[] = 'separate_exif';
+        // }
         
-        if ($shoot_datetime == null || count($photos) != count($shoot_datetime)) {
-            $unmatched[] = 'shoot_datetime';
-        }
+        // if ($shoot_datetime == null || count($photos) != count($shoot_datetime)) {
+        //     $unmatched[] = 'shoot_datetime';
+        // }
 
-        if ($lat == null || count($photos) != count($lat)) {
-            $unmatched[] = 'latitude';
-        }
+        // if ($lat == null || count($photos) != count($lat)) {
+        //     $unmatched[] = 'latitude';
+        // }
 
-        if ($long == null || count($photos) != count($long)) {
-            $unmatched[] = 'longitude';
-        }
+        // if ($long == null || count($photos) != count($long)) {
+        //     $unmatched[] = 'longitude';
+        // }
 
-        if (!empty($unmatched)) {
-            $fail("The {$attribute}'s support data [" . implode(', ', $unmatched) . "] count are unmatched");
-            return;
-        }
+        // if (!empty($unmatched)) {
+        //     $fail("The {$attribute}'s support data [" . implode(', ', $unmatched) . "] count are unmatched");
+        //     return;
+        // }
     }
 }
