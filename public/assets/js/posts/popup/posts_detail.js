@@ -108,26 +108,32 @@ function pmdLoadComment(id) {
 
 function pmdDrawDetail(item) {
 
-	$("#pmd_image_original").attr('href', item.photo_original);
-	$("#pmd_image_no_exif").attr('href', item.photo);
+	$("#pmd_image_original").attr('href', item.post_photo[0].photo_original);
+	$("#pmd_image_no_exif").attr('href', item.post_photo[0].photo);
 
 	// maps
-	if (item.latitude === 0.0 && item.longitude === 0.0) {
+	if (item.post_photo[0].latitude === 0.0 && item.post_photo[0].longitude === 0.0) {
 		$("#pmd_maps").addClass("d-none");
 		$("#pmd_no_gps_info").removeClass("d-none");
 	} else {
 		$("#pmd_maps").removeClass("d-none");
 		$("#pmd_no_gps_info").addClass("d-none");
 		$("#pmd_maps").html("<iframe width=\"100%\" min-height=\"150\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"" +
-			"src=\"https://www.openstreetmap.org/export/embed.html?bbox=" + (item.longitude - 0.002) + "," + (item.latitude - 0.002) + "," + (item.longitude + 0.002) + "," + (item.latitude + 0.002) + "&layer=mapnik&marker=" + item.latitude + "," + item.longitude + "\" style=\"border: 1px solid black\">" +
+			"src=\"https://www.openstreetmap.org/export/embed.html?bbox=" + (item.post_photo[0].longitude - 0.002) + "," + (item.post_photo[0].latitude - 0.002) + "," + (item.post_photo[0].longitude + 0.002) + "," + (item.post_photo[0].latitude + 0.002) + "&layer=mapnik&marker=" + item.post_photo[0].latitude + "," + item.post_photo[0].longitude + "\" style=\"border: 1px solid black\">" +
 			"</iframe>" +
 			"<br />" +
-			"<small><a target=\"_blank\" href=\"" + base_url + "maps?lat=" + item.latitude + "&long=" + item.longitude + "\">地図を拡大</a></small>");
+			"<small><a target=\"_blank\" href=\"" + base_url + "maps?lat=" + item.post_photo[0].latitude + "&long=" + item.post_photo[0].longitude + "\">地図を拡大</a></small>");
 	}
 
 	// thumbnail
 	// $("#pmd_image").html("<a target=\"_blank\" href=\"" + item.photo + "\"><img src=\"" + item.thumbnail + "\"/></a>");
-	$("#pmd_image").html("<span style=\"cursor: pointer;\" onclick=\"pmdOpenImage('" + item.photo + "')\"><img src=\"" + item.thumbnail + "\" /></span>");
+
+	$("#pmd_image").empty();
+	item.post_photo.forEach((value, index, arr) => {
+		$("#pmd_image").append(
+			"<span class=\"" + (index < arr.length - 1 ? "mr-3" : "") + "\" style=\"cursor: pointer;\" onclick=\"pmdOpenImage('" + value.photo + "')\"><img src=\"" + value.thumbnail + "\" /></span>"
+		);
+	});
 }
 
 function pmdOpenImage(photo_url) {

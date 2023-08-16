@@ -49,13 +49,13 @@ class ExifImage
                                 $GPSLongitudeRef = $gps_ifd->getEntry(PelTag::GPS_LONGITUDE_REF)->getValue();
                                 $GPSLongitude   = $gps_ifd->getEntry(PelTag::GPS_LONGITUDE)->getValue();
 
-                                $lat_degrees = count($GPSLatitude) > 0 ? GPSLocation::gps2Num($GPSLatitude[0][0] / $GPSLatitude[0][1]) : 0;
-                                $lat_minutes = count($GPSLatitude) > 1 ? GPSLocation::gps2Num($GPSLatitude[1][0] / $GPSLatitude[1][1]) : 0;
-                                $lat_seconds = count($GPSLatitude) > 2 ? GPSLocation::gps2Num($GPSLatitude[2][0] / $GPSLatitude[2][1]) : 0;
+                                $lat_degrees = count($GPSLatitude) > 0 && $GPSLatitude[0][1] > 0 ? GPSLocation::gps2Num($GPSLatitude[0][0] / $GPSLatitude[0][1]) : 0;
+                                $lat_minutes = count($GPSLatitude) > 1 && $GPSLatitude[1][1] > 0 ? GPSLocation::gps2Num($GPSLatitude[1][0] / $GPSLatitude[1][1]) : 0;
+                                $lat_seconds = count($GPSLatitude) > 2 && $GPSLatitude[2][1] > 0 ? GPSLocation::gps2Num($GPSLatitude[2][0] / $GPSLatitude[2][1]) : 0;
 
-                                $lon_degrees = count($GPSLongitude) > 0 ? GPSLocation::gps2Num($GPSLongitude[0][0] / $GPSLongitude[0][1]) : 0;
-                                $lon_minutes = count($GPSLongitude) > 1 ? GPSLocation::gps2Num($GPSLongitude[1][0] / $GPSLongitude[1][1]) : 0;
-                                $lon_seconds = count($GPSLongitude) > 2 ? GPSLocation::gps2Num($GPSLongitude[2][0] / $GPSLongitude[2][1]) : 0;
+                                $lon_degrees = count($GPSLongitude) > 0 && $GPSLongitude[0][1] > 0 ? GPSLocation::gps2Num($GPSLongitude[0][0] / $GPSLongitude[0][1]) : 0;
+                                $lon_minutes = count($GPSLongitude) > 1 && $GPSLongitude[1][1] > 0 ? GPSLocation::gps2Num($GPSLongitude[1][0] / $GPSLongitude[1][1]) : 0;
+                                $lon_seconds = count($GPSLongitude) > 2 && $GPSLongitude[2][1] > 0 ? GPSLocation::gps2Num($GPSLongitude[2][0] / $GPSLongitude[2][1]) : 0;
 
                                 $lat_direction = ($GPSLatitudeRef == 'W' or $GPSLatitudeRef == 'S') ? -1 : 1;
                                 $lon_direction = ($GPSLongitudeRef == 'W' or $GPSLongitudeRef == 'S') ? -1 : 1;
