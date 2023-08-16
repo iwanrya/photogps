@@ -73,7 +73,7 @@ function populate_search_data(data) {
                 "<strong>撮影日時</strong>" +
                 "</div>" +
                 "<div class='col-8'>" +
-                c_data.post_photo[0].shoot_datetime_formatted +
+                (c_data.post_photo.length > 0 ? c_data.post_photo[0].shoot_datetime_formatted : "") +
                 "</div>" +
                 "</div>" +
 
@@ -82,7 +82,7 @@ function populate_search_data(data) {
                 "<strong>撮影場所 / GPS情報</strong>" +
                 "</div>" +
                 "<div class='col-8'>" +
-                "<strong>緯度</strong>: " + c_data.post_photo[0].latitude + " <strong>経度</strong>: " + c_data.post_photo[0].longitude +
+                "<strong>緯度</strong>: " + (c_data.post_photo.length > 0 ? c_data.post_photo[0].latitude : "-") + " <strong>経度</strong>: " + (c_data.post_photo.length > 0 ? c_data.post_photo[0].longitude : "") +
                 "</div>" +
                 "</div>" +
 
@@ -92,10 +92,10 @@ function populate_search_data(data) {
                 "</div>" +
                 "</div>";
 
-            let photo = "<img src='" + c_data.post_photo[0].thumbnail + "' style='max-width: 120px; max-heigth: 120px;'/>";
+            let photo = "<img src='" + (c_data.post_photo.length > 0 ? c_data.post_photo[0].thumbnail : "") + "' style='max-width: 120px; max-heigth: 120px;'/>";
 
             tblResult.row.add([
-                [i+1, c_data],
+                [i + 1, c_data],
                 dv_info,
                 photo
             ]);
