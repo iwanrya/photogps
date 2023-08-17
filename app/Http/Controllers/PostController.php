@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Core\App;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -19,9 +20,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        //get all posts
-        // $photographers = DB::table('posts')->select('photographer as name', 'photographer_username as code')->distinct()->get();
-        $photographers = User::select('name', 'username', 'id as code')->orderBy('username')->get();
+        $current_user = Auth::user();
+
+        $user = User::with(['companyUser', 'companyUser.company', 'companyUser.userAuth'])
+            ->find($current_user->id);
+
+        $builder = User::select('name', 'username', 'id as code')->with(['companyUser']);
+
+        if ($user->companyUser->userAuth->is_system_owner == false) {
+            $builder->whereRelation('companyUser', 'company_id', '=', $user->companyUser->company_id);
+        }
+
+        $photographers = $builder->orderBy('username', 'asc')->get();
 
         return response()
             ->view('app/photogps/index', [

@@ -6,9 +6,11 @@ use App\Core\exceptions\BadRequestException;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
@@ -31,7 +33,18 @@ class ProjectController extends Controller
                 throw new BadRequestException($validator->errors());
             }
 
-            $projects = Project::select('id', 'name', 'company_id')->orderBy('name', 'asc')->get();
+            $current_user = Auth::user();
+
+            $user = User::with(['companyUser', 'companyUser.company', 'companyUser.userAuth'])
+                ->find($current_user->id);
+
+            $builder = Project::select('id', 'name', 'company_id')->orderBy('name', 'asc');
+
+            if ($user->companyUser->userAuth->is_system_owner == false) {
+                $builder->where('company_id', '=', $user->companyUser->company_id);
+            }
+
+            $projects = $builder->get();
 
             //return single post as a resource
             return new ProjectResource(true, '', $projects->makeHidden(['created_at_formatted', 'updated_at_formatted']));
@@ -43,5 +56,4 @@ class ProjectController extends Controller
             return response()->json(new ProjectResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    
 }

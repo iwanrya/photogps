@@ -59,7 +59,7 @@ function populate_search_data(data) {
             c_data = data[i];
 
             let dv_info =
-                "<div class='row mb-20'>" +
+                "<div class='row mb-1'>" +
                 "<div class='col-4'>" +
                 "<strong>撮影者</strong>" +
                 "</div>" +
@@ -68,7 +68,7 @@ function populate_search_data(data) {
                 "</div>" +
                 "</div>" +
 
-                "<div class='row mb-20'>" +
+                "<div class='row mb-1'>" +
                 "<div class='col-4'>" +
                 "<strong>撮影日時</strong>" +
                 "</div>" +
@@ -77,12 +77,39 @@ function populate_search_data(data) {
                 "</div>" +
                 "</div>" +
 
-                "<div class='row'>" +
+                "<div class='row mb-1'>" +
                 "<div class='col-4'>" +
                 "<strong>撮影場所 / GPS情報</strong>" +
                 "</div>" +
                 "<div class='col-8'>" +
                 "<strong>緯度</strong>: " + (c_data.post_photo.length > 0 ? c_data.post_photo[0].latitude : "-") + " <strong>経度</strong>: " + (c_data.post_photo.length > 0 ? c_data.post_photo[0].longitude : "-") +
+                "</div>" +
+                "</div>" +
+
+                "<div class='row mb-1'>" +
+                "<div class='col-4'>" +
+                "<strong>Company Name</strong>" +
+                "</div>" +
+                "<div class='col-8'>" +
+                (c_data.company ? c_data.company.name : "") +
+                "</div>" +
+                "</div>" +
+
+                "<div class='row mb-1'>" +
+                "<div class='col-4'>" +
+                "<strong>Project Name</strong>" +
+                "</div>" +
+                "<div class='col-8'>" +
+                (c_data.project ? c_data.project.name : "") +
+                "</div>" +
+                "</div>" +
+
+                "<div class='row mb-1'>" +
+                "<div class='col-4'>" +
+                "<strong>Status</strong>" +
+                "</div>" +
+                "<div class='col-8'>" +
+                (c_data.status_item ? c_data.status_item.name : "") +
                 "</div>" +
                 "</div>" +
 

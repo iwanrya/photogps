@@ -208,6 +208,12 @@ class PostController extends Controller
     public function read(Request $request)
     {
         try {
+
+            $current_user = Auth::user();
+
+            $user = User::with(['companyUser', 'companyUser.company', 'companyUser.userAuth'])
+                ->find($current_user->id);
+
             // define validation rules
             $validator = Validator::make($request->all(), []);
 
@@ -227,7 +233,7 @@ class PostController extends Controller
             $comment = $request->get('comment') ?: "";
 
             // get data rows
-            $builder = Post::with('postComment')->with('postPhoto');
+            $builder = Post::with(['postComment', 'postPhoto', 'company', 'project', 'statusItem']);
             if (!empty($photographers)) {
                 $builder->whereIn('create_user_id', $photographers);
             }
@@ -236,8 +242,13 @@ class PostController extends Controller
                 $builder->whereIn('area_id', $areas);
             }
 
-            if (!empty($customers)) {
-                $builder->whereIn('company_id', $companies);
+
+            if ($user->companyUser->userAuth->is_system_owner == false) {
+                $builder->where('company_id', $user->companyUser->company_id);
+            } else {
+                if (!empty($customers)) {
+                    $builder->whereIn('company_id', $companies);
+                }
             }
 
             if (!empty($projects)) {
@@ -259,6 +270,7 @@ class PostController extends Controller
             if (!empty($comment)) {
                 $builder->whereRelation('postComment', 'comment', 'like', "%{$comment}%");
             }
+
 
             $posts = $builder->latest()->get();
 

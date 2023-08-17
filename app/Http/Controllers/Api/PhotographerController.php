@@ -9,6 +9,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PhotographerController extends Controller
@@ -31,7 +32,18 @@ class PhotographerController extends Controller
                 throw new BadRequestException($validator->errors());
             }
 
-            $users = User::select('id', 'name')->get();
+            $current_user = Auth::user();
+
+            $user = User::with(['companyUser', 'companyUser.company', 'companyUser.userAuth'])
+                ->find($current_user->id);
+
+            $builder = User::select('id', 'name')->with(['companyUser']);
+
+            if ($user->companyUser->userAuth->is_system_owner == false) {
+                $builder->whereRelation('companyUser', 'company_id', '=', $user->companyUser->company_id);
+            }
+
+            $users = $builder->orderBy('name', 'asc')->get();
 
             //return single post as a resource
             return new PhotographerResource(true, '', $users->makeHidden(['created_at_formatted', 'updated_at_formatted']));
