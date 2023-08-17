@@ -19,4 +19,9 @@ final class App
     {
         return storage_path('app/private/posts/');
     }
+
+    static public function temp_download_folder()
+    {
+        return storage_path('app/private/temp/download/');
+    }
 }

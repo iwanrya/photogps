@@ -18,6 +18,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\PostPhotoController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Middleware\SessionOrJWTAuth;
@@ -43,8 +44,14 @@ Route::post('/login/check', [LoginController::class, 'check'])->middleware('gues
 Route::get('/logout', [LogoutController::class, 'index'])->middleware('auth')->name('logout');
 
 Route::middleware(SessionOrJWTAuth::class)->group(function () {
-    Route::get('/photo', [PostController::class, 'index'])->middleware('auth');
+    Route::get('/photo', [PostController::class, 'index']);
     Route::get('/photo/original_image/{id}', [PostController::class, 'original_image']);
+    Route::get('/photo/original_images/{id}', [PostController::class, 'original_images']);
+});
+Route::get('/photo/images/{id}', [PostController::class, 'images']);
+
+Route::middleware(SessionOrJWTAuth::class)->group(function () {
+    Route::get('/post_photo/original_image/{id}', [PostPhotoController::class, 'original_image']);
 });
 
 Route::middleware('auth')->group(function () {

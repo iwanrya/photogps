@@ -108,8 +108,8 @@ function pmdLoadComment(id) {
 
 function pmdDrawDetail(item) {
 
-	$("#pmd_image_original").attr('href', item.post_photo[0].photo_original);
-	$("#pmd_image_no_exif").attr('href', item.post_photo[0].photo);
+	$("#pmd_image_original").attr('href', item.zip_photo_original);
+	$("#pmd_image_no_exif").attr('href', item.zip_photo);
 
 	// maps
 	if (item.post_photo[0].latitude === 0.0 && item.post_photo[0].longitude === 0.0) {

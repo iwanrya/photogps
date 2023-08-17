@@ -30,6 +30,8 @@ class Post extends BaseModel
     ];
 
     protected $appends = [
+        'zip_photo_original',
+        'zip_photo',
         'photo_original',
         'photo',
         'thumbnail',
@@ -104,6 +106,16 @@ class Post extends BaseModel
     protected function getPhotoOriginalAttribute()
     {
         return URL::to('/photo/original_image/' . $this->id);
+    }
+
+    protected function getZIPPhotoOriginalAttribute()
+    {
+        return URL::to('/photo/original_images/' . $this->id);
+    }
+
+    protected function getZIPPhotoAttribute()
+    {
+        return URL::to('/photo/images/' . $this->id);
     }
 
     protected function getThumbnailAttribute()

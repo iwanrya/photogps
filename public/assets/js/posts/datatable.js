@@ -82,7 +82,7 @@ function populate_search_data(data) {
                 "<strong>撮影場所 / GPS情報</strong>" +
                 "</div>" +
                 "<div class='col-8'>" +
-                "<strong>緯度</strong>: " + (c_data.post_photo.length > 0 ? c_data.post_photo[0].latitude : "-") + " <strong>経度</strong>: " + (c_data.post_photo.length > 0 ? c_data.post_photo[0].longitude : "") +
+                "<strong>緯度</strong>: " + (c_data.post_photo.length > 0 ? c_data.post_photo[0].latitude : "-") + " <strong>経度</strong>: " + (c_data.post_photo.length > 0 ? c_data.post_photo[0].longitude : "-") +
                 "</div>" +
                 "</div>" +
 

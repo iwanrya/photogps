@@ -49,7 +49,7 @@ class PostPhoto extends BaseModel
 
     protected function getPhotoOriginalAttribute()
     {
-        return URL::to('/photo/original_image/' . $this->id);
+        return URL::to('/post_photo/original_image/' . $this->id);
     }
 
     protected function getThumbnailAttribute()
