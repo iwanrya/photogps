@@ -31,7 +31,7 @@ class ProjectController extends Controller
                 throw new BadRequestException($validator->errors());
             }
 
-            $projects = Project::select('id', 'name', 'company_id')->get();
+            $projects = Project::select('id', 'name', 'company_id')->orderBy('name', 'asc')->get();
 
             //return single post as a resource
             return new ProjectResource(true, '', $projects->makeHidden(['created_at_formatted', 'updated_at_formatted']));

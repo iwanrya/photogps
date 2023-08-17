@@ -31,7 +31,7 @@ class CustomerController extends Controller
                 throw new BadRequestException($validator->errors());
             }
 
-            $customers = Company::select('id', 'name')->where('is_system_owner', false)->get();
+            $customers = Company::select('id', 'name')->where('is_system_owner', false)->orderBy('name', 'asc')->get();
 
             //return single post as a resource
             return new CustomerResource(true, '', $customers->makeHidden(['created_at_formatted', 'updated_at_formatted']));

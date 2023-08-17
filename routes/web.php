@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resources([
         'area' => AreaController::class,
-        'customer' => CustomerController::class,
+        // 'customer' => CustomerController::class,
         'project' => ProjectController::class,
         // 'user' => UserController::class,
         'user_auth' => UserAuthController::class,
