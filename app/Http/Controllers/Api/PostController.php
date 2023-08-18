@@ -99,7 +99,7 @@ class PostController extends Controller
                 $long = $longs[$index];
 
                 // convert shoot_datetime from timestamp (string) to DateTime
-                $shoot_timestamp = (float)$shoot_timestamps[$index];
+                $shoot_timestamp = $shoot_timestamps[$index];
                 $shoot_datetime = DateTime::createFromFormat('U.u', $shoot_timestamp);
                 date_timezone_set($shoot_datetime, new DateTimeZone(date_default_timezone_get()));
 

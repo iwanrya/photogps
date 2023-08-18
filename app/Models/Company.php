@@ -23,7 +23,7 @@ class Company extends BaseModel
 
     protected function getIsSystemOwnerAttribute($value)
     {
-        return $value == 1;
+        return $value || $value == 1;
     }
 
 }
