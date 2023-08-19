@@ -48,6 +48,10 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div class="mt-2">
+                        {!! $companys->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

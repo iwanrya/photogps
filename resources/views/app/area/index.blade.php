@@ -46,6 +46,10 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div class="mt-2">
+                        {!! $areas->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

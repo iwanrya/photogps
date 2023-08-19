@@ -19,7 +19,7 @@ class CompanyController extends Controller
     public function index()
     {
         // get all the company
-        $company = Company::all();
+        $company = Company::paginate(50)->withQueryString();
 
         // load the view and pass the company
         return View::make('app.company.index')

@@ -13,9 +13,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
     <link href="{{asset('assets/css/bootstrap-multiselect.min.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" />
+    
     <link href="{{asset('assets/plugins/timepicker/css/jquery.timepicker.min.css')}}" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet">
+    <!-- <link href="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet"> -->
     <link href="{{asset('assets/css/app.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/datatable_custom.css')}}" rel="stylesheet">
 
@@ -73,8 +74,9 @@
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
     <script src="{{asset('assets/js/bootstrap-multiselect.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/locales/bootstrap-datepicker.ja.min.js"></script>
     <script src="{{asset('assets/plugins/timepicker/js/jquery.timepicker.min.js')}}"></script>
-    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.js"></script>
+    <!-- <script src="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.js"></script> -->
 
     <script src="{{asset('assets/js/app/text_formating.js')}}"></script>
     <script src="{{asset('assets/js/app/loading.js')}}"></script>

@@ -19,7 +19,7 @@ class AreaController extends Controller
     public function index()
     {
         // get all the area
-        $area = Area::all();
+        $area = Area::paginate(50)->withQueryString();
 
         // load the view and pass the area
         return View::make('app.area.index')

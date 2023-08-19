@@ -7,11 +7,20 @@ return [
     'photographer' => '撮影者',
     'shoot_datetime' => '撮影日時',
     'comment' => 'コメント',
-    
+
     // table
     'no' => 'no',
     'content' => '内容',
     'photograph' => '写真',
+    'location' => '撮影場所 / GPS情報',
+    'latitude' => '緯度',
+    'longitude' => '経度',
+
+    'company_name' => 'お客様名',
+    'project_name' => 'プロジェクト名',
+    'status' => 'ステータス',
+
+    'detail' => '詳細',
 
     // popup
     'no_gps_info_1' => '位置情報が特定できないため、',

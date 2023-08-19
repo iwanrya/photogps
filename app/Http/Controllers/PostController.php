@@ -8,8 +8,8 @@ use App\Core\App;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -18,9 +18,19 @@ class PostController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index(Request $request)
     {
         $current_user = Auth::user();
+
+        // get filters
+        $filter_photographers = $request->get('photographer') ?: [];
+        $areas = $request->get('area') ?: [];
+        $companies = $request->get('company') ?: [];
+        $projects = $request->get('project') ?: [];
+        $status = $request->get('status') ?: [];
+        $shoot_date_start = $request->get('shoot_date_start') ?: "";
+        $shoot_date_end = $request->get('shoot_date_end') ?: "";
+        $comment = $request->get('comment') ?: "";
 
         $user = User::with(['companyUser', 'companyUser.company', 'companyUser.userAuth'])
             ->find($current_user->id);
@@ -33,9 +43,14 @@ class PostController extends Controller
 
         $photographers = $builder->orderBy('username', 'asc')->get();
 
+        $builder = Post::read($user, $filter_photographers, $companies, $projects, $areas, $status, $shoot_date_start, $shoot_date_end, $comment);
+
+        $posts = $builder->paginate(50)->withQueryString();
+        
         return response()
             ->view('app/photogps/index', [
-                'photographers' => $photographers
+                'photographers' => $photographers,
+                'posts' => $posts
             ], 200);
     }
 

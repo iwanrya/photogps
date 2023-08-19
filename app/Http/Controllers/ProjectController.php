@@ -19,7 +19,7 @@ class ProjectController extends Controller
     public function index()
     {
         // get all the project
-        $project = Project::all();
+        $project = Project::paginate(50)->withQueryString();
 
         // load the view and pass the project
         return View::make('app.project.index')

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -85,7 +86,8 @@ class Post extends BaseModel
         return Str::title($value);
     }
 
-    protected function getShootDatetimeFormattedAttribute() {
+    protected function getShootDatetimeFormattedAttribute()
+    {
         if (!empty($this->shoot_datetime)) {
             return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->shoot_datetime)->format($this->dateFormat);
         } else {
@@ -146,5 +148,56 @@ class Post extends BaseModel
     protected function getStatusAttribute($value)
     {
         return $value != null ? intval($value) : null;
+    }
+
+    public function scopeRead(
+        Builder $builder,
+        User $user,
+        array $photographers = [],
+        array $companies = [],
+        array $projects = [],
+        array $areas = [],
+        array $status = [],
+        string $shoot_date_start = '',
+        string $shoot_date_end = '',
+        string $comment = ''
+    ): void {
+        Post::with(['postComment', 'postPhoto', 'company', 'project', 'statusItem']);
+        if (!empty($photographers)) {
+            $builder->whereIn('create_user_id', $photographers);
+        }
+
+        if (!empty($areas)) {
+            $builder->whereIn('area_id', $areas);
+        }
+
+
+        if ($user->companyUser->userAuth->is_system_owner == false) {
+            $builder->where('company_id', $user->companyUser->company_id);
+        } else {
+            if (!empty($companies)) {
+                $builder->whereIn('company_id', $companies);
+            }
+        }
+
+        if (!empty($projects)) {
+            $builder->whereIn('project_id', $projects);
+        }
+
+        if (!empty($status)) {
+            $builder->whereIn('status', $status);
+        }
+
+        if (!empty($shoot_date_start)) {
+            $builder->whereRelation('postPhoto', 'shoot_datetime', '>=', $shoot_date_start);
+        }
+
+        if (!empty($shoot_date_end)) {
+            $builder->whereRelation('postPhoto', 'shoot_datetime', '<=', $shoot_date_end . ' 23:59:59.9999');
+        }
+
+        if (!empty($comment)) {
+            $builder->whereRelation('postComment', 'comment', 'like', "%{$comment}%");
+        }
     }
 }

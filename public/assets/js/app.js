@@ -6,7 +6,8 @@ $(function () {
         autoclose: true,
         todayHighlight: true,
         language: 'ja',
-        orientation: "bottom"
+        orientation: "bottom",
+        enableOnReadonly: false
     });
 
     $(".datepicker").attr("autocomplete", "off");
@@ -15,7 +16,8 @@ $(function () {
         'disableTextInput': true,
         'timeFormat': 'H:i',
         'forceRoundTime': true,
-        'step': 10
+        'step': 10,
+        'beforeShow': function (i) { if ($(i).attr('readonly')) { return false; } }
     });
 
     $(document).on('click', '#btnGoToTop', function () {

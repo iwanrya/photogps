@@ -19,7 +19,7 @@ class CustomerController extends Controller
     public function index()
     {
         // get all the customer
-        $customer = Customer::all();
+        $customer = Customer::paginate(50)->withQueryString();
 
         // load the view and pass the customer
         return View::make('app.customer.index')

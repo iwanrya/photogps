@@ -48,6 +48,10 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <div class="mt-2">
+                        {!! $user_auths->links() !!}
+                    </div>
                 </div>
             </div>
         </div>
