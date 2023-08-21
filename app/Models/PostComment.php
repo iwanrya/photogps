@@ -27,7 +27,7 @@ class PostComment extends BaseModel
         return $this->belongsTo(Post::class, 'post_id', 'id');
     }
 
-    public function user(): BelongsTo
+    public function createUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'create_user_id', 'id');
     }

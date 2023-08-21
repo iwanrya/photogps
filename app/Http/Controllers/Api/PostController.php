@@ -315,11 +315,28 @@ class PostController extends Controller
             $post_id = $request->get('photo_mobile_id');
 
             //find post by image name
-            $builder = Post::with(['postComment', 'postPhoto', 'area', 'customer', 'project', 'statusItem']);
+            $builder = Post::with(['postComment', 'postComment.createUser', 'postPhoto', 'area', 'customer', 'project', 'statusItem']);
             $post = $builder->find($post_id);
 
             if (!empty($post)) {
                 $post->hideInternalFields();
+
+                if (!empty($post->postComment)) {
+
+                    foreach ($post->postComment as $postComment) {
+                        $postComment->hideUnformattedInternalFields();
+
+                        if (!empty($postComment->createUser)) {
+                            $postComment->createUser->hideInternalFields();
+                        }
+                    }
+                }
+
+                if (!empty($post->postPhoto)) {
+                    foreach ($post->postPhoto as $postPhoto) {
+                        $postPhoto->hideInternalFields();
+                    }
+                }
 
                 if (!empty($post->area)) {
                     $post->area->hideInternalFields();

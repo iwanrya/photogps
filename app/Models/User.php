@@ -83,6 +83,18 @@ class User extends Authenticatable implements JWTSubject
             'updated_at',
             'created_at_formatted',
             'updated_at_formatted',
+            'email_verified_at',
+            'deleted_at',
+            'create_user_id'
+        ]);
+    }
+
+    function hideUnformattedInternalFields()
+    {
+        $this->makeHidden([
+            'created_at',
+            'updated_at',
+            'email_verified_at',
             'deleted_at',
             'create_user_id'
         ]);

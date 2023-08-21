@@ -38,4 +38,13 @@ class BaseModel extends Model
             'create_user_id'
         ]);
     }
+
+    function hideUnformattedInternalFields()
+    {
+        $this->makeHidden([
+            'created_at',
+            'updated_at',
+            'deleted_at'
+        ]);
+    }
 }
