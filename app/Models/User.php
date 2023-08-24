@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -14,6 +15,12 @@ use Illuminate\Support\Str;
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
+    use SoftDeletes;
+
+    public $timestamps = true;
+
+    protected $dateFormat = 'Y/m/d H:i:s';
 
     public function companyUser(): HasOne
     {
@@ -71,9 +78,22 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function isSystemOwner(): bool {
+        return $this->companyUser->userAuth->is_system_owner;
+    }
+
     protected function getNameAttribute($value)
     {
         return Str::title($value);
+    }
+
+    protected function getEmailVerifiedAtFormattedAttribute()
+    {
+        if (!empty($this->email_verified_at)) {
+            return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->email_verified_at)->format($this->dateFormat);
+        } else {
+            return '';
+        }
     }
 
     function hideInternalFields()
@@ -81,9 +101,10 @@ class User extends Authenticatable implements JWTSubject
         $this->makeHidden([
             'created_at',
             'updated_at',
+            'email_verified_at',
             'created_at_formatted',
             'updated_at_formatted',
-            'email_verified_at',
+            'email_verified_at_formatted',
             'deleted_at',
             'create_user_id'
         ]);
@@ -95,6 +116,7 @@ class User extends Authenticatable implements JWTSubject
             'created_at',
             'updated_at',
             'email_verified_at',
+            'email_verified_at_formatted',
             'deleted_at',
             'create_user_id'
         ]);

@@ -22,9 +22,14 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('project.name')}}</label>
-                            <div class="col-12 col-sm-2">
-                                <input type="text" class="form-control" name="name">
+                            <label class="col-form-label col-12 col-sm-4 col-md-3 col-lg-2 text-right xs-text-left">{{ __('project.name')}}</label>
+                            <div class="col-12 col-sm-5 col-md-3">
+                                <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                                @if ($errors->has('name'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('name') }}</small>
+                                </div>
+                                @endif
                             </div>
                         </div>
 

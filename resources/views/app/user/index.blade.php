@@ -1,55 +1,63 @@
 @extends('app/common/layout')
 
 @section('content')
+<section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-white mt-2">
+                <div class="card-header">
+                    <h3 class="card-title with-left-border text-bold">{{ __('user.title')}}</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool btn-show-hide" data-card-widget="collapse">
+                            <i class="fa fa-minus"> <span class="sh-text">{{ __('button.hidden')}}</span></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="{{ URL::to('user/create') }}">{{ __('user.create_link')}}</a>
 
-<div class="login-page">
-    <div class="login-box">
-        <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">
-                <!-- <div class="text-center">
-                    <img src="http://153.126.176.74/autopart_newui/assets/resources/img/logo.png" alt="" height="36">
-                </div> -->
-                <div class="mt-20">
-                    <h1>Login</h1>
-                    <form id="form" action="/login/check" method="POST">
-                        @csrf
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <td class="w-5 text-center">{{ __('user.id')}}</td>
+                                <td>{{ __('user.name')}}</td>
+                                <td class="w-30">{{ __('user.details')}}</td>
+                                <td class="w-20">{{ __('user.dates')}}</td>
+                                <td class="w-20">{{ __('user.actions')}}</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $key => $value)
+                            <tr>
+                                <td class="text-center">{{ $value->id }}</td>
+                                <td>{{ $value->name }}</td>
+                                <td>{{ __('user.email')}}: {{ $value->email }}
+                                    <br />
+                                    {{ __('user.company')}}: {{ !empty($value->companyUser) ? $value->companyUser->company->name : "-" }}
+                                    <br />
+                                    {{ __('user.role')}}: {{ !empty($value->companyUser) ? $value->companyUser->userAuth->name : "-" }}
+                                </td>
+                                <td>{{ __(('table.create_date_symbol'))}}: {{ $value->created_at_formatted }}
+                                    <br>
+                                    {{ __(('table.update_date_symbol'))}}: {{ $value->updated_at_formatted }}
+                                </td>
 
-                        <div class="mt-3">
-                            <label for="username" class="form-label">ユーザーID (メールアドレス) <span class="text-danger">*</span></label>
-                            <input type="text" name="username" class="form-control" value="{{ old('username') }}">
-                        </div>
+                                <td>
+                                    <a class="btn btn-sm btn-success" href="{{ URL::to('user/' . $value->id) }}">{{ __('button.detail')}}</a>
+                                    <a class="btn btn-sm btn-info" href="{{ URL::to('user/' . $value->id . '/edit') }}">{{ __('button.edit')}}</a>
+                                    <a class="btn btn-sm btn-danger" href="{{ route('user.delete', $value->id) }}">{{ __('button.delete')}}</i></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                        @if ($errors->has('username'))
-                        <div>
-                            <small class="text-danger text-left">{{ $errors->first('username') }}</small>
-                        </div>
-                        @endif
-                        <div class="mt-3">
-                            <label for="password" class="form-label">パスワード <span class="text-danger">*</span></label>
-                            <input type="password" name="password" class="form-control" value="{{ old('password') }}">
-                        </div>
-                        @if ($errors->has('password'))
-                        <div>
-                            <small class="text-danger text-left">{{ $errors->first('password') }}</small>
-                        </div>
-                        @endif
-                        <div class="mt-3">
-                            <input type="checkbox" class="label-remember" id="rememberMe" name="rememberMe" checked>
-                            <label for="rememberMe" class="label-remember">このログイン情報をブラウザに保存する</label>
-                        </div>
-                        @if ($errors->has('unmatched'))
-                        <div>
-                            <small class="text-danger text-left">{{ $errors->first('unmatched') }}</small>
-                        </div>
-                        @endif
-                        <div class="mt-3 d-grid">
-                            <button name="submit" type="submit" form="form" class="btn btn-primary">ログイン</button>
-                        </div>
-                    </form>
+                    <div class="mt-2">
+                        {!! $users->links() !!}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 @endsection

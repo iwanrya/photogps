@@ -21,6 +21,7 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\PostPhotoController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\SessionOrJWTAuth;
 
 /*
@@ -60,12 +61,13 @@ Route::middleware('auth')->group(function () {
         'area' => AreaController::class,
         // 'customer' => CustomerController::class,
         'project' => ProjectController::class,
-        // 'user' => UserController::class,
+        'user' => UserController::class,
         'user_auth' => UserAuthController::class,
         'company' => CompanyController::class,
     ]);
 
     Route::get('/project/delete/{id}', [ProjectController::class, 'delete'])->name('project.delete');
+    Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 });
 
 

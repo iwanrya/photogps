@@ -13,12 +13,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
     <link href="{{asset('assets/css/bootstrap-multiselect.min.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" />
-    
+
     <link href="{{asset('assets/plugins/timepicker/css/jquery.timepicker.min.css')}}" rel="stylesheet" />
     <!-- <link href="https://cdn.datatables.net/v/bs5/dt-1.13.5/datatables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet"> -->
     <link href="{{asset('assets/css/app.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/datatable_custom.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     @stack('css')
 </head>
