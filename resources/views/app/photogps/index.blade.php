@@ -130,7 +130,7 @@
                                                     <strong>{{ __('photogps.shoot_datetime')}}</strong>
                                                 </div>
                                                 <div class='col-8'>
-                                                    {{ isset($post->postPhoto) > 0 ? $post->postPhoto[0]->shoot_datetime_formatted : "-" }}
+                                                    {{ isset($post->postPhoto) && count($post->postPhoto) > 0 ? $post->postPhoto[0]->shoot_datetime_formatted : "-" }}
                                                 </div>
                                             </div>
 
@@ -139,8 +139,8 @@
                                                     <strong>{{ __('photogps.location')}}</strong>
                                                 </div>
                                                 <div class='col-8'>
-                                                    <strong>{{ __('photogps.latitude')}}</strong>: {{ isset($post->postPhoto) > 0 ? $post->postPhoto[0]->latitude : "-" }}
-                                                    <strong>{{ __('photogps.longitude')}}</strong>: {{ isset($post->postPhoto) > 0 ? $post->postPhoto[0]->longitude : "-" }}
+                                                    <strong>{{ __('photogps.latitude')}}</strong>: {{ isset($post->postPhoto) && count($post->postPhoto) > 0 ? $post->postPhoto[0]->latitude : "-" }}
+                                                    <strong>{{ __('photogps.longitude')}}</strong>: {{ isset($post->postPhoto) && count($post->postPhoto) > 0 ? $post->postPhoto[0]->longitude : "-" }}
                                                 </div>
                                             </div>
 
