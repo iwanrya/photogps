@@ -114,7 +114,7 @@
                                 <tbody>
                                     @foreach ($posts as $post)
                                     <tr>
-                                        <td>This is user {{ $post->id }}</td>
+                                        <td>{{ $post->id }}</td>
                                         <td>
                                             <div class='row mb-1'>
                                                 <div class='col-4'>
