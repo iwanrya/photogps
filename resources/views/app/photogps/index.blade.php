@@ -114,7 +114,7 @@
                                 <tbody>
                                     @foreach ($posts as $post)
                                     <tr>
-                                        <td>{{ $post->id }}</td>
+                                        <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <div class='row mb-1'>
                                                 <div class='col-4'>
