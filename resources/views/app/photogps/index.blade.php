@@ -20,12 +20,9 @@
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.photographer')}}</label>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="photographer" name="photographer[]" class="form-control" multiple="multiple">
-                                    <?php
-                                    for ($i = 0; $i < count($photographers); $i++) {
-                                        $photographer = $photographers[$i];
-                                        echo "<option value='" . $photographer->code . "'" . (isset($_GET['photographer']) && in_array($photographer->code, $_GET['photographer']) ? 'selected' : '') . ">({$photographer->username}){$photographer->name}</option>";
-                                    }
-                                    ?>
+                                    @foreach ($photographers as $photographer) 
+                                        <option value="{{$photographer->code}}" {{ (request()->get('photographer') != null && in_array($photographer->code, request()->get('photographer')) ? 'selected' : '') }}>({{$photographer->username}}){{$photographer->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -40,14 +37,14 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
                                                 </div>
-                                                <input id="shoot_date_start" name="shoot_date_start" type="text" data-date-start="1" class="form-control datepicker" placeholder="yyyy/mm/dd" value="<?= isset($_GET['shoot_date_start']) && $_GET['shoot_date_start'] !== '' ? $_GET['shoot_date_start'] : '' ?>" />
+                                                <input id="shoot_date_start" name="shoot_date_start" type="text" data-date-start="1" class="form-control datepicker" placeholder="yyyy/mm/dd" value="{{ request()->get('shoot_date_start') }}" />
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">~</span>
                                                 </div>
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-calendar-alt"></i></span>
                                                 </div>
-                                                <input id="shoot_date_end" name="shoot_date_end" type="text" data-date-end="1" class="form-control datepicker" placeholder="yyyy/mm/dd" value="<?= isset($_GET['shoot_date_end']) && $_GET['shoot_date_end'] !== '' ? $_GET['shoot_date_end'] : '' ?>" />
+                                                <input id="shoot_date_end" name="shoot_date_end" type="text" data-date-end="1" class="form-control datepicker" placeholder="yyyy/mm/dd" value="{{ request()->get('shoot_date_end') }}" />
                                             </div>
                                         </div>
                                     </div>
@@ -55,16 +52,16 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-5 xs-mt-10 md-mt-10">
                                 <div class="form-inline">
-                                    <input type="checkbox" id="filter_date_toogle_opt_1" name="filter_date_toogle_1" value="1" data-btn-date="1" class="btn-check" <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '1' ? 'checked' : ''; ?> autocomplete="off">
+                                    <input type="checkbox" id="filter_date_toogle_opt_1" name="filter_date_toogle_1" value="1" data-btn-date="1" class="btn-check" {{ request()->get('filter_date_toogle_1') === '1' ? 'checked' : '' }} autocomplete="off">
                                     <label class="btn btn-outline-success ml-1" for="filter_date_toogle_opt_1">{{ __('button.today')}}</label>
 
-                                    <input type="checkbox" id="filter_date_toogle_opt_2" name="filter_date_toogle_1" value="2" data-btn-date="1" class="btn-check" <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '2' ? 'checked' : ''; ?> autocomplete="off">
+                                    <input type="checkbox" id="filter_date_toogle_opt_2" name="filter_date_toogle_1" value="2" data-btn-date="1" class="btn-check" {{ request()->get('filter_date_toogle_1') === '2' ? 'checked' : '' }} autocomplete="off">
                                     <label class="btn btn-outline-success ml-1" for="filter_date_toogle_opt_2">{{ __('button.one_week_ago')}}</label>
 
-                                    <input type="checkbox" id="filter_date_toogle_opt_3" name="filter_date_toogle_1" value="3" data-btn-date="1" class="btn-check" <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '3' ? 'checked' : ''; ?> autocomplete="off">
+                                    <input type="checkbox" id="filter_date_toogle_opt_3" name="filter_date_toogle_1" value="3" data-btn-date="1" class="btn-check" {{ request()->get('filter_date_toogle_1') === '3' ? 'checked' : '' }} autocomplete="off">
                                     <label class="btn btn-outline-success ml-1" for="filter_date_toogle_opt_3">{{ __('button.one_month_ago')}}</label>
 
-                                    <input type="checkbox" id="filter_date_toogle_opt_4" name="filter_date_toogle_1" value="4" data-btn-date="1" class="btn-check" <?= isset($_GET['filter_date_toogle_1']) && $_GET['filter_date_toogle_1'] === '4' ? 'checked' : ''; ?> autocomplete="off">
+                                    <input type="checkbox" id="filter_date_toogle_opt_4" name="filter_date_toogle_1" value="4" data-btn-date="1" class="btn-check" {{ request()->get('filter_date_toogle_1') === '4' ? 'checked' : '' }} autocomplete="off">
                                     <label class="btn btn-outline-success ml-1" for="filter_date_toogle_opt_4">{{ __('button.three_month_ago')}}</label>
                                 </div>
                             </div>
@@ -73,7 +70,7 @@
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.comment')}}</label>
                             <div class="col-12 col-sm-7">
-                                <input type="text" class="form-control" id="comment" name="comment" value="<?= isset($_GET['comment']) && $_GET['comment'] !== '' ? $_GET['comment'] : '' ?>">
+                                <input type="text" class="form-control" id="comment" name="comment" value="{{ request()->get('comment') }}">
                             </div>
                         </div>
                         <!-- button -->
@@ -112,6 +109,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(count($posts) === 0)
+                                    <tr>
+                                        <td class="text-center" colspan=3>{{ __('table.no_search_result')}}</td>
+                                    </tr>
+                                    @else
                                     @foreach ($posts as $post)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
@@ -180,6 +182,7 @@
                                         <td><img src='{{ count($post->postPhoto) > 0 ? $post->postPhoto[0]->thumbnail : "" }}' style='max-width: 120px; max-height: 120px;' /></td>
                                     </tr>
                                     @endforeach
+                                    @endif
                                 </tbody>
                             </table>
 

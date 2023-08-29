@@ -30,7 +30,7 @@ class PostCommentController extends Controller
 
             $post_id = $request->get('photo_mobile_id');
 
-            $post_comments = PostComment::with('user')->where('post_id', $post_id)->get();
+            $post_comments = PostComment::with('createUser')->where('post_id', $post_id)->get();
 
             return new PostCommentResource(true, '', $post_comments);
         } catch (BadRequestException $ex) {

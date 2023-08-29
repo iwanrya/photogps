@@ -63,10 +63,10 @@
     ?>
 
     <script>
-        const base_url = "<?= url('/') . '/'; ?>";
-        const current_page = location.href.replace(location.search, '');
-        const up_ms = "<?= return_bytes(ini_get('upload_max_filesize')); ?>";
-        const up_ms_text = "<?= ini_get('upload_max_filesize') . 'B'; ?>";
+        const base_url = "{{ URL::to('/') . '/' }}";
+        const current_page = "{{ URL::current() }}";
+        const up_ms = "{{ return_bytes(ini_get('upload_max_filesize')) }}";
+        const up_ms_text = "{{ ini_get('upload_max_filesize') . 'B' }}";
     </script>
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
