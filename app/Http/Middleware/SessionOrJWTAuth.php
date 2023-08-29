@@ -24,6 +24,8 @@ class SessionOrJWTAuth
             // has session
             if ($request->hasSession() && $request->user()) {
                 return $next($request);
+            } else {
+                return redirect()->route('login');
             }
         } else if (App::isProduction() && $request->acceptsHtml()) {
             

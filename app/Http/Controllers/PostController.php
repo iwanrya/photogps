@@ -45,7 +45,7 @@ class PostController extends Controller
 
         $builder = Post::read($user, $filter_photographers, $companies, $projects, $areas, $status, $shoot_date_start, $shoot_date_end, $comment);
 
-        $posts = $builder->paginate(50)->withQueryString();
+        $posts = $builder->orderBy('created_at', 'desc')->paginate(50)->withQueryString();
         
         return response()
             ->view('app/photogps/index', [
