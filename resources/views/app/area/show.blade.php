@@ -21,8 +21,8 @@
                     <div class="jumbotron text-center">
                         <h2>{{ $area->name }}</h2>
                         <p>
-                            <strong>Created Date Time:</strong> {{ $area->created_at_formatted }}<br>
-                            <strong>Last Updated Date Time:</strong> {{ $area->updated_at_formatted }}<br>
+                            <strong>{{ __('area.created_datetime')}}:</strong> {{ $area->created_at_formatted }}<br>
+                            <strong>{{ __('area.last_updated_datetime')}}:</strong> {{ $area->updated_at_formatted }}<br>
                         </p>
                     </div>
                 </div>

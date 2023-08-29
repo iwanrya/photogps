@@ -6,9 +6,9 @@ return [
     'reset' => 'クリア',
     'search' => '検　索',
     'submit' => '送信',
-    'detail' => 'Detail',
-    'edit' => 'Edit',
-    'delete' => 'Delete',
+    'detail' => '詳細',
+    'edit' => '更新',
+    'delete' => '削除',
 
     'today' => '本日',
     'one_week_ago' => '1週間前',

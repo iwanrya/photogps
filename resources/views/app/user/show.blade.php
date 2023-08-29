@@ -26,8 +26,8 @@
                             <strong>{{ __('user.email_verified_at')}}:</strong> {{ $user->email_verified_at_formatted }}<br>
                             <strong>{{ __('user.company')}}:</strong> {{ $user->companyUser ? $user->companyUser->company->name : "-" }}<br>
                             <strong>{{ __('user.role')}}:</strong> {{ $user->companyUser ? $user->companyUser->userAuth->name : "-" }}<br>
-                            <strong>Created Date Time:</strong> {{ $user->created_at_formatted }}<br>
-                            <strong>Last Updated Date Time:</strong> {{ $user->updated_at_formatted }}<br>
+                            <strong>{{ __('user.created_datetime')}}:</strong> {{ $user->created_at_formatted }}<br>
+                            <strong>{{ __('user.last_updated_datetime')}}:</strong> {{ $user->updated_at_formatted }}<br>
                         </p>
                     </div>
                 </div>

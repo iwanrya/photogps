@@ -5,13 +5,20 @@ return [
 
     // columns / fields
     'id' => 'ID',
-    'actions' => 'actions',
-    'name' => '名前',
+    'actions' => '動作',
+    'name' => 'プロジェクト名',
     'dates' => '日時',
 
+    // detail
+    'created_datetime' => '登録日時',
+    'last_updated_datetime' => '更新日時',
+
+    // delete
+    'delete_confirmation' => '以下のプロジェクトを削除してもよろしいですか。',
+
     // Link
-    'create_link' => 'Create a Project',
-    'view_link' => 'View All Projects',
+    'create_link' => '新プロジェクト »',
+    'view_link' => '戻る',
 
     
 ];

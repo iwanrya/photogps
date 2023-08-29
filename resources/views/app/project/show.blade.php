@@ -21,8 +21,8 @@
                     <div class="jumbotron text-center">
                         <h2>{{ $project->name }}</h2>
                         <p>
-                            <strong>Created Date Time:</strong> {{ $project->created_at_formatted }}<br>
-                            <strong>Last Updated Date Time:</strong> {{ $project->updated_at_formatted }}<br>
+                            <strong>{{ __('project.created_datetime')}}:</strong> {{ $project->created_at_formatted }}<br>
+                            <strong>{{ __('project.last_updated_datetime')}}:</strong> {{ $project->updated_at_formatted }}<br>
                         </p>
                     </div>
                 </div>

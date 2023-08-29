@@ -26,7 +26,7 @@
                             @method('DELETE')
 
                             <div class="col-12">
-                                <h4>Are you sure to DELETE the data below?</h4>
+                                <h4>{{ __('user.delete_confirmation')}}</h4>
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-sm btn-danger">{{ __('app.yes')}}</button>
@@ -37,8 +37,8 @@
 
                         <h2>{{ $user->name }}</h2>
                         <p>
-                            <strong>Created Date Time:</strong> {{ $user->created_at_formatted }}<br>
-                            <strong>Last Updated Date Time:</strong> {{ $user->updated_at_formatted }}<br>
+                            <strong>{{ __('user.created_datetime')}}:</strong> {{ $user->created_at_formatted }}<br>
+                            <strong>{{ __('user.last_updated_datetime')}}:</strong> {{ $user->updated_at_formatted }}<br>
                         </p>
                     </div>
                 </div>

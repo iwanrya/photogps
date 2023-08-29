@@ -22,8 +22,8 @@
                         <h2>{{ $user_auth->name }}</h2>
                         <p>
                             <strong>System Owner:</strong> {{ $user_auth->is_system_owner ? __('app.yes') : __('app.no') }}<br>
-                            <strong>Created Date Time:</strong> {{ $user_auth->created_at_formatted }}<br>
-                            <strong>Last Updated Date Time:</strong> {{ $user_auth->updated_at_formatted }}<br>
+                            <strong>{{ __('user_auth.created_datetime')}}:</strong> {{ $user_auth->created_at_formatted }}<br>
+                            <strong>{{ __('user_auth.last_updated_datetime')}}:</strong> {{ $user_auth->updated_at_formatted }}<br>
                         </p>
                     </div>
                 </div>

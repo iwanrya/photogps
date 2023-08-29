@@ -21,8 +21,8 @@
                     <div class="jumbotron text-center">
                         <h2>{{ $customer->name }}</h2>
                         <p>
-                            <strong>Created Date Time:</strong> {{ $customer->created_at_formatted }}<br>
-                            <strong>Last Updated Date Time:</strong> {{ $customer->updated_at_formatted }}<br>
+                            <strong>{{ __('customer.created_datetime')}}:</strong> {{ $customer->created_at_formatted }}<br>
+                            <strong>{{ __('customer.last_updated_datetime')}}:</strong> {{ $customer->updated_at_formatted }}<br>
                         </p>
                     </div>
                 </div>
