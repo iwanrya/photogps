@@ -155,7 +155,7 @@ function pmdDrawComment(item) {
 
 function pmdAppendComment(item) {
 	var html = "<div class=\"row\">" +
-		"	<div class=\"col-8\" style=\"font-size: 10px\">(" + item.user.name + ") <span><strong>" + item.user.username + "</strong></span></div>" +
+		"	<div class=\"col-8\" style=\"font-size: 10px\">(" + item.create_user.name + ") <span><strong>" + item.create_user.username + "</strong></span></div>" +
 		"	<div class=\"col-4 text-right\" style=\"font-size: 10px\"><strong>" + item.created_at_formatted + "</strong></div>" +
 		"</div>" +
 		"<p class=\"bordered-box\" style=\"white-space: break-spaces;\">" +
