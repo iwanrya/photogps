@@ -169,7 +169,7 @@
                                                     <strong>{{ __('photogps.status')}}</strong>
                                                 </div>
                                                 <div class='col-8'>
-                                                    {{ $post->status_item ? $post->status_item->name : "-" }}
+                                                    {{ $post->statusItem ? $post->statusItem->name : "-" }}
                                                 </div>
                                             </div>
 
