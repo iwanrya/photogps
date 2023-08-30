@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'ユーさ権限',
+    'title' => 'ユーザー権限',
 
     // columns / fields
     'id' => 'ID',

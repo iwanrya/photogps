@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'User',
+    'title' => 'ユーザー',
 
     // columns / fields
     'id' => 'ID',
@@ -25,8 +25,8 @@ return [
     'delete_confirmation' => '以下のプロジェクトを削除してもよろしいですか。',
 
     // Link
-    'create_link' => 'Create an User',
-    'view_link' => 'View All User',
+    'create_link' => '新ユーザー',
+    'view_link' => '戻る',
 
     
 ];

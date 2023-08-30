@@ -11,12 +11,12 @@
                     <img src="http://153.126.176.74/autopart_newui/assets/resources/img/logo.png" alt="" height="36">
                 </div> -->
                 <div class="mt-20">
-                    <h1>Login</h1>
+                    <h1>{{ __('login.title')}}</h1>
                     <form id="form" action="/login/check" method="POST">
                         @csrf
 
                         <div class="mt-3">
-                            <label for="username" class="form-label">ユーザーID (メールアドレス) <span class="text-danger">*</span></label>
+                            <label for="username" class="form-label">{{ __('login.username')}} <span class="text-danger">*</span></label>
                             <input type="text" name="username" class="form-control" value="{{ old('username') }}">
                         </div>
 
@@ -26,7 +26,7 @@
                         </div>
                         @endif
                         <div class="mt-3">
-                            <label for="password" class="form-label">パスワード <span class="text-danger">*</span></label>
+                            <label for="password" class="form-label">{{ __('login.password')}} <span class="text-danger">*</span></label>
                             <input type="password" name="password" class="form-control" value="{{ old('password') }}">
                         </div>
                         @if ($errors->has('password'))
@@ -36,7 +36,7 @@
                         @endif
                         <div class="mt-3">
                             <input type="checkbox" class="label-remember" id="rememberMe" name="rememberMe" checked>
-                            <label for="rememberMe" class="label-remember">このログイン情報をブラウザに保存する</label>
+                            <label for="rememberMe" class="label-remember">{{ __('login.remember_me')}}</label>
                         </div>
                         @if ($errors->has('unmatched'))
                         <div>
@@ -44,7 +44,7 @@
                         </div>
                         @endif
                         <div class="mt-3 d-grid">
-                            <button name="submit" type="submit" form="form" class="btn btn-primary">ログイン</button>
+                            <button name="submit" type="submit" form="form" class="btn btn-primary">{{ __('login.submit')}}</button>
                         </div>
                     </form>
                 </div>
