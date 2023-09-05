@@ -12,7 +12,7 @@
                 </div> -->
                 <div class="mt-20">
                     <h1>{{ __('login.title')}}</h1>
-                    <form id="form" action="/login/check" method="POST">
+                    <form id="form" action="{{ URL::to('login/check') }}" method="POST">
                         @csrf
 
                         <div class="mt-3">

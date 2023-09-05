@@ -31,7 +31,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">{{ __('menu.change_password') }}</button>
+                <a href="{{route('changepassword')}}" type="button" class="btn btn-primary">{{ __('menu.change_password') }}</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('button.close')}}</button>
             </div>
         </div>

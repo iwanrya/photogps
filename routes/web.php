@@ -9,7 +9,9 @@ use App\Http\Controllers\Api\ProjectController as ApiProjectController;
 use App\Http\Controllers\Api\SessionController as ApiSessionController;
 use App\Http\Controllers\Api\StatusController as ApiStatusController;
 use App\Http\Controllers\Api\TestController as ApiTestController;
+use App\Http\Controllers\Api\ChangePasswordController as ApiChangePasswordController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +43,9 @@ Route::get('/maps', [MapController::class, 'index']);
 
 Route::get('/login', [LoginController::class, 'index'], 'login')->middleware('guest')->name('login');
 Route::post('/login/check', [LoginController::class, 'check'])->middleware('guest');
+
+Route::get('/changepassword', [ChangePasswordController::class, 'index'], 'changepassword')->middleware('auth')->name('changepassword');
+Route::post('/changepassword/change', [ChangePasswordController::class, 'change'])->middleware('auth');
 
 Route::get('/logout', [LogoutController::class, 'index'])->middleware('auth')->name('logout');
 
@@ -95,6 +100,15 @@ Route::controller(ApiSessionController::class)
 
         Route::middleware(SessionOrJWTAuth::class)->group(function () {
             Route::get('/login_as', 'login_as');
+        });
+    });
+
+Route::controller(ApiChangePasswordController::class)
+    ->prefix('api/changepassword')
+    ->group(function () {
+
+        Route::middleware(SessionOrJWTAuth::class)->group(function () {
+            Route::post('/change', 'change');
         });
     });
 
