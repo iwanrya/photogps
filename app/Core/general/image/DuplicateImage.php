@@ -9,6 +9,13 @@ class DuplicateImage
 
     static function duplicate_photo($file, $file_name, $rotation)
     {
+        if (!is_dir(App::photo_mobile_noexif_file_location())) {
+            mkdir(App::photo_mobile_noexif_file_location(), 0777, true);
+        }
+        if (!is_dir(App::photo_mobile_thumbnail_file_location())) {
+            mkdir(App::photo_mobile_thumbnail_file_location(), 0777, true);
+        }
+
         $file_noexif_dir = App::photo_mobile_noexif_file_location() . $file_name;
         $file_thumbnail_dir = App::photo_mobile_thumbnail_file_location() . $file_name;
         // copy without exif data
