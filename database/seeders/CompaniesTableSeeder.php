@@ -18,7 +18,7 @@ class CompaniesTableSeeder extends Seeder
             ['name' => 'Nakamura', 'create_user_id' => 1, 'is_system_owner' => true],
         );
 
-        $companies = array_merge($companies, Company::faker(5)->make());
+        $companies = array_merge($companies, Company::factory(5)->make());
 
         DB::table('companies')->insert($companies);
 
