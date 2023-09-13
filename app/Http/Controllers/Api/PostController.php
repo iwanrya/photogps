@@ -84,6 +84,7 @@ class PostController extends Controller
             $company_id = $request->post('company_id') ? trim($request->post('company_id')) : null;
             $status = $request->post('status') ? trim($request->post('status')) : null;
             $comment = $request->post('comment') ? trim($request->post('comment')) : '';
+            
 
             $images = $request->file('photo');
             $shoot_timestamps = $request->post('shoot_datetime');

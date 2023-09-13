@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends BaseModel
@@ -20,6 +22,16 @@ class Company extends BaseModel
         'created_at_formatted',
         'updated_at_formatted'
     ];
+
+    public function companyUser(): HasMany
+    {
+        return $this->hasMany(CompanyUser::class, 'company_id', 'id');
+    }
+
+    public function createUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'create_user_id', 'id');
+    }
 
     protected function getIsSystemOwnerAttribute($value)
     {

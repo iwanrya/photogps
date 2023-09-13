@@ -95,7 +95,7 @@ class CompanyController extends Controller
     public function edit(string $id)
     {
         // get the company
-        $company = Company::find($id);
+        $company = Company::with('companyUser')->with('companyUser.userAuth')->find($id);
 
         // show the edit form and pass the company
         return View::make('app.company.edit')
