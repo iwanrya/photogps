@@ -270,6 +270,7 @@ class PostController extends Controller
 
             if (!empty($comment)) {
                 $builder->whereRelation('postComment', 'comment', 'like', "%{$comment}%");
+                $builder->with('postComment.createUser');
             }
 
 

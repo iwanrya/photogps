@@ -55,7 +55,7 @@ class PostCommentController extends Controller
             throw new BadRequestException($validator->errors());
         }
 
-        $post_id = $request->post('photo_mobile_id');
+        $post_id = (int) $request->post('photo_mobile_id');
         $comment = $request->post('comment');
         
         $user = Auth::user();

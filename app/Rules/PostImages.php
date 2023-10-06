@@ -17,7 +17,7 @@ class PostImages implements ValidationRule
     {
 
         $imageRules = array(
-            'image' => 'image|mimes:jpeg,jpg|max:8000'
+            'image' => 'image|mimes:jpeg,jpg|max:80000'
         );
         
         foreach($photos as $image)
