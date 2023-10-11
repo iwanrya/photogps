@@ -18,7 +18,7 @@
                         <li><a href="{{ URL::to('area') }}">{{ __('area.view_link')}}</a></li>
                     </ul>
 
-                    <form method="POST" action="/area">
+                    <form method="POST" action="{{ url('/area') }}">
                         @csrf
 
                         <div class="form-group row">

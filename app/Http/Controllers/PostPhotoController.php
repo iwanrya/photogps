@@ -20,6 +20,19 @@ class PostPhotoController extends Controller
         }
     }
 
+    public function resize(string $id, int $width, int $height) {
+        $post = PostPhoto::find($id);
+
+        if ($post) {
+            $file_src = App::photo_mobile_original_file_location() . $post->getRawOriginal('image');
+            $src = imagecreatefromstring(file_get_contents($file_src));
+
+        } else {
+            return response('', 404);
+        }
+
+    }
+
     private function showImage($file)
     {
         $imginfo = getimagesize($file);

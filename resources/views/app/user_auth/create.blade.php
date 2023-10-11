@@ -18,7 +18,7 @@
                         <li><a href="{{ URL::to('user_auth') }}">{{ __('user_auth.view_link')}}</a></li>
                     </ul>
 
-                    <form method="POST" action="/user_auth">
+                    <form method="POST" action="{{ url('/user_auth') }}">
                         @csrf
 
                         <div class="form-group row">

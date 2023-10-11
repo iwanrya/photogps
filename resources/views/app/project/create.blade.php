@@ -18,7 +18,7 @@
                         <li><a href="{{ URL::to('project') }}">{{ __('project.view_link')}}</a></li>
                     </ul>
 
-                    <form method="POST" action="/project">
+                    <form method="POST" action="{{ url('/project') }}">
                         @csrf
 
                         <div class="form-group row">
