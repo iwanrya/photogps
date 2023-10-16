@@ -3,7 +3,7 @@ let tblResult;
 let re_init;
 
 $(function () {
-	$('#photographer').multiselect({
+	$('#photographer, #area, #project, #company, #status').multiselect({
 		buttonText: function (options, select) {
 			return options.length + "名が選択されました";
 		},

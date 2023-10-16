@@ -5,6 +5,10 @@ return [
 
     // search filter
     'photographer' => '撮影者',
+    'customer' => 'お客様名',
+    'project' => 'プロジェクト名',
+    'area' => '面積',
+    'status' => 'ステータス',
     'shoot_datetime' => '撮影日時',
     'comment' => 'コメント',
 

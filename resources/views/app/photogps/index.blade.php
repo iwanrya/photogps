@@ -68,6 +68,50 @@
                         </div>
                         <!-- 3 -->
                         <div class="form-group row">
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.customer')}}</label>
+                            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                                <select id="company" name="company[]" class="form-control" multiple="multiple">
+                                    @foreach ($companies as $company) 
+                                        <option value="{{$company->code}}" {{ (request()->get('company') != null && in_array($company->code, request()->get('company')) ? 'selected' : '') }}>{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <!-- 4 -->
+                        <div class="form-group row">
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.project')}}</label>
+                            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                                <select id="project" name="project[]" class="form-control" multiple="multiple">
+                                    @foreach ($projects as $project) 
+                                        <option value="{{$project->code}}" {{ (request()->get('project') != null && in_array($project->code, request()->get('project')) ? 'selected' : '') }}>{{$project->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <!-- 5 -->
+                        <div class="form-group row">
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.area')}}</label>
+                            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                                <select id="area" name="area[]" class="form-control" multiple="multiple">
+                                    @foreach ($areas as $area) 
+                                        <option value="{{$area->code}}" {{ (request()->get('area') != null && in_array($area->code, request()->get('area')) ? 'selected' : '') }}>{{$area->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <!-- 6 -->
+                        <div class="form-group row">
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.status')}}</label>
+                            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                                <select id="status" name="status[]" class="form-control" multiple="multiple">
+                                    @foreach ($status as $item) 
+                                        <option value="{{$item->code}}" {{ (request()->get('status') != null && in_array($item->code, request()->get('status')) ? 'selected' : '') }}>{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <!-- 7 -->
+                        <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.comment')}}</label>
                             <div class="col-12 col-sm-7">
                                 <input type="text" class="form-control" id="comment" name="comment" value="{{ request()->get('comment') }}">

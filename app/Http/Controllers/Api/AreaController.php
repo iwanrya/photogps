@@ -32,10 +32,10 @@ class AreaController extends Controller
                 throw new BadRequestException($validator->errors());
             }
 
-            $users = Area::select('id', 'name')->get();
+            $areas = Area::select('id', 'name')->get();
 
             //return single post as a resource
-            return new AreaResource(true, '', $users->makeHidden(['created_at_formatted', 'updated_at_formatted']));
+            return new AreaResource(true, '', $areas->makeHidden(['created_at_formatted', 'updated_at_formatted']));
         } catch (BadRequestException $ex) {
             error_log($ex->getMessage());
             return response()->json(new AreaResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);

@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 //import Model "Post"
 
 use App\Core\App;
+use App\Models\Area;
+use App\Models\Company;
 use App\Models\Post;
+use App\Models\Project;
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -24,14 +28,15 @@ class PostController extends Controller
 
         // get filters
         $filter_photographers = $request->get('photographer') ?: [];
-        $areas = $request->get('area') ?: [];
-        $companies = $request->get('company') ?: [];
-        $projects = $request->get('project') ?: [];
-        $status = $request->get('status') ?: [];
-        $shoot_date_start = $request->get('shoot_date_start') ?: "";
-        $shoot_date_end = $request->get('shoot_date_end') ?: "";
-        $comment = $request->get('comment') ?: "";
+        $filter_areas = $request->get('area') ?: [];
+        $filter_companies = $request->get('company') ?: [];
+        $filter_projects = $request->get('project') ?: [];
+        $filter_status = $request->get('status') ?: [];
+        $filter_shoot_date_start = $request->get('shoot_date_start') ?: "";
+        $filter_shoot_date_end = $request->get('shoot_date_end') ?: "";
+        $filter_comment = $request->get('comment') ?: "";
 
+        // photographers
         $user = User::with(['companyUser', 'companyUser.company', 'companyUser.userAuth'])
             ->find($current_user->id);
 
@@ -43,13 +48,39 @@ class PostController extends Controller
 
         $photographers = $builder->orderBy('username', 'asc')->get();
 
-        $builder = Post::read($user, $filter_photographers, $companies, $projects, $areas, $status, $shoot_date_start, $shoot_date_end, $comment);
+        // companies
+
+        $companies = Company::select('id as code', 'name')->where('is_system_owner', false)->orderBy('name', 'asc')->get();
+
+        // projects
+
+        $builder = Project::select('id as code', 'name', 'company_id')->orderBy('name', 'asc');
+
+        if ($user->companyUser->userAuth->is_system_owner == false) {
+            $builder->where('company_id', '=', $user->companyUser->company_id);
+        }
+
+        $projects = $builder->get();
+
+        // areas
+
+        $areas = Area::select('id as code', 'name')->get();
+
+        // status
+
+        $status = Status::select('id as code', 'name')->get();
+
+        $builder = Post::read($user, $filter_photographers, $filter_companies, $filter_projects, $filter_areas, $filter_status, $filter_shoot_date_start, $filter_shoot_date_end, $filter_comment);
 
         $posts = $builder->orderBy('created_at', 'desc')->paginate(50)->withQueryString();
         
         return response()
             ->view('app/photogps/index', [
                 'photographers' => $photographers,
+                'companies' => $companies,
+                'projects' => $projects,
+                'areas' => $areas,
+                'status' => $status,
                 'posts' => $posts
             ], 200);
     }
