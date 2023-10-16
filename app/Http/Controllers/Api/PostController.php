@@ -247,7 +247,7 @@ class PostController extends Controller
             if ($user->companyUser->userAuth->is_system_owner == false) {
                 $builder->where('company_id', $user->companyUser->company_id);
             } else {
-                if (!empty($customers)) {
+                if (!empty($companies)) {
                     $builder->whereIn('company_id', $companies);
                 }
             }
