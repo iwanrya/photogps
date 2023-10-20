@@ -50,10 +50,8 @@ class DuplicateImage
      * @param String $file_src file source path
      * @param String $file_dst file destination path
      */
-    static function create_photo_thumbnail($file_src, $file_dst, $rotation = 0)
+    static function create_photo_thumbnail($file_src, $file_dst, $rotation = 0, $maxDim = 100)
     {
-        $maxDim = 100;
-
         $img_info = getimagesize($file_src);
 
         $width = $img_info[0];

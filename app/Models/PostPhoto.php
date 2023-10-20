@@ -24,12 +24,14 @@ class PostPhoto extends BaseModel
         'photo_original',
         'photo',
         'thumbnail',
+        'custom_size',
         'shoot_datetime_formatted',
         'created_at_formatted',
         'updated_at_formatted'
     ];
 
-    protected function getShootDatetimeFormattedAttribute() {
+    protected function getShootDatetimeFormattedAttribute()
+    {
         if (!empty($this->updated_at)) {
             return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $this->shoot_datetime)->format($this->dateFormat);
         } else {
@@ -55,6 +57,11 @@ class PostPhoto extends BaseModel
     protected function getThumbnailAttribute()
     {
         return asset('/storage/thumbnail/posts/' . $this->getRawOriginal('image'));
+    }
+
+    protected function getCustomSizeAttribute()
+    {
+        return URL::to('/post_photo/resize/' . $this->id);
     }
 
     protected function getLatitudeAttribute($value)

@@ -55,6 +55,7 @@ Route::middleware(SessionOrJWTAuth::class)->group(function () {
     Route::get('/photo/original_images/{id}', [PostController::class, 'original_images']);
 });
 Route::get('/photo/images/{id}', [PostController::class, 'images']);
+Route::get('/post_photo/resize/{id}/{maxDim}', [PostPhotoController::class, 'resize']);
 
 Route::middleware(SessionOrJWTAuth::class)->group(function () {
     Route::get('/post_photo/original_image/{id}', [PostPhotoController::class, 'original_image']);
