@@ -9,9 +9,9 @@ return [
     'area' => '面積',
     'user' => 'ユーザー',
     'user_auth' => 'ユーザー権限',
-    'company' => 'Company',
+    'company' => '企業名',
 
-    'user_info' => 'User Info',
+    'user_info' => 'ユーザー情報',
     'change_password' => 'パスワード変更',
     'logout' => 'ログアウト',
 ];

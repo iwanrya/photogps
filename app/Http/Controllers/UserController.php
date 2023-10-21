@@ -48,13 +48,24 @@ class UserController extends Controller
 
         try {
             // define validation rules
-            $validator = Validator::make($request->all(), [
-                'username'              => 'required',
-                'name'                  => 'required',
-                'email'                 => 'required',
-                'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',
-                'password_confirmation' => 'min:6'
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'username'              => 'required',
+                    'name'                  => 'required',
+                    'email'                 => 'required',
+                    'password'              => 'min:6|required_with:password_confirmation|same:password_confirmation',
+                    'password_confirmation' => 'min:6'
+                ],
+                [
+                    'username.required' => __("user.username_required"),
+                    'name.required' => __("user.name_required"),
+                    'email.required' => __("user.email_required"),
+                    'password.min' => __("user.password_min"),
+                    'password.same' => __("user.password_same"),
+                    'password_confirmation.min' => __("user.passwordconfirmation_min"),
+                ]
+            );
 
             // check if validation fails
             if ($validator->fails()) {

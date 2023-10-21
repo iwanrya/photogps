@@ -30,6 +30,9 @@ class ChangePasswordController extends Controller
                     'confirmpassword' => ['required', 'same:newpassword'],
                 ],
                 [
+                    'password.required' => __("changepassword.oldpassword_required"),
+                    'newpassword.required' => __("changepassword.newpassword_required"),
+                    'confirmpassword.required' => __("changepassword.newpasswordconfirmation_required"),
                     'confirmpassword.same' => __("changepassword.newpassword_not_matched")
                 ]
             );
