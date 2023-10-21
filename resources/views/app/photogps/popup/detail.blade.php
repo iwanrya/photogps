@@ -21,8 +21,9 @@
                             <div class="col-4">
                                 <div id="pmd_no_gps_info" class="no-gps-info">{{ __('photogps.no_gps_info_1')}}<br>{{ __('photogps.no_gps_info_2')}}</div>
                                 <div id="pmd_maps"></div>
-                                <div id="pmd_image" class="text-center mt-2 mb-2">
-                                    <img />
+                                <div class="text-center mt-2 mb-2">
+                                    <div id="pmd_image" class=row style="overflow-x: auto; max-height: 150px;">
+                                    </div>
                                 </div>
                                 <a id='pmd_image_original' class="btn btn-primary button-small-font w-100 mb-2" download>{{ __('photogps.download_original_image')}}</a>
                                 <a id='pmd_image_no_exif' class="btn btn-primary button-small-font w-100 mb-2" download>{{ __('photogps.download_noexif_image')}}</a>

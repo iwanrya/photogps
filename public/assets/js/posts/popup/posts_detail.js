@@ -133,7 +133,7 @@ function pmdDrawDetail(item) {
 	item.post_photo.forEach((value, index, arr) => {
 		pmd_image += "<div class=\"col-6\"><p style=\"cursor: pointer; background-color: rgb(245, 245, 245);\" onclick=\"pmdOpenImage('" + value.photo + "')\"><img src=\"" + value.thumbnail + "\" /></p></div>";
 	});
-	$("#pmd_image").append("<div class=\"row\">" + pmd_image + "</div>");
+	$("#pmd_image").html(pmd_image);
 }
 
 function pmdOpenImage(photo_url) {
