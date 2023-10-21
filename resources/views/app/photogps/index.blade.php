@@ -223,7 +223,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><img src='{{ count($post->postPhoto) > 0 ? $post->postPhoto[0]->thumbnail : "" }}' style='max-width: 120px; max-height: 120px;' /></td>
+                                        <td style="align-content: center; align-items: center; text-align: center; vertical-align: middle;"><img src='{{ count($post->postPhoto) > 0 ? $post->postPhoto[0]->thumbnail : "" }}' style='max-width: 120px; max-height: 120px;' /></td>
                                     </tr>
                                     @endforeach
                                     @endif

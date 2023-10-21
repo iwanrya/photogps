@@ -129,11 +129,11 @@ function pmdDrawDetail(item) {
 	// $("#pmd_image").html("<a target=\"_blank\" href=\"" + item.photo + "\"><img src=\"" + item.thumbnail + "\"/></a>");
 
 	$("#pmd_image").empty();
+	let pmd_image = "";
 	item.post_photo.forEach((value, index, arr) => {
-		$("#pmd_image").append(
-			"<span class=\"" + (index < arr.length - 1 ? "mr-3" : "") + "\" style=\"cursor: pointer;\" onclick=\"pmdOpenImage('" + value.photo + "')\"><img src=\"" + value.thumbnail + "\" /></span>"
-		);
+		pmd_image += "<div class=\"col-6\"><p style=\"cursor: pointer; background-color: rgb(245, 245, 245);\" onclick=\"pmdOpenImage('" + value.photo + "')\"><img src=\"" + value.thumbnail + "\" /></p></div>";
 	});
+	$("#pmd_image").append("<div class=\"row\">" + pmd_image + "</div>");
 }
 
 function pmdOpenImage(photo_url) {
