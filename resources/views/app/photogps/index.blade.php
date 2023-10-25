@@ -219,6 +219,7 @@
 
                                             <div class='row'>
                                                 <div class='col-12 text-right'>
+                                                    <a href="{{ route('post.report', ['id' => $post->id]) }}" class='btn btn-danger'>{{ __('photogps.detail')}}</a>
                                                     <button data-bs-toggle='modal' data-id='{{ $post->id }}' data-bs-target='#popup_photo_mobile_detail' class='btn btn-primary'>{{ __('photogps.detail')}}</button>
                                                 </div>
                                             </div>

@@ -61,6 +61,8 @@ Route::middleware(SessionOrJWTAuth::class)->group(function () {
     Route::get('/post_photo/original_image/{id}', [PostPhotoController::class, 'original_image']);
 });
 
+Route::get('/post/report/{id}', [PostController::class, 'report'])->name('post.report');
+
 Route::middleware('auth')->group(function () {
 
     Route::resources([

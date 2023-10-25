@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 //import Model "Post"
 
 use App\Core\App;
+use App\Core\general\reports\Posts;
 use App\Models\Area;
 use App\Models\Company;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\Status;
 use App\Models\User;
+use App\Exports\PostsExport;
+use Maatwebsite\Excel\Facades\Excel;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -73,7 +77,7 @@ class PostController extends Controller
         $builder = Post::read($user, $filter_photographers, $filter_companies, $filter_projects, $filter_areas, $filter_status, $filter_shoot_date_start, $filter_shoot_date_end, $filter_comment);
 
         $posts = $builder->orderBy('created_at', 'desc')->paginate(50)->withQueryString();
-        
+
         return response()
             ->view('app/photogps/index', [
                 'photographers' => $photographers,
@@ -141,7 +145,6 @@ class PostController extends Controller
         $fileName = Date('Ymdhisu') . ".zip";
 
         $temp_download_path = App::temp_download_folder();
-        File::makeDirectory($temp_download_path, $mode = 0777, true, true);
 
         if ($zip->open($temp_download_path . $fileName, \ZipArchive::CREATE) == TRUE) {
             foreach ($photos as $key => $photo) {
@@ -158,5 +161,22 @@ class PostController extends Controller
         readfile($temp_download_path . $fileName);
         exit;
         // return response()->download($temp_download_path . $fileName, $fileName);
+    }
+
+    public function report($id)
+    {
+        $builder = Post::with(['postPhoto']);
+        $post = $builder->find($id);
+
+        $temp_download_path = App::temp_download_folder();
+
+        $now = DateTime::createFromFormat('U.u', microtime(true));
+
+        $filename = $now->format("Ymd_Hisu");
+        $dest_filepath = "{$temp_download_path}/{$filename}.xlsx";
+
+        $filepath = storage_path("app/private/reports/report_posts.xlsx");
+
+        Posts::generate($filepath, $post, $dest_filepath);
     }
 }
