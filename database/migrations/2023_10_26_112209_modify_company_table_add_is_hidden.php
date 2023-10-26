@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('companies', function (Blueprint $table) {
+            $table->boolean('is_hidden');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('user_auths', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
+        Schema::table('companies', function (Blueprint $table) {
+            $table->dropColumn('is_hidden');
         });
     }
 };

@@ -20,6 +20,22 @@
 
                     <form method="POST" action="{{ url('/project') }}">
                         @csrf
+                        <div class="form-group row">
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('project.company')}}</label>
+                            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                                <select id="company" name="company" class="form-control">
+                                    <option hidden></option>
+                                    @foreach ($companies as $company) 
+                                    <option value="{{$company->code}}" {{ (old() && $company->code == old('company') ? 'selected' : '') }}>{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('company'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('company') }}</small>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-4 col-md-3 col-lg-2 text-right xs-text-left">{{ __('project.name')}}</label>
@@ -44,3 +60,7 @@
     </div>
 </section>
 @endsection
+
+@push('js')
+<script src="{{asset('assets/js/projects/create.js')}}"></script>
+@endpush

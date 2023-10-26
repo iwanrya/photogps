@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Project;
 use Exception;
 use Illuminate\Http\Request;
@@ -31,7 +32,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return View::make('app.project.create');
+        // companies
+        $companies = Company::select('id as code', 'name')->where('is_system_owner', false)->orderBy('name', 'asc')->get();
+
+        return View::make('app.project.create')
+            ->with('companies', $companies);
     }
 
     /**
@@ -43,6 +48,7 @@ class ProjectController extends Controller
         try {
             // define validation rules
             $validator = Validator::make($request->all(), [
+                'company'    => 'required',
                 'name'       => 'required',
             ]);
 
@@ -54,11 +60,13 @@ class ProjectController extends Controller
                 die();
             }
 
+            $company = $request->get('company') ?: null;
             $name = $request->get('name') ?: null;
 
             $user = Auth::user();
 
             $project = Project::create([
+                'company_id' => $company,
                 'name' => $name,
                 'create_user_id' => $user->id
             ]);
@@ -100,9 +108,13 @@ class ProjectController extends Controller
             die();
         }
 
+        // companies
+        $companies = Company::select('id as code', 'name')->where('is_system_owner', false)->orderBy('name', 'asc')->get();
+
         // show the edit form and pass the project
         return View::make('app.project.edit')
-            ->with('project', $project);
+            ->with('project', $project)
+            ->with('companies', $companies);
     }
 
     /**
@@ -111,6 +123,7 @@ class ProjectController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
+            'company'    => 'required',
             'name'       => 'required',
         ]);
 
@@ -122,10 +135,12 @@ class ProjectController extends Controller
             die();
         }
 
+        $company = $request->get('company') ?: null;
         $name = $request->get('name') ?: null;
 
         // store
         $project = Project::find($id);
+        $project->company_id = $company;
         $project->name = $name;
         $project->save();
 

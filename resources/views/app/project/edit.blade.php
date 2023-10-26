@@ -22,11 +22,32 @@
                     <form action="{{ route('project.update', $project->id) }}" method="POST">
                         @csrf
                         @method('PUT')
+                        <div class="form-group row">
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('project.company')}}</label>
+                            <div class="col-12 col-sm-3 col-md-3 col-lg-3">
+                                <select id="company" name="company" class="form-control">
+                                    <option hidden></option>
+                                    @foreach ($companies as $company) 
+                                        <option value="{{$company->code}}" {{ ($company->code == (old() ? old('company') : $project->company_id) ? 'selected' : '') }}>{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('company'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('company') }}</small>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-4 col-md-3 col-lg-2 text-right xs-text-left">{{ __('project.name')}}</label>
                             <div class="col-12 col-sm-5 col-md-3">
-                                <input type="text" class="form-control" name="name" value="{{ $project->name }}">
+                                <input type="text" class="form-control" name="name" value="{{ old() ? old('name') : $project->name }}">
+                                @if ($errors->has('name'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('name') }}</small>
+                                </div>
+                                @endif
                             </div>
                         </div>
 
@@ -41,3 +62,7 @@
     </div>
 </section>
 @endsection
+
+@push('js')
+<script src="{{asset('assets/js/projects/edit.js')}}"></script>
+@endpush

@@ -19,7 +19,7 @@ class CompanyController extends Controller
     public function index()
     {
         // get all the company
-        $company = Company::paginate(50)->withQueryString();
+        $company = Company::hideHidden()->paginate(50)->withQueryString();
 
         // load the view and pass the company
         return View::make('app.company.index')
@@ -82,7 +82,7 @@ class CompanyController extends Controller
     public function show(string $id)
     {
         // get the company
-        $company = Company::find($id);
+        $company = Company::hideHidden()->findOrFail($id);
 
         // show the view and pass the company to it
         return View::make('app.company.show')
@@ -123,7 +123,7 @@ class CompanyController extends Controller
         $is_system_owner = $request->get('is_system_owner') ? true : false;
 
         // store
-        $company = Company::find($id);
+        $company = Company::findOrFail($id);
         $company->name = $name;
         $company->is_system_owner = $is_system_owner;
         $company->save();
@@ -138,7 +138,7 @@ class CompanyController extends Controller
      */
     public function destroy(string $id)
     {
-        $company = Company::find($id);
+        $company = Company::findOrFail($id);
         $company->delete();
 
         // redirect

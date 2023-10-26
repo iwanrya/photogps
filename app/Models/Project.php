@@ -11,6 +11,7 @@ class Project extends BaseModel
     use SoftDeletes;
 
     protected $fillable = [
+        'company_id',
         'name',
         'create_user_id',
     ];

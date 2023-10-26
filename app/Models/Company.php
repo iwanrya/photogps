@@ -23,6 +23,11 @@ class Company extends BaseModel
         'updated_at_formatted'
     ];
 
+    public function scopeHideHidden($query)
+    {
+        return $query->where('is_hidden', '=', false);
+    }
+
     public function companyUser(): HasMany
     {
         return $this->hasMany(CompanyUser::class, 'company_id', 'id');
@@ -37,5 +42,4 @@ class Company extends BaseModel
     {
         return $value || $value == 1;
     }
-
 }
