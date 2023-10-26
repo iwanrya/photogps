@@ -28,7 +28,7 @@ class Posts
         $reader = new XlsxReader();
         $spreadsheet = $reader->load($filepath);
 
-        $sheet = $spreadsheet->getSheetByName('main');
+        $sheet = $spreadsheet->getSheetByName('基本情報');
 
         self::postInformation($sheet, $post);
 
@@ -61,7 +61,7 @@ class Posts
         $sheet->setCellValueExplicit("H3", $post->created_at_formatted, DataType::TYPE_STRING);
         $sheet->setCellValueExplicit("H4", $post->photographer, DataType::TYPE_STRING);
 
-        $customer_name = $post->customer ? $post->customer->name : "";
+        $customer_name = $post->company ? $post->company->name : "";
         $sheet->setCellValueExplicit("H5", $customer_name, DataType::TYPE_STRING);
 
         $project_name = $post->project ? $post->project->name : "";
@@ -73,10 +73,7 @@ class Posts
         $status = $post->statusItem ? $post->statusItem->name : "";
         $sheet->setCellValueExplicit("H8", $status, DataType::TYPE_STRING);
 
-        $sheet->setCellValueExplicit("I9", $post->longitude, DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit("O9", $post->latitude, DataType::TYPE_STRING);
-
-        $base_row = 11;
+        $base_row = 10;
         foreach ($post->postComment as $index => $comment) {
             $sheet->setCellValueExplicit("C" . ($base_row + ($index * 3)), "{$comment->createUser->name} ({$comment->created_at_formatted})", DataType::TYPE_STRING);
             $sheet->setCellValueExplicit("D" . ($base_row + ($index * 3) + 1), $comment->comment, DataType::TYPE_STRING);
