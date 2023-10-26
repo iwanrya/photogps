@@ -18,6 +18,7 @@ use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -178,5 +179,11 @@ class PostController extends Controller
         $filepath = storage_path("app/private/reports/report_posts.xlsx");
 
         Posts::generate($filepath, $post, $dest_filepath);
+
+        // Download file with custom headers
+        return response()->download($dest_filepath, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"'
+        ])->deleteFileAfterSend(true);;
     }
 }
