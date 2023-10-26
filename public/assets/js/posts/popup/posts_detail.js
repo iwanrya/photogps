@@ -7,8 +7,8 @@ $(document).ready(function () {
 $(document).on('show.bs.modal', '#popup_photo_mobile_detail', function (e) {
 	sel_photo_mobile_id = $(e.relatedTarget).data('id');
 
-	pmdLoadDetail(sel_photo_mobile_id);
-	pmdLoadComment(sel_photo_mobile_id);
+	ppmdLoadDetail(sel_photo_mobile_id);
+	ppmdLoadComment(sel_photo_mobile_id);
 });
 
 $(document).on('click', '#ppmd_delete:enabled', function () {
@@ -55,14 +55,18 @@ $(document).on('click', '#ppmd_delete:enabled', function () {
 
 });
 
+$(document).on('click', '#ppmd_report', function () {
+	
+});
+
 $(document).on('click', '#ppmd_add_comment', function () {
-	var comment = $('#pmd_new_comment').val();
+	var comment = $('#ppmd_new_comment').val();
 	if (comment.trim()) {
-		pmdAddComment(sel_photo_mobile_id, comment);
+		ppmdAddComment(sel_photo_mobile_id, comment);
 	}
 });
 
-function pmdLoadDetail(id) {
+function ppmdLoadDetail(id) {
 	loading_start();
 	$.ajax
 		({
@@ -72,7 +76,7 @@ function pmdLoadDetail(id) {
 				photo_mobile_id: id,
 			},
 			success: function (data) {
-				pmdDrawDetail(data.data);
+				ppmdDrawDetail(data.data);
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
 				custom_alert("Status: " + textStatus);
@@ -83,7 +87,7 @@ function pmdLoadDetail(id) {
 		});
 }
 
-function pmdLoadComment(id) {
+function ppmdLoadComment(id) {
 	loading_start();
 	$.ajax
 		({
@@ -94,7 +98,7 @@ function pmdLoadComment(id) {
 			},
 			success: function (data) {
 				if (data.status) {
-					pmdDrawComment(data.data);
+					ppmdDrawComment(data.data);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -106,19 +110,20 @@ function pmdLoadComment(id) {
 		});
 }
 
-function pmdDrawDetail(item) {
+function ppmdDrawDetail(item) {
 
-	$("#pmd_image_original").attr('href', item.zip_photo_original);
-	$("#pmd_image_no_exif").attr('href', item.zip_photo);
+	$("#ppmd_image_original").attr('href', item.zip_photo_original);
+	$("#ppmd_image_no_exif").attr('href', item.zip_photo);
+	$("#ppmd_report").attr('href', item.report);
 
 	// maps
 	if (item.post_photo[0].latitude === 0.0 && item.post_photo[0].longitude === 0.0) {
-		$("#pmd_maps").addClass("d-none");
-		$("#pmd_no_gps_info").removeClass("d-none");
+		$("#ppmd_maps").addClass("d-none");
+		$("#ppmd_no_gps_info").removeClass("d-none");
 	} else {
-		$("#pmd_maps").removeClass("d-none");
-		$("#pmd_no_gps_info").addClass("d-none");
-		$("#pmd_maps").html("<iframe width=\"100%\" min-height=\"150\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"" +
+		$("#ppmd_maps").removeClass("d-none");
+		$("#ppmd_no_gps_info").addClass("d-none");
+		$("#ppmd_maps").html("<iframe width=\"100%\" min-height=\"150\" frameborder=\"0\" scrolling=\"no\" marginheight=\"0\" marginwidth=\"0\"" +
 			"src=\"https://www.openstreetmap.org/export/embed.html?bbox=" + (item.post_photo[0].longitude - 0.002) + "," + (item.post_photo[0].latitude - 0.002) + "," + (item.post_photo[0].longitude + 0.002) + "," + (item.post_photo[0].latitude + 0.002) + "&layer=mapnik&marker=" + item.post_photo[0].latitude + "," + item.post_photo[0].longitude + "\" style=\"border: 1px solid black\">" +
 			"</iframe>" +
 			"<br />" +
@@ -126,34 +131,34 @@ function pmdDrawDetail(item) {
 	}
 
 	// thumbnail
-	// $("#pmd_image").html("<a target=\"_blank\" href=\"" + item.photo + "\"><img src=\"" + item.thumbnail + "\"/></a>");
+	// $("#ppmd_image").html("<a target=\"_blank\" href=\"" + item.photo + "\"><img src=\"" + item.thumbnail + "\"/></a>");
 
-	$("#pmd_image").empty();
-	let pmd_image = "";
+	$("#ppmd_image").empty();
+	let ppmd_image = "";
 	item.post_photo.forEach((value, index, arr) => {
-		pmd_image += "<div class=\"col-6\"><p style=\"cursor: pointer; background-color: rgb(245, 245, 245);\" onclick=\"pmdOpenImage('" + value.photo + "')\"><img src=\"" + value.thumbnail + "\" /></p></div>";
+		ppmd_image += "<div class=\"col-6\"><p style=\"cursor: pointer; background-color: rgb(245, 245, 245);\" onclick=\"pmdOpenImage('" + value.photo + "')\"><img src=\"" + value.thumbnail + "\" /></p></div>";
 	});
-	$("#pmd_image").html(pmd_image);
+	$("#ppmd_image").html(pmd_image);
 }
 
-function pmdOpenImage(photo_url) {
+function ppmdOpenImage(photo_url) {
 	custom_alert("<img src=\"" + photo_url + "\" style=\"max-width: 100%\"/>", 0, 0, "閉じる");
 }
 
-function pmdDrawComment(item) {
+function ppmdDrawComment(item) {
 
 	// draw table
-	$("#dv_pmd_comment").empty();
+	$("#dv_ppmd_comment").empty();
 
 	if (item.length > 0) {
 		item = item.reverse();
 		item.forEach(e => {
-			pmdAppendComment(e);
+			ppmdAppendComment(e);
 		});
 	}
 }
 
-function pmdAppendComment(item) {
+function ppmdAppendComment(item) {
 	var html = "<div class=\"row\">" +
 		"	<div class=\"col-8\" style=\"font-size: 10px\">(" + item.create_user.name + ") <span><strong>" + item.create_user.username + "</strong></span></div>" +
 		"	<div class=\"col-4 text-right\" style=\"font-size: 10px\"><strong>" + item.created_at_formatted + "</strong></div>" +
@@ -161,10 +166,10 @@ function pmdAppendComment(item) {
 		"<p class=\"bordered-box\" style=\"white-space: break-spaces;\">" +
 		item.comment +
 		"</p>"
-	$("#dv_pmd_comment").append(html);
+	$("#dv_ppmd_comment").append(html);
 }
 
-function pmdAddComment(id, comment) {
+function ppmdAddComment(id, comment) {
 	loading_start();
 	$.ajax
 		({
@@ -176,8 +181,8 @@ function pmdAddComment(id, comment) {
 			},
 			success: function (res) {
 				if (res.status) {
-					pmdResetComment();
-					pmdLoadComment(id);
+					ppmdResetComment();
+					ppmdLoadComment(id);
 				}
 			},
 			error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -189,6 +194,6 @@ function pmdAddComment(id, comment) {
 		});
 }
 
-function pmdResetComment() {
-	$("#pmd_new_comment").val('');
+function ppmdResetComment() {
+	$("#ppmd_new_comment").val('');
 }

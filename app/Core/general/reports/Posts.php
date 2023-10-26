@@ -74,9 +74,25 @@ class Posts
         $sheet->setCellValueExplicit("H8", $status, DataType::TYPE_STRING);
 
         $base_row = 10;
-        foreach ($post->postComment as $index => $comment) {
-            $sheet->setCellValueExplicit("C" . ($base_row + ($index * 3)), "{$comment->createUser->name} ({$comment->created_at_formatted})", DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit("D" . ($base_row + ($index * 3) + 1), $comment->comment, DataType::TYPE_STRING);
+        $index = 0;
+        for ($i = count($post->postComment) - 1; $i >= 0; $i--) {
+            $comment = $post->postComment[$i];
+            $data_row = ($base_row + ($index * 3));
+
+            $styleArray = array(
+                'borders' => array(
+                    'top' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
+                        'color' => array('argb' => 'FF000000'),
+                    ),
+                ),
+            );
+            $sheet->getStyle("B{$data_row}:V{$data_row}")->applyFromArray($styleArray);
+
+            $sheet->setCellValueExplicit("C" . $data_row, "{$comment->createUser->name} ({$comment->created_at_formatted})", DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit("D" . ($data_row + 1), $comment->comment, DataType::TYPE_STRING);
+
+            $index++;
         }
     }
 

@@ -5,6 +5,7 @@ return [
 
     // columns / fields
     'id' => 'ID',
+    'content' => '内容',
     'company' => '企業名',
     'actions' => '動作',
     'name' => 'プロジェクト名',

@@ -32,7 +32,7 @@ class AreaController extends Controller
                 throw new BadRequestException($validator->errors());
             }
 
-            $areas = Area::select('id', 'name')->get();
+            $areas = Area::select('id', 'name')->orderBy('name', 'asc')->get();
 
             //return single post as a resource
             return new AreaResource(true, '', $areas->makeHidden(['created_at_formatted', 'updated_at_formatted']));

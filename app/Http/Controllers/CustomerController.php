@@ -19,7 +19,7 @@ class CustomerController extends Controller
     public function index()
     {
         // get all the customer
-        $customer = Customer::paginate(50)->withQueryString();
+        $customer = Customer::orderBy('id', 'asc')->paginate(50)->withQueryString();
 
         // load the view and pass the customer
         return View::make('app.customer.index')
@@ -56,11 +56,11 @@ class CustomerController extends Controller
 
             $name = $request->get('name') ?: null;
 
-            $user = Auth::user();
+            $current_user = Auth::user();
 
             $customer = Customer::create([
                 'name' => $name,
-                'create_user_id' => $user->id
+                'create_user_id' => $current_user->id
             ]);
 
             // redirect

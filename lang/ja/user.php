@@ -20,6 +20,8 @@ return [
     'username_required' => 'ユーザー名を入力して下さい。',
     'name_required' => '名前を入力して下さい。',
     'email_required' => 'メールアドレスを入力して下さい。',
+    'company_required' => '企業名を入力して下さい。',
+    'auth_required' => '役割を入力して下さい。',
     'password_min' => 'パスワードは6文字以上で入力して下さい。',
     'passwordconfirmation_min' => 'パスワード（確認)は6文字以上で入力して下さい。',
     'password_same' => 'パスワードとパスワード確認は一致しません。',

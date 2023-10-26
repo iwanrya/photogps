@@ -30,7 +30,7 @@ class PostCommentController extends Controller
 
             $post_id = $request->get('photo_mobile_id');
 
-            $post_comments = PostComment::with('createUser')->where('post_id', $post_id)->get();
+            $post_comments = PostComment::with('createUser')->where('post_id', $post_id)->orderBy('created_at', 'asc')->get();
 
             return new PostCommentResource(true, '', $post_comments);
         } catch (BadRequestException $ex) {
@@ -58,12 +58,12 @@ class PostCommentController extends Controller
         $post_id = (int) $request->post('photo_mobile_id');
         $comment = $request->post('comment');
         
-        $user = Auth::user();
+        $current_user = Auth::user();
 
         $post_comments = PostComment::create([
             'post_id' => $post_id,
             'comment' => $comment,
-            'create_user_id' => $user->id
+            'create_user_id' => $current_user->id
         ]);
 
         return new PostCommentResource(true, '', $post_comments);

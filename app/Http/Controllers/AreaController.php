@@ -19,7 +19,7 @@ class AreaController extends Controller
     public function index()
     {
         // get all the area
-        $area = Area::paginate(50)->withQueryString();
+        $area = Area::orderBy('id', 'asc')->paginate(50)->withQueryString();
 
         // load the view and pass the area
         return View::make('app.area.index')
@@ -56,11 +56,11 @@ class AreaController extends Controller
 
             $name = $request->get('name') ?: null;
 
-            $user = Auth::user();
+            $current_user = Auth::user();
 
             $area = Area::create([
                 'name' => $name,
-                'create_user_id' => $user->id
+                'create_user_id' => $current_user->id
             ]);
 
             // redirect

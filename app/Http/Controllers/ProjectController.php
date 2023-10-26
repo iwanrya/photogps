@@ -17,14 +17,25 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // get all the project
-        $project = Project::paginate(50)->withQueryString();
+        $current_user = Auth::user();
+
+        // get filters
+        $filter_companies = $request->get('company') ?: [];
+        $filter_name = $request->get('name') ?: "";
+
+        $builder = Project::read($current_user, $filter_companies, $filter_name);
+
+        $projects = $builder->orderBy('id', 'asc')->paginate(50)->withQueryString();
+
+        // companies
+        $companies = Company::select('id as code', 'name')->where('is_system_owner', false)->orderBy('name', 'asc')->get();
 
         // load the view and pass the project
         return View::make('app.project.index')
-            ->with('projects', $project);
+            ->with('projects', $projects)
+            ->with('companies', $companies);
     }
 
     /**
@@ -63,12 +74,12 @@ class ProjectController extends Controller
             $company = $request->get('company') ?: null;
             $name = $request->get('name') ?: null;
 
-            $user = Auth::user();
+            $current_user = Auth::user();
 
             $project = Project::create([
                 'company_id' => $company,
                 'name' => $name,
-                'create_user_id' => $user->id
+                'create_user_id' => $current_user->id
             ]);
 
             // redirect

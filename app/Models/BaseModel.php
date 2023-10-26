@@ -9,6 +9,11 @@ class BaseModel extends Model
 
     protected $dateFormat = 'Y/m/d H:i:s';
 
+    protected function scopeOrder($query)
+    {
+        return $query->orderBy('created_at', 'asc');
+    }
+
     protected function getCreatedAtFormattedAttribute()
     {
         if (!empty($this->created_at)) {

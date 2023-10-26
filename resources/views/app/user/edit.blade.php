@@ -26,45 +26,71 @@
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-5 col-md-4 col-lg-3 text-right xs-text-left">{{ __('user.username')}}</label>
                             <div class="col-12 col-sm-5 col-md-3">
-                                <input type="text" class="form-control" name="username" value="{{ $user->username }}">
+                                <input type="text" class="form-control" name="username" value="{{ old() ? old('username') : $user->username }}">
+                                @if ($errors->has('username'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('username') }}</small>
+                                </div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-5 col-md-4 col-lg-3 text-right xs-text-left">{{ __('user.name')}}</label>
                             <div class="col-12 col-sm-6 col-md-4">
-                                <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                                <input type="text" class="form-control" name="name" value="{{ old() ? old('name') : $user->name }}">
+                                @if ($errors->has('name'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('name') }}</small>
+                                </div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-5 col-md-4 col-lg-3 text-right xs-text-left">{{ __('user.email')}}</label>
                             <div class="col-12 col-sm-6 col-md-4">
-                                <input type="text" class="form-control" name="email" value="{{ $user->email }}">
+                                <input type="text" class="form-control" name="email" value="{{ old() ? old('email') : $user->email }}">
+                                @if ($errors->has('email'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('email') }}</small>
+                                </div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-5 col-md-4 col-lg-3 text-right xs-text-left">{{ __('user.company')}}</label>
                             <div class="col-12 col-sm-5 col-md-3">
-                                <select name="company" class="form-control" value="{{ $user->companyUser ? $user->companyUser->company->name : '-' }}">
+                                <select name="company" class="form-control">
                                     <option></option>
-                                    @foreach ($companys as $company)
-                                    <option value="{{$company->id}}" {{( $user->companyUser && $user->companyUser->company->id == $company->id) ? "selected" : "" }}>{{$company->name}}</option>
+                                    @foreach ($companies as $company)
+                                    <option value="{{$company->code}}" {{ ((old() ? old('company') : $user_company_id) == $company->code) ? "selected" : "" }}>{{$company->name}}</option>
+
                                     @endforeach
                                 </select>
+                                @if ($errors->has('company'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('company') }}</small>
+                                </div>
+                                @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-5 col-md-4 col-lg-3 text-right xs-text-left">{{ __('user.role')}}</label>
                             <div class="col-12 col-sm-5 col-md-3">
-                                <select name="auth" class="form-control" value="{{ $user->companyUser ? $user->companyUser->userAuth->name : '-' }}">
+                                <select name="auth" class="form-control">
                                     <option></option>
                                     @foreach ($auths as $auth)
-                                    <option value="{{$auth->id}}" {{( $user->companyUser && $user->companyUser->userAuth->id == $auth->id) ? "selected" : "" }}>{{$auth->name}}</option>
+                                    <option value="{{$auth->id}}" {{ ((old() ? old('auth') : $user_auth_id) == $auth->id) ? "selected" : "" }}>{{$auth->name}}</option>
                                     @endforeach
                                 </select>
+                                @if ($errors->has('auth'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('auth') }}</small>
+                                </div>
+                                @endif
                             </div>
                         </div>
 

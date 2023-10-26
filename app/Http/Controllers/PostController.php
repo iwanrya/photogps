@@ -54,11 +54,9 @@ class PostController extends Controller
         $photographers = $builder->orderBy('username', 'asc')->get();
 
         // companies
-
         $companies = Company::select('id as code', 'name')->where('is_system_owner', false)->orderBy('name', 'asc')->get();
 
         // projects
-
         $builder = Project::select('id as code', 'name', 'company_id')->orderBy('name', 'asc');
 
         if ($user->companyUser->userAuth->is_system_owner == false) {
@@ -68,11 +66,9 @@ class PostController extends Controller
         $projects = $builder->get();
 
         // areas
-
         $areas = Area::select('id as code', 'name')->get();
 
         // status
-
         $status = Status::select('id as code', 'name')->get();
 
         $builder = Post::read($user, $filter_photographers, $filter_companies, $filter_projects, $filter_areas, $filter_status, $filter_shoot_date_start, $filter_shoot_date_end, $filter_comment);

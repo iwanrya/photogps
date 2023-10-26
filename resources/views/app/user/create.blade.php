@@ -58,6 +58,40 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-form-label col-12 col-sm-5 col-md-4 col-lg-3 text-right xs-text-left">{{ __('user.company')}}</label>
+                            <div class="col-12 col-sm-5 col-md-3">
+                                <select name="company" class="form-control">
+                                    <option></option>
+                                    @foreach ($companies as $company)
+                                    <option value="{{$company->code}}" {{ (old() && $company->code == old("company")) ? "selected" : "" }}>{{$company->name}}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('company'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('company') }}</small>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-form-label col-12 col-sm-5 col-md-4 col-lg-3 text-right xs-text-left">{{ __('user.role')}}</label>
+                            <div class="col-12 col-sm-5 col-md-3">
+                                <select name="auth" class="form-control">
+                                    <option></option>
+                                    @foreach ($auths as $auth)
+                                    <option value="{{$auth->id}}" {{ (old() && $auth->id == old("auth")) ? "selected" : "" }}>{{$auth->name}}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('auth'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('auth') }}</small>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-5 col-md-4 col-lg-3 text-right xs-text-left">{{ __('user.password')}}</label>
                             <div class="col-12 col-sm-5 col-md-3">
                                 <input type="password" class="form-control" name="password" value="{{ old('password') }}">

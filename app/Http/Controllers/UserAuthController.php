@@ -19,7 +19,7 @@ class UserAuthController extends Controller
     public function index()
     {
         // get all the user_auth
-        $user_auth = UserAuth::paginate(50)->withQueryString();
+        $user_auth = UserAuth::orderBy('id', 'asc')->paginate(50)->withQueryString();
 
         // load the view and pass the user auth
         return View::make('app.user_auth.index')
@@ -57,12 +57,12 @@ class UserAuthController extends Controller
             $name = $request->get('name') ?: null;
             $is_system_owner = $request->get('is_system_owner') ? true : false;
 
-            $user = Auth::user();
+            $current_user = Auth::user();
 
             $user_auth = UserAuth::create([
                 'name' => $name,
                 'is_system_owner' => $is_system_owner,
-                'create_user_id' => $user->id
+                'create_user_id' => $current_user->id
             ]);
 
             // redirect

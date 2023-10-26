@@ -53,9 +53,9 @@ class SessionController extends Controller
 
     function login_as()
     {
-        $user = Auth::user();
+        $current_user = Auth::user();
 
-        return response()->json(new BaseResource(true, '', array("current_user" => $user)));
+        return response()->json(new BaseResource(true, '', array("current_user" => $current_user)));
     }
 
     function logout()

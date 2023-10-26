@@ -158,9 +158,9 @@
                                         <td class="text-center" colspan=3>{{ __('table.no_search_result')}}</td>
                                     </tr>
                                     @else
-                                    @foreach ($posts as $post)
+                                    @foreach ($posts as $key => $post)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $posts->firstItem() + $key }}</td>
                                         <td>
                                             <div class='row mb-1'>
                                                 <div class='col-4'>
@@ -219,7 +219,7 @@
 
                                             <div class='row'>
                                                 <div class='col-12 text-right'>
-                                                    <a href="{{ route('post.report', ['id' => $post->id]) }}" class='btn btn-danger'>{{ __('photogps.detail')}}</a>
+                                                    <a href="{{ $post->report }}" class='btn btn-success'><i class="fa fa-file-excel-o" aria-hidden="true"></i> {{ __('photogps.download_report')}}</a>
                                                     <button data-bs-toggle='modal' data-id='{{ $post->id }}' data-bs-target='#popup_photo_mobile_detail' class='btn btn-primary'>{{ __('photogps.detail')}}</button>
                                                 </div>
                                             </div>

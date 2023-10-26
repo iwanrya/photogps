@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
@@ -33,6 +34,7 @@ class Post extends BaseModel
     protected $appends = [
         'zip_photo_original',
         'zip_photo',
+        'report',
         'photo_original',
         'photo',
         'thumbnail',
@@ -118,6 +120,11 @@ class Post extends BaseModel
     protected function getZIPPhotoAttribute()
     {
         return URL::to('/photo/images/' . $this->id);
+    }
+
+    protected function getReportAttribute()
+    {
+        return Route("post.report", ['id' => $this->id]);
     }
 
     protected function getThumbnailAttribute()

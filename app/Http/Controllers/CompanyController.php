@@ -19,7 +19,7 @@ class CompanyController extends Controller
     public function index()
     {
         // get all the company
-        $company = Company::hideHidden()->paginate(50)->withQueryString();
+        $company = Company::hideHidden()->orderBy('id', 'asc')->paginate(50)->withQueryString();
 
         // load the view and pass the company
         return View::make('app.company.index')
@@ -57,12 +57,12 @@ class CompanyController extends Controller
             $name = $request->get('name') ?: null;
             $is_system_owner = $request->get('is_system_owner') ? true : false;
 
-            $user = Auth::user();
+            $current_user = Auth::user();
 
             $company = Company::create([
                 'name' => $name,
                 'is_system_owner' => $is_system_owner,
-                'create_user_id' => $user->id
+                'create_user_id' => $current_user->id
             ]);
 
             // redirect
