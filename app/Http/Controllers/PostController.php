@@ -173,8 +173,8 @@ class PostController extends Controller
 
         $now = DateTime::createFromFormat('U.u', microtime(true));
 
-        $filename = $now->format("Ymd_Hisu");
-        $dest_filepath = "{$temp_download_path}/{$filename}.xlsx";
+        $filename = $now->format("Ymd_Hisu") . ".xlsx";
+        $dest_filepath = "{$temp_download_path}/{$filename}";
 
         $filepath = storage_path("app/private/reports/report_posts.xlsx");
 
