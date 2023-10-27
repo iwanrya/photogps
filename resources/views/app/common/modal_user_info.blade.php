@@ -16,12 +16,12 @@
                     <tr>
                         <td>{{ __('userinfo.company_name')}}</td>
                         <td>:</td>
-                        <td>{{ auth()->user()->company_name }}</td>
+                        <td>{{ auth()->user()->companyUser->company->name }}</td>
                     </tr>
                     <tr>
                         <td>{{ __('userinfo.permissions')}}</td>
                         <td>:</td>
-                        <td>{{ auth()->user()->permissions }}</td>
+                        <td>{{ auth()->user()->companyUser->userAuth->name }}</td>
                     </tr>
                     <tr>
                         <td>{{ __('userinfo.last_login')}}</td>

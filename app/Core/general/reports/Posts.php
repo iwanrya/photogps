@@ -73,24 +73,41 @@ class Posts
         $status = $post->statusItem ? $post->statusItem->name : "";
         $sheet->setCellValueExplicit("H8", $status, DataType::TYPE_STRING);
 
-        $base_row = 10;
+        $firstRow = 10;
+        $lastRow = 0;
+
         $index = 0;
         for ($i = count($post->postComment) - 1; $i >= 0; $i--) {
             $comment = $post->postComment[$i];
-            $data_row = ($base_row + ($index * 3));
+            $firstRow = $lastRow == 0 ? $firstRow : ($lastRow + 1); // lastRow == 0 means first comment
+            $lastRow = $firstRow;
 
             $styleArray = array(
                 'borders' => array(
-                    'top' => array(
+                    'outline' => array(
                         'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM,
                         'color' => array('argb' => 'FF000000'),
                     ),
                 ),
             );
-            $sheet->getStyle("B{$data_row}:V{$data_row}")->applyFromArray($styleArray);
 
-            $sheet->setCellValueExplicit("C" . $data_row, "{$comment->createUser->name} ({$comment->created_at_formatted})", DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit("D" . ($data_row + 1), $comment->comment, DataType::TYPE_STRING);
+            $sheet->mergeCells("C{$firstRow}:V{$firstRow}");
+            $sheet->setCellValueExplicit("C" . $firstRow, "{$comment->createUser->name} ({$comment->created_at_formatted})", DataType::TYPE_STRING);
+
+            // get comment per line
+            $lineComments = preg_split('/\r\n|\r|\n/', $comment->comment);
+
+            // draw line comment and merge the cells
+            foreach ($lineComments as $commentIndex => $lineComment) {
+                $commentRow = ($firstRow + 1 + $commentIndex);
+                $lastRow = $commentRow;
+
+                $sheet->mergeCells("D{$commentRow}:V{$commentRow}");
+                $sheet->setCellValueExplicit("D" . $commentRow, $lineComment, DataType::TYPE_STRING);
+            }
+            $lastRow++; // extra one row for space
+
+            $sheet->getStyle("B{$firstRow}:V{$lastRow}")->applyFromArray($styleArray);
 
             $index++;
         }

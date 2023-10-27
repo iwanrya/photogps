@@ -20,8 +20,8 @@
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.photographer')}}</label>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="photographer" name="photographer[]" class="form-control" multiple="multiple">
-                                    @foreach ($photographers as $photographer) 
-                                        <option value="{{$photographer->code}}" {{ (request()->get('photographer') != null && in_array($photographer->code, request()->get('photographer')) ? 'selected' : '') }}>({{$photographer->username}}){{$photographer->name}}</option>
+                                    @foreach ($photographers as $photographer)
+                                    <option value="{{$photographer->code}}" {{ (request()->get('photographer') != null && in_array($photographer->code, request()->get('photographer')) ? 'selected' : '') }}>({{$photographer->username}}){{$photographer->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -68,19 +68,21 @@
                         </div>
                         <!-- 3 -->
                         <div class="form-group row">
+                            @if (Auth::user()->isSystemOwner())
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.customer')}}</label>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="company" name="company[]" class="form-control" multiple="multiple">
-                                    @foreach ($companies as $company) 
-                                        <option value="{{$company->code}}" {{ (request()->get('company') != null && in_array($company->code, request()->get('company')) ? 'selected' : '') }}>{{$company->name}}</option>
+                                    @foreach ($companies as $company)
+                                    <option value="{{$company->code}}" {{ (request()->get('company') != null && in_array($company->code, request()->get('company')) ? 'selected' : '') }}>{{$company->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
+                            @endif
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.project')}}</label>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="project" name="project[]" class="form-control" multiple="multiple">
-                                    @foreach ($projects as $project) 
-                                        <option value="{{$project->code}}" {{ (request()->get('project') != null && in_array($project->code, request()->get('project')) ? 'selected' : '') }}>{{$project->name}}</option>
+                                    @foreach ($projects as $project)
+                                    <option value="{{$project->code}}" {{ (request()->get('project') != null && in_array($project->code, request()->get('project')) ? 'selected' : '') }}>{{$project->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -90,16 +92,16 @@
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.area')}}</label>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="area" name="area[]" class="form-control" multiple="multiple">
-                                    @foreach ($areas as $area) 
-                                        <option value="{{$area->code}}" {{ (request()->get('area') != null && in_array($area->code, request()->get('area')) ? 'selected' : '') }}>{{$area->name}}</option>
+                                    @foreach ($areas as $area)
+                                    <option value="{{$area->code}}" {{ (request()->get('area') != null && in_array($area->code, request()->get('area')) ? 'selected' : '') }}>{{$area->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.status')}}</label>
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="status" name="status[]" class="form-control" multiple="multiple">
-                                    @foreach ($status as $item) 
-                                        <option value="{{$item->code}}" {{ (request()->get('status') != null && in_array($item->code, request()->get('status')) ? 'selected' : '') }}>{{$item->name}}</option>
+                                    @foreach ($status as $item)
+                                    <option value="{{$item->code}}" {{ (request()->get('status') != null && in_array($item->code, request()->get('status')) ? 'selected' : '') }}>{{$item->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

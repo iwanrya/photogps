@@ -33,6 +33,6 @@ return [
     'submit_comment' => 'コメント入力',
     'download_original_image' => '写真ダウンロード(GPS情報付)',
     'download_noexif_image' => '写真ダウンロード(GPS情報無)',
-    'download_report' => 'Download',
+    'download_report' => 'ダウンロード',
     'delete' => '削除',
 ];
