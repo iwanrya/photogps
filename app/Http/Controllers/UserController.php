@@ -76,7 +76,9 @@ class UserController extends Controller
                 [
                     'username.required' => __("user.username_required"),
                     'name.required' => __("user.name_required"),
+                    'name.unique' => __("user.name_unique"),
                     'email.required' => __("user.email_required"),
+                    'email.unique' => __("user.email_unique"),
                     'company.required' => __("user.company_required"),
                     'auth.required' => __("user.auth_required"),
                     'password.min' => __("user.password_min"),

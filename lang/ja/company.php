@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Company',
+    'title' => '企業名',
 
     // columns / fields
     'id' => 'ID',

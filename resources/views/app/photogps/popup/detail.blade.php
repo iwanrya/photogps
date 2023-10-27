@@ -28,7 +28,7 @@
                                 <a id='ppmd_image_original' class="btn btn-primary button-small-font w-100 mb-2" download>{{ __('photogps.download_original_image')}}</a>
                                 <a id='ppmd_image_no_exif' class="btn btn-primary button-small-font w-100 mb-2" download>{{ __('photogps.download_noexif_image')}}</a>
                                 <a id='ppmd_report' class='btn btn-success button-small-font w-100 mb-2'><i class="fa fa-file-excel-o"></i> {{ __('photogps.download_report')}}</a>
-                                <button id="pmd_delete" class="btn btn-danger text-white button-small-font w-100"><i class="fa fa-trash"></i> {{ __('photogps.delete')}}</button>                                
+                                <button id="ppmd_delete" class="btn btn-danger text-white button-small-font w-100"><i class="fa fa-trash"></i> {{ __('photogps.delete')}}</button>                                
                             </div>
                         </div>
                     </div>

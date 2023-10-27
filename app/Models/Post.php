@@ -85,7 +85,7 @@ class Post extends BaseModel
 
     protected function getPhotographerAttribute($value)
     {
-        return Str::title($value);
+        return $value;
     }
 
     protected function getShootDatetimeFormattedAttribute()

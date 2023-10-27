@@ -84,7 +84,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected function getNameAttribute($value)
     {
-        return Str::title($value);
+        return $value;
     }
 
     protected function getEmailVerifiedAtFormattedAttribute()

@@ -11,12 +11,12 @@
                     <tr>
                         <td>{{ __('userinfo.name')}}</td>
                         <td>:</td>
-                        <td>{{ Str::title(auth()->user()->name) }}</td>
+                        <td>{{ auth()->user()->name }}</td>
                     </tr>
                     <tr>
                         <td>{{ __('userinfo.company_name')}}</td>
                         <td>:</td>
-                        <td>{{ Str::title(auth()->user()->company_name) }}</td>
+                        <td>{{ auth()->user()->company_name }}</td>
                     </tr>
                     <tr>
                         <td>{{ __('userinfo.permissions')}}</td>

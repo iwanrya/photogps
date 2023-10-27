@@ -21,7 +21,7 @@
                     <div class="jumbotron text-center">
                         <h2>{{ $company->name }}</h2>
                         <p>
-                            <strong>System Owner:</strong> {{ $company->is_system_owner ? __('app.yes') : __('app.no') }}<br>
+                            <strong>{{ __('company.system_owner')}}:</strong> {{ $company->is_system_owner ? __('app.yes') : __('app.no') }}<br>
                             <strong>{{ __('company.created_datetime')}}:</strong> {{ $company->created_at_formatted }}<br>
                             <strong>{{ __('company.last_updated_datetime')}}:</strong> {{ $company->updated_at_formatted }}<br>
                         </p>
