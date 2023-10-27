@@ -25,6 +25,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\SessionOrJWTAuth;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,17 +66,20 @@ Route::get('/post/report/{id}', [PostController::class, 'report'])->name('post.r
 
 Route::middleware('auth')->group(function () {
 
-    Route::resources([
-        'area' => AreaController::class,
-        // 'customer' => CustomerController::class,
-        'project' => ProjectController::class,
-        'user' => UserController::class,
-        'user_auth' => UserAuthController::class,
-        'company' => CompanyController::class,
-    ]);
+    Route::middleware('system_owner')->group(function () {
 
-    Route::get('/project/delete/{id}', [ProjectController::class, 'delete'])->name('project.delete');
-    Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+        Route::resources([
+            'area' => AreaController::class,
+            // 'customer' => CustomerController::class,
+            'project' => ProjectController::class,
+            'user' => UserController::class,
+            'user_auth' => UserAuthController::class,
+            'company' => CompanyController::class,
+        ]);
+
+        Route::get('/project/delete/{id}', [ProjectController::class, 'delete'])->name('project.delete');
+        Route::get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+    });
 });
 
 
