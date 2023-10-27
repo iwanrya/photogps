@@ -18,8 +18,8 @@ return [
     'dates' => '日時',
 
     'username_required' => 'ユーザー名を入力して下さい。',
+    'username_unique' => 'ユーザー名が既に使われている。',
     'name_required' => '名前を入力して下さい。',
-    'name_unique' => 'ユーザー名が既に使われている。',
     'email_required' => 'メールアドレスを入力して下さい。',
     'email_unique' => 'メールが既に使われている。',
     'company_required' => '企業名を入力して下さい。',
