@@ -24,7 +24,9 @@ class UserController extends Controller
     {
         // get all the user
         $builder = User::with('companyUser')->with('companyUser.company')
-            ->with('companyUser.userAuth');
+            ->with('companyUser.userAuth')
+            ->whereRelation('companyUser.company', 'is_hidden', false)
+            ->whereRelation('companyUser.userAuth', 'is_hidden', false);
         $users = $builder->orderBy('id', 'asc')->paginate(50)->withQueryString();
         // $users = User::paginate(50)->withQueryString();
 
@@ -39,8 +41,8 @@ class UserController extends Controller
     public function create()
     {
         // companies
-        $companies = Company::select('id as code', 'name')->orderBy('name', 'asc')->get();
-        $auths = UserAuth::orderBy('is_system_owner', 'desc')
+        $companies = Company::HideHidden()->select('id as code', 'name')->orderBy('name', 'asc')->get();
+        $auths = UserAuth::HideHidden()->orderBy('is_system_owner', 'desc')
             ->orderBy('name', 'asc')->get();
 
         return View::make('app.user.create')
@@ -151,6 +153,8 @@ class UserController extends Controller
     {
         // get the user
         $user = User::with(['companyUser', 'companyUser.company', 'companyUser.userAuth'])
+            ->whereRelation('companyUser.company', 'is_hidden', false)
+            ->whereRelation('companyUser.userAuth', 'is_hidden', false)
             ->find($id);
 
         if (empty($user)) {
@@ -159,8 +163,8 @@ class UserController extends Controller
         }
 
         // companies
-        $companies = Company::select('id as code', 'name')->orderBy('name', 'asc')->get();
-        $auths = UserAuth::orderBy('is_system_owner', 'desc')
+        $companies = Company::HideHidden()->select('id as code', 'name')->orderBy('name', 'asc')->get();
+        $auths = UserAuth::HideHidden()->orderBy('is_system_owner', 'desc')
             ->orderBy('name', 'asc')->get();
 
         // show the edit form and pass the user

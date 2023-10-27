@@ -21,6 +21,11 @@ class UserAuth extends BaseModel
         'updated_at_formatted'
     ];
 
+    public function scopeHideHidden($query)
+    {
+        return $query->where('is_hidden', '=', false);
+    }
+
     protected function getIsSystemOwnerAttribute($value)
     {
         return $value || $value == 1;
