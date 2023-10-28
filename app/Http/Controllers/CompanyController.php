@@ -44,12 +44,16 @@ class CompanyController extends Controller
 
         try {
             // define validation rules
-            $validator = Validator::make($request->all(), [
-                'name'       => [
-                    'required',
-                    'unique:companies,name',
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name'       => ['required', 'unique:companies,name'],
                 ],
-            ]);
+                [
+                    'name.required' => __("company.name_required"),
+                    'name.unique' => __("company.name_unique"),
+                ]
+            );
 
             // check if validation fails
             if ($validator->fails()) {

@@ -61,6 +61,10 @@ class ProjectController extends Controller
             $validator = Validator::make($request->all(), [
                 'company'    => 'required',
                 'name'       => 'required',
+            ],
+            [
+                'company.required' => __("project.company_required"),
+                'name.required' => __("project.name_required"),
             ]);
 
             // check if validation fails

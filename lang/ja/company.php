@@ -10,6 +10,9 @@ return [
     'name' => '名前',
     'dates' => '日時',
 
+    'name_required' => '企業名を入力して下さい。',
+    'name_unique' => '企業名が既に使われている。',
+    
     // detail
     'created_datetime' => '登録日時',
     'last_updated_datetime' => '更新日時',

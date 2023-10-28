@@ -148,7 +148,7 @@ function ppmdDrawDetail() {
 			"<img src=\"" + value.thumbnail + "\" onclick=\"ppmdOpenImage(" + value.id + ")\" style=\"max-width: 100%; max-height: 100%;\"/>" +
 			"</div>";
 	});
-	$("#ppmd_image").html("<div class=\"col-12\" style=\"background-color: rgb(245, 245, 245); display: -webkit-box;\">" + ppmd_image + "</div>");
+	$("#ppmd_image").html("<div class=\"col-12\" style=\"overflow-x: auto; background-color: rgb(245, 245, 245); display: -webkit-box;\">" + ppmd_image + "</div>");
 }
 
 function ppmdOpenImage(image_id) {

@@ -11,6 +11,9 @@ return [
     'name' => 'プロジェクト名',
     'dates' => '日時',
 
+    'company_required' => '企業名を入力して下さい。',
+    'name_required' => 'プロジェクトを入力して下さい。',
+
     // detail
     'created_datetime' => '登録日時',
     'last_updated_datetime' => '更新日時',

@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-4">
                                 <div class="text-center mt-2 mb-2">
-                                    <div id="ppmd_image" class=row style="overflow-x: auto; max-height: 150px;">
+                                    <div id="ppmd_image" class=row style="max-height: 200px;">
                                     </div>
                                 </div>
                                 <a id='ppmd_image_original' class="btn btn-primary button-small-font w-100 mb-2" download>{{ __('photogps.download_original_image')}}</a>

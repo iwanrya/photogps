@@ -56,15 +56,11 @@ class PostController extends Controller
 
             //define validation rules
             $validator = Validator::make($request->all(), [
-                // 'photo'             => 'required|image|mimes:jpeg,jpg|max:8000',
                 'photo'                => ['required', new PostImages],
                 'shoot_datetime'       => 'required',
                 'separate_exif'        => 'required',
                 'latitude'             => 'required',
                 'longitude'            => 'required',
-                // 'project_id'        => 'required',
-                // 'customer_id'       => 'required',
-                // 'status'            => 'required',
             ]);
 
             //check if validation fails
@@ -85,7 +81,9 @@ class PostController extends Controller
             $status = $request->post('status') ? trim($request->post('status')) : null;
             $comment = $request->post('comment') ? trim($request->post('comment')) : '';
             
-
+            $files = $request->file();
+            var_dump($files);
+            die();
             $images = $request->file('photo');
             $shoot_timestamps = $request->post('shoot_datetime');
             $separate_exifs = $request->post('separate_exif');
