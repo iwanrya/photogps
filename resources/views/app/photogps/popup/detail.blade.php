@@ -19,8 +19,6 @@
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div id="ppmd_no_gps_info" class="no-gps-info">{{ __('photogps.no_gps_info_1')}}<br>{{ __('photogps.no_gps_info_2')}}</div>
-                                <div id="ppmd_maps"></div>
                                 <div class="text-center mt-2 mb-2">
                                     <div id="ppmd_image" class=row style="overflow-x: auto; max-height: 150px;">
                                     </div>

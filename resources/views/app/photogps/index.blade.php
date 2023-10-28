@@ -243,6 +243,7 @@
 
 @push('modals')
 @include('app.photogps.popup.detail')
+@include('app.photogps.popup.image_info')
 @endpush
 
 @push('js')
