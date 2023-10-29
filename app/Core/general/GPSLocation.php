@@ -14,6 +14,47 @@ class GPSLocation
         // (no distinction here for N/S
         // or W/E).
 
+        $degrees = floor($degree); // Number of whole degrees.
+
+        $minute = fmod($degree, 1) * 60;
+        $minutes = floor($minute); // Number of whole minutes.
+        // taken by the minutes.
+
+        $second = fmod($minute, 1) * 60;
+
+        $decimal_digits = strpos($second . "", ".") > 0 ? strlen(explode(".", $second  . "")[1]) : 0;
+
+        $second_divs =  10 ** ($decimal_digits > 8 ? 8 : $decimal_digits);
+
+        $seconds = floor(fmod($minute, 1) * 60 * $second_divs);
+        // taken by the seconds.
+
+        return [
+            [
+                $degrees,
+                1
+            ],
+            [
+                $minutes,
+                1
+            ],
+            [
+                $seconds,
+                $second_divs
+            ]
+        ];
+    }
+
+    static function convertDecimalToDMSX($degree)
+    {
+        if ($degree > 180 || $degree < -180) {
+            return null;
+        }
+
+        $degree = abs($degree); // make sure number is positive
+        // (no distinction here for N/S
+        // or W/E).
+
         $seconds = $degree * 3600; // Total number of seconds.
 
         $degrees = floor($degree); // Number of whole degrees.

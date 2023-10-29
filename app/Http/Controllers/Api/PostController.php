@@ -94,6 +94,9 @@ class PostController extends Controller
                 $lat = $lats[$index];
                 $long = $longs[$index];
 
+                error_log($lat);
+                error_log($long);
+
                 // convert shoot_datetime from timestamp (string) to DateTime
                 $shoot_timestamp = $shoot_timestamps[$index];
                 $shoot_datetime = DateTime::createFromFormat('U.u', $shoot_timestamp);
