@@ -12,7 +12,7 @@ return [
     'dates' => '日時',
 
     'company_required' => '企業名を入力して下さい。',
-    'name_required' => 'プロジェクトを入力して下さい。',
+    'name_required' => 'プロジェクト名を入力して下さい。',
 
     // detail
     'created_datetime' => '登録日時',

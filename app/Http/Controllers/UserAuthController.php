@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Validation\Rule;
 
 class UserAuthController extends Controller
 {
@@ -42,9 +43,16 @@ class UserAuthController extends Controller
 
         try {
             // define validation rules
-            $validator = Validator::make($request->all(), [
-                'name'                  => 'required',
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name'       => ['required', 'unique:user_auths,name'],
+                ],
+                [
+                    'name.required' => __("user_auth.name_required"),
+                    'name.unique' => __("user_auth.name_unique"),
+                ]
+            );
 
             // check if validation fails
             if ($validator->fails()) {
@@ -109,7 +117,10 @@ class UserAuthController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'name'       => 'required',
+            'name'       => [
+                'required',
+                Rule::unique('user_auths', 'name')->ignore($id),
+            ],
         ]);
 
         // check if validation fails

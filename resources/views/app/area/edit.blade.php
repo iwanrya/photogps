@@ -26,7 +26,12 @@
                         <div class="form-group row">
                             <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('area.name')}}</label>
                             <div class="col-12 col-sm-2">
-                                <input type="text" class="form-control" name="name" value="{{ $area->name }}">
+                                <input type="text" class="form-control" name="name" value="{{ old() ? old('name') : $area->name }}">
+                                @if ($errors->has('name'))
+                                <div>
+                                    <small class="text-danger text-left">{{ $errors->first('name') }}</small>
+                                </div>
+                                @endif
                             </div>
                         </div>
 

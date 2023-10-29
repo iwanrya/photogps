@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Validation\Rule;
 
 class AreaController extends Controller
 {
@@ -42,9 +43,16 @@ class AreaController extends Controller
 
         try {
             // define validation rules
-            $validator = Validator::make($request->all(), [
-                'name'       => 'required',
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'name'       => ['required', 'unique:areas,name'],
+                ],
+                [
+                    'name.required' => __("area.name_required"),
+                    'name.unique' => __("area.name_unique"),
+                ]
+            );
 
             // check if validation fails
             if ($validator->fails()) {
@@ -106,7 +114,10 @@ class AreaController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'name'       => 'required',
+            'name'       => [
+                'required',
+                Rule::unique('areea', 'name')->ignore($id),
+            ],
         ]);
 
         // check if validation fails
