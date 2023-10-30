@@ -14,7 +14,7 @@ return [
     'password_confirmation' => 'パスワード（確認)',
     'email' => 'メールアドレス',
     'company' => '企業名',
-    'role' => '役割',
+    'role' => '権限',
     'dates' => '日時',
 
     'username_required' => 'ユーザー名を入力して下さい。',

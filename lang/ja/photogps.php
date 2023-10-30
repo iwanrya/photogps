@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => '写真共有ツール',
+    'title' => '画像情報共有ツール',
 
     // search filter
     'photographer' => '撮影者',
@@ -16,7 +16,7 @@ return [
     'no' => 'no',
     'content' => '内容',
     'photograph' => '写真',
-    'location' => '撮影場所 / GPS情報',
+    'location' => '撮影場所/位置情報',
     'latitude' => '緯度',
     'longitude' => '経度',
 

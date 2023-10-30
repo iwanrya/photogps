@@ -23,7 +23,6 @@
                         <p>
                             <strong>{{ __('user.username')}}:</strong> {{ $user->username }}<br>
                             <strong>{{ __('user.email')}}:</strong> {{ $user->email }}<br>
-                            <strong>{{ __('user.email_verified_at')}}:</strong> {{ $user->email_verified_at_formatted }}<br>
                             <strong>{{ __('user.company')}}:</strong> {{ $user->companyUser ? $user->companyUser->company->name : "-" }}<br>
                             <strong>{{ __('user.role')}}:</strong> {{ $user->companyUser ? $user->companyUser->userAuth->name : "-" }}<br>
                             <strong>{{ __('user.created_datetime')}}:</strong> {{ $user->created_at_formatted }}<br>

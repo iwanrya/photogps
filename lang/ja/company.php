@@ -5,10 +5,10 @@ return [
 
     // columns / fields
     'id' => 'ID',
-    'actions' => '動作',
-    'system_owner' => 'システムの所有者',
-    'name' => '名前',
-    'dates' => '日時',
+    'actions' => 'アクション',
+    'system_owner' => 'システム管理者権限',
+    'name' => '企業名',
+    'dates' => '登録、更新日時',
 
     'name_required' => '企業名を入力して下さい。',
     'name_unique' => '企業名が既に使われている。',

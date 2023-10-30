@@ -3,7 +3,7 @@
 return [
     'menu' => 'Menu',
     'home' => 'Home',
-    'photo_sharing' => '写真共有ツール',
+    'photo_sharing' => '画像情報共有ツール',
     'customer' => 'お客様',
     'project' => 'プロジェクト',
     'area' => '面積',
