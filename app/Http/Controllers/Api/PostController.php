@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Validator;
 use DateTime;
 use DateTimeZone;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use stdClass;
 
 class PostController extends Controller
@@ -54,6 +55,7 @@ class PostController extends Controller
 
         try {
 
+            throw new Exception("Hello");
             //define validation rules
             $validator = Validator::make($request->all(), [
                 'photo'                => ['required', new PostImages],
@@ -165,9 +167,11 @@ class PostController extends Controller
             return response()->json(new PostResource(true, "Image successfully uploaded"), Response::HTTP_OK);
         } catch (BadRequestException $ex) {
             error_log($ex->getMessage());
+            Log::error($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_BAD_REQUEST);
         } catch (Exception $ex) {
             error_log($ex->getMessage());
+            Log::error($ex->getMessage());
             return response()->json(new PostResource(false, "Exception: " . $ex->getMessage()), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
