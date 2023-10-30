@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -58,14 +59,18 @@ class ProjectController extends Controller
 
         try {
             // define validation rules
-            $validator = Validator::make($request->all(), [
-                'company'    => 'required',
-                'name'       => 'required',
-            ],
-            [
-                'company.required' => __("project.company_required"),
-                'name.required' => __("project.name_required"),
-            ]);
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'company'    => 'required',
+                    'name'       => ['required', 'unique:projects,name'],
+                ],
+                [
+                    'company.required' => __("project.company_required"),
+                    'name.required' => __("project.name_required"),
+                    'name.unique' => __("project.name_unique"),
+                ]
+            );
 
             // check if validation fails
             if ($validator->fails()) {
@@ -137,10 +142,21 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(), [
-            'company'    => 'required',
-            'name'       => 'required',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'company'    => 'required',
+                'name'       => [
+                    'required',
+                    Rule::unique('projects', 'name')->ignore($id),
+                ]
+            ],
+            [
+                'company.required' => __("project.company_required"),
+                'name.required' => __("project.name_required"),
+                'name.unique' => __("project.name_unique"),
+            ]
+        );
 
         // check if validation fails
         if ($validator->fails()) {

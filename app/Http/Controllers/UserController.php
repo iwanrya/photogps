@@ -185,19 +185,31 @@ class UserController extends Controller
             // Value of User before update
             $user_now = User::find($id);
 
-            $validator = Validator::make($request->all(), [
-                'username'              => [
-                    'required',
-                    Rule::unique('users', 'username')->ignore($user_now->id),
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'username'              => [
+                        'required',
+                        Rule::unique('users', 'username')->ignore($user_now->id),
+                    ],
+                    'name'                  => 'required',
+                    'email'                 => [
+                        'required',
+                        Rule::unique('users', 'email')->ignore($user_now->id),
+                    ],
+                    'company'               => 'required',
+                    'auth'                  => 'required',
                 ],
-                'name'                  => 'required',
-                'email'                 => [
-                    'required',
-                    Rule::unique('users', 'email')->ignore($user_now->id),
-                ],
-                'company'               => 'required',
-                'auth'                  => 'required',
-            ]);
+                [
+                    'username.required' => __("user.username_required"),
+                    'username.unique' => __("user.username_unique"),
+                    'name.required' => __("user.name_required"),
+                    'email.required' => __("user.email_required"),
+                    'email.unique' => __("user.email_unique"),
+                    'company.required' => __("user.company_required"),
+                    'auth.required' => __("user.auth_required"),
+                ]
+            );
 
             // check if validation fails
             if ($validator->fails()) {

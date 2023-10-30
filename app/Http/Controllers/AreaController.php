@@ -113,12 +113,19 @@ class AreaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name'       => [
-                'required',
-                Rule::unique('areea', 'name')->ignore($id),
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name'       => [
+                    'required',
+                    Rule::unique('areas', 'name')->ignore($id),
+                ]
             ],
-        ]);
+            [
+                'name.required' => __("area.name_required"),
+                'name.unique' => __("area.name_unique"),
+            ]
+        );
 
         // check if validation fails
         if ($validator->fails()) {

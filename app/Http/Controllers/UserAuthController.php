@@ -116,12 +116,19 @@ class UserAuthController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name'       => [
-                'required',
-                Rule::unique('user_auths', 'name')->ignore($id),
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name'       => [
+                    'required',
+                    Rule::unique('user_auths', 'name')->ignore($id),
+                ],
             ],
-        ]);
+            [
+                'name.required' => __("user_auth.name_required"),
+                'name.unique' => __("user_auth.name_unique"),
+            ]
+        );
 
         // check if validation fails
         if ($validator->fails()) {

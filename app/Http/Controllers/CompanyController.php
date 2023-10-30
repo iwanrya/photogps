@@ -116,12 +116,19 @@ class CompanyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name'       => [
-                'required',
-                Rule::unique('companies', 'name')->ignore($id),
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name'       => [
+                    'required',
+                    Rule::unique('companies', 'name')->ignore($id),
+                ],
             ],
-        ]);
+            [
+                'name.required' => __("company.name_required"),
+                'name.unique' => __("company.name_unique"),
+            ]
+        );
 
         // check if validation fails
         if ($validator->fails()) {

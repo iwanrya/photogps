@@ -13,6 +13,7 @@ return [
 
     'company_required' => '企業名を入力して下さい。',
     'name_required' => 'プロジェクト名を入力して下さい。',
+    'name_unique' => 'プロジェクト名が既に使われている。',
 
     // detail
     'created_datetime' => '登録日時',
