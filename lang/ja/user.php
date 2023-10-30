@@ -15,7 +15,7 @@ return [
     'email' => 'メールアドレス',
     'company' => '企業名',
     'role' => '権限',
-    'dates' => 'システム管理者権限',
+    'dates' => '登録、更新日時',
 
     'username_required' => 'ユーザー名を入力して下さい。',
     'username_unique' => 'ユーザー名が既に使われている。',

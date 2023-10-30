@@ -9,7 +9,7 @@ return [
     'company' => '企業名',
     'actions' => 'アクション',
     'name' => 'プロジェクト名',
-    'dates' => 'システム管理者権限',
+    'dates' => '登録、更新日時',
 
     'company_required' => '企業名を入力して下さい。',
     'name_required' => 'プロジェクト名を入力して下さい。',

@@ -7,7 +7,7 @@ return [
     'id' => 'ID',
     'actions' => 'アクション',
     'name' => 'お客様名',
-    'dates' => 'システム管理者権限',
+    'dates' => '登録、更新日時',
 
     // detail
     'created_datetime' => '登録日時',

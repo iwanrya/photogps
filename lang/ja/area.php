@@ -7,7 +7,7 @@ return [
     'id' => 'ID',
     'actions' => 'アクション',
     'name' => '内容',
-    'dates' => 'システム管理者権限',
+    'dates' => '登録、更新日時',
 
     'name_required' => '面積名を入力して下さい。',
     'name_unique' => '面積名が既に使われている。',

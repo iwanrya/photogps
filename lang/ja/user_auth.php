@@ -8,7 +8,7 @@ return [
     'actions' => 'アクション',
     'system_owner' => 'システム管理者権限',
     'name' => 'ユーザー権限名',
-    'dates' => 'システム管理者権限',
+    'dates' => '登録、更新日時',
 
     'name_required' => 'ユーザー権限名を入力して下さい。',
     'name_unique' => 'ユーザー権限名が既に使われている。',
