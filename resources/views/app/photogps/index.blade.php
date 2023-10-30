@@ -228,7 +228,7 @@
                             </table>
 
                             <div class="mt-2">
-                                {!! $posts->links() !!}
+                                {!! $posts->render("pagination::custom-jpns") !!}
                             </div>
                         </div>
                     </div>

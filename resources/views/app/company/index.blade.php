@@ -50,7 +50,7 @@
                     </table>
 
                     <div class="mt-2">
-                        {!! $companys->links() !!}
+                        {!! $posts->render("pagination::custom-jpns") !!}
                     </div>
                 </div>
             </div>
