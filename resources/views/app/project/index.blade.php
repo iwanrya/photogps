@@ -116,7 +116,7 @@
                     </table>
 
                     <div class="mt-2">
-                        {!! $posts->render("pagination::custom-jpns") !!}
+                        {!! $projects->render("pagination::custom-jpns") !!}
                     </div>
                 </div>
             </div>

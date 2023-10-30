@@ -50,7 +50,7 @@
                     </table>
 
                     <div class="mt-2">
-                        {!! $posts->render("pagination::custom-jpns") !!}
+                        {!! $user_auths->render("pagination::custom-jpns") !!}
                     </div>
                 </div>
             </div>

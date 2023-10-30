@@ -53,7 +53,7 @@
                     </table>
 
                     <div class="mt-2">
-                        {!! $posts->render("pagination::custom-jpns") !!}
+                        {!! $users->render("pagination::custom-jpns") !!}
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@
                     </table>
 
                     <div class="mt-2">
-                        {!! $posts->render("pagination::custom-jpns") !!}
+                        {!! $areas->render("pagination::custom-jpns") !!}
                     </div>
                 </div>
             </div>
