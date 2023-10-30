@@ -5,9 +5,11 @@ namespace App\Core\general\image;
 use App\Core\general\GPSLocation;
 use lsolesen\pel\PelEntryAscii;
 use lsolesen\pel\PelEntryRational;
+use lsolesen\pel\PelExif;
 use lsolesen\pel\PelIfd;
 use lsolesen\pel\PelJpeg;
 use lsolesen\pel\PelTag;
+use lsolesen\pel\PelTiff;
 
 class AddExifToImage
 {
@@ -33,13 +35,24 @@ class AddExifToImage
         $jpeg = new PelJpeg($input);
 
         $exif = $jpeg->getExif();
+        if ($exif == null) {
+            $exif = new PelExif();
+            $jpeg->setExif($exif);
+        }
 
         $tiff = $exif->getTiff();
+        if ($tiff == null) {
+            $tiff = new PelTiff();
+            $exif->setTiff($tiff);
+        }
 
         $ifd0 = $tiff->getIfd();
+        if ($ifd0 == null) {
+            $ifd0 = new PelIfd(PelIfd::IFD0);
+            $tiff->setIfd($ifd0);
+        }
 
         $gps_ifd = $ifd0->getSubIfd(PelIfd::GPS);
-
         if ($gps_ifd === null) {
             $gps_ifd = new PelIfd(PelIfd::GPS);
             $ifd0->addSubIfd($gps_ifd);
