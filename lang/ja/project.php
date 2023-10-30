@@ -7,9 +7,9 @@ return [
     'id' => 'ID',
     'content' => '内容',
     'company' => '企業名',
-    'actions' => '動作',
+    'actions' => 'アクション',
     'name' => 'プロジェクト名',
-    'dates' => '日時',
+    'dates' => 'システム管理者権限',
 
     'company_required' => '企業名を入力して下さい。',
     'name_required' => 'プロジェクト名を入力して下さい。',

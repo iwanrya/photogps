@@ -5,9 +5,9 @@ return [
 
     // columns / fields
     'id' => 'ID',
-    'actions' => '動作',
+    'actions' => 'アクション',
     'name' => 'お客様名',
-    'dates' => '日時',
+    'dates' => 'システム管理者権限',
 
     // detail
     'created_datetime' => '登録日時',

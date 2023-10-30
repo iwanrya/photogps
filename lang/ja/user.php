@@ -5,7 +5,7 @@ return [
 
     // columns / fields
     'id' => 'ID',
-    'actions' => '動作',
+    'actions' => 'アクション',
     'details' => '詳細',
     'username' => 'ユーザー名',
     'name' => '名前',
@@ -15,7 +15,7 @@ return [
     'email' => 'メールアドレス',
     'company' => '企業名',
     'role' => '権限',
-    'dates' => '日時',
+    'dates' => 'システム管理者権限',
 
     'username_required' => 'ユーザー名を入力して下さい。',
     'username_unique' => 'ユーザー名が既に使われている。',

@@ -5,9 +5,9 @@ return [
 
     // columns / fields
     'id' => 'ID',
-    'actions' => '動作',
+    'actions' => 'アクション',
     'name' => '内容',
-    'dates' => '日時',
+    'dates' => 'システム管理者権限',
 
     'name_required' => '面積名を入力して下さい。',
     'name_unique' => '面積名が既に使われている。',
