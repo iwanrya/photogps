@@ -26,7 +26,7 @@
                     <tr>
                         <td>{{ __('userinfo.last_login')}}</td>
                         <td>:</td>
-                        <td>{{ auth()->user()->last_login }}</td>
+                        <td>{{ auth()->user()->lastLogin }}</td>
                     </tr>
                 </table>
             </div>

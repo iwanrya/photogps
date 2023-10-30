@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +26,11 @@ class User extends Authenticatable implements JWTSubject
     public function companyUser(): HasOne
     {
         return $this->hasOne(CompanyUser::class, 'user_id', 'id');
+    }
+
+    public function successfulLoginLog(): HasMany
+    {
+        return $this->hasMany(SuccessfulLoginLog::class, 'create_user_id', 'id');
     }
 
     /**
@@ -80,6 +86,11 @@ class User extends Authenticatable implements JWTSubject
 
     public function isSystemOwner(): bool {
         return $this->companyUser->userAuth->is_system_owner;
+    }
+
+    protected function getLastLoginAttribute(): string
+    {
+        return count($this->successfulLoginLog) >= 2 ? $this->successfulLoginLog[count($this->successfulLoginLog)-2]->created_at_formatted : "-";
     }
 
     protected function getNameAttribute($value)
