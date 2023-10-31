@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Exports\PostsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use DateTime;
+use DateTimeZone;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -172,6 +173,7 @@ class PostController extends Controller
         $temp_download_path = App::temp_download_folder();
 
         $now = DateTime::createFromFormat('U.u', microtime(true));
+        date_timezone_set($now, new DateTimeZone(date_default_timezone_get()));
 
         $filename = $now->format("Ymd_Hisu") . ".xlsx";
         $dest_filepath = "{$temp_download_path}/{$filename}";
