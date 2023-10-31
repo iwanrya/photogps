@@ -144,7 +144,7 @@ function ppmdDrawDetail() {
 		// ppmd_image += "<div style=\"cursor: pointer; width: 70px; height: 70px;\">" +
 		// 	"<img data-image=\"" + value.id + "\" src=\"" + value.thumbnail + "\" onclick=\"ppmdOpenImage('" + value.photo + "', '" + value.longitude + "', '" + value.latitude + "')\" style=\"max-width: 100%; max-height: 100%;\"/>" +
 		// 	"</div>";
-		ppmd_image += "<div style=\"cursor: pointer; width: 70px; height: 70px;\">" +
+		ppmd_image += "<div class=\"mx-1 my-1\" style=\"cursor: pointer; width: 70px; height: 70px;\">" +
 			"<img src=\"" + value.thumbnail + "\" onclick=\"ppmdOpenImage(" + value.id + ")\" style=\"max-width: 100%; max-height: 100%;\"/>" +
 			"</div>";
 	});
