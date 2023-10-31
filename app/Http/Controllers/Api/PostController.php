@@ -55,7 +55,6 @@ class PostController extends Controller
 
         try {
 
-            throw new Exception("Hello");
             //define validation rules
             $validator = Validator::make($request->all(), [
                 'photo'                => ['required', new PostImages],
