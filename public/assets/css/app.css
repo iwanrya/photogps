@@ -101,3 +101,7 @@ label {
 .w-40 {
     width: 40% !important;
 }
+
+.multiselect-container .multiselect-option.disabled {
+    display: none;
+}

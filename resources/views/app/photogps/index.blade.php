@@ -82,7 +82,7 @@
                             <div class="col-12 col-sm-3 col-md-3 col-lg-3">
                                 <select id="project" name="project[]" class="form-control" multiple="multiple">
                                     @foreach ($projects as $project)
-                                    <option value="{{$project->code}}" {{ (request()->get('project') != null && in_array($project->code, request()->get('project')) ? 'selected' : '') }}>{{$project->name}}</option>
+                                    <option data-company="{{$project->company_id}}" value="{{$project->code}}" hidden {{ (request()->get('project') != null && in_array($project->code, request()->get('project')) ? 'selected' : '') }}>{{$project->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

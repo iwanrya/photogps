@@ -4,22 +4,51 @@ let re_init;
 
 $(function () {
 
+	$('#photographer, #area, #project, #status').multiselect({
+		buttonText: function (options, select) {
+			return options.length + "件が選択されました";
+		},
+		buttonWidth: '100%',
+		includeSelectAllOption: true,
+		selectAllText: '全て選択',
+		maxHeight: 400,
+		enableFiltering: true,
+	});
+
+	$('#company').multiselect({
+		buttonText: function (options, select) {
+			return options.length + "件が選択されました";
+		},
+		buttonWidth: '100%',
+		includeSelectAllOption: true,
+		selectAllText: '全て選択',
+		maxHeight: 400,
+		enableFiltering: true,
+		onChange: function (element, checked) {
+			$('*[data-company]').prop("disabled", true);
+
+			$("#company").select().val().forEach((value, index, arr) => {
+				var opts = $('*[data-company="' + value + '"]');
+				opts.prop('disabled', false);
+			});
+
+			$('*[data-company]:disabled').prop("selected", false);
+
+			$("#project").multiselect('refresh');
+		},
+		onSelectAll: function (options) {
+			showAllProjectSelection();
+		},
+		onDeselectAll: function (options) {
+			showAllProjectSelection();
+		}
+	});
+
 	if (getQueryString('filter_date_toogle_1') != null) {
 		$("#shoot_date_start").prop('readonly', true);
 		$("#shoot_date_end").prop('readonly', true);
 	}
 
-});
-
-$('#photographer, #area, #project, #company, #status').multiselect({
-	buttonText: function (options, select) {
-		return options.length + "件が選択されました";
-	},
-	buttonWidth: '100%',
-	includeSelectAllOption: true,
-	selectAllText: '全て選択',
-	maxHeight: 400,
-	enableFiltering: true,
 });
 
 $(document).on('change', '[data-btn-date]', function (v) {
@@ -90,4 +119,9 @@ function reset_form() {
 	});
 
 	$("#comment").val('');
+}
+
+
+function showAllProjectSelection() {
+	$('*[data-company]').prop("disabled", false);
 }
