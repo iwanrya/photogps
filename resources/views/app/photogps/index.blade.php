@@ -119,7 +119,7 @@
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                        <button type="button" id="b_clear" class="btn btn-default btn-block xs-btn-block">{{ __('button.reset')}}</button>
+                                        <a href="{{ URL::to('photo') }}" id="b_clear" class="btn btn-default btn-block xs-btn-block">{{ __('button.reset')}}</a>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                         <button type="submit" id="b_search" class="btn btn-success btn-block xs-btn-block xs-mt-10">{{ __('button.search')}}</button>

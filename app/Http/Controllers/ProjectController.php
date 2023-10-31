@@ -28,7 +28,10 @@ class ProjectController extends Controller
 
         $builder = Project::read($current_user, $filter_companies, $filter_name);
 
-        $projects = $builder->orderBy('id', 'asc')->paginate(50)->withQueryString();
+        $projects = [];
+        if (!empty($request->all())) {
+            $projects = $builder->orderBy('id', 'asc')->paginate(50)->withQueryString();
+        }
 
         // companies
         $companies = Company::select('id as code', 'name')->where('is_system_owner', false)->orderBy('name', 'asc')->get();

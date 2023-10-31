@@ -39,7 +39,7 @@
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                        <button type="button" id="b_clear" class="btn btn-default btn-block xs-btn-block">{{ __('button.reset')}}</button>
+                                        <a href="{{ URL::to('project') }}" class="btn btn-default btn-block xs-btn-block">{{ __('button.reset')}}</a>
                                     </div>
                                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                         <button type="submit" id="b_search" class="btn btn-success btn-block xs-btn-block xs-mt-10">{{ __('button.search')}}</button>
@@ -69,9 +69,11 @@
                     <a href="{{ URL::to('project/create') }}">{{ __('project.create_link')}}</a>
 
                     <div class="mb-2 float-right">
+                        @if(count($projects) > 0)
                         {!! $projects->render("pagination::custom-jpns-header") !!}
+                        @endif
                     </div>
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-bordered table-soft-dark">
                         <thead>
                             <tr>
                                 <td class="w-5 text-center">{{ __('project.no')}}</td>
@@ -81,6 +83,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if(count($projects) === 0)
+                            <tr>
+                                <td class="text-center" colspan=4>{{ __('table.no_search_result')}}</td>
+                            </tr>
+                            @else
                             @foreach($projects as $key => $project)
                             <tr>
                                 <td class="text-center">{{ $projects->firstItem() + $key }}</td>
@@ -115,11 +122,14 @@
                                 </td>
                             </tr>
                             @endforeach
+                            @endif
                         </tbody>
                     </table>
 
                     <div class="mt-2">
+                        @if(count($projects) > 0)
                         {!! $projects->render("pagination::custom-jpns") !!}
+                        @endif
                     </div>
                 </div>
             </div>

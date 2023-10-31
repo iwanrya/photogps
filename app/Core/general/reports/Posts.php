@@ -116,15 +116,15 @@ class Posts
     private static function postPhoto($sheet, $postPhoto)
     {
         $sheet->setCellValueExplicit("F2", $postPhoto->shoot_datetime_formatted, DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit("H3", $postPhoto->longitude, DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit("N3", $postPhoto->latitude, DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit("H3", $postPhoto->longitude . "度", DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit("H4", $postPhoto->latitude . "度", DataType::TYPE_STRING);
 
         $image_path = App::photo_mobile_noexif_file_location() . $postPhoto->getRawOriginal('image');
 
         $drawing = new Drawing();
         $drawing->setName($postPhoto->getRawOriginal('image'));
         $drawing->setPath($image_path); // put your path and image here
-        $drawing->setCoordinates('C5');
+        $drawing->setCoordinates('C6');
         $drawing->setHeight(500);
         $drawing->setWidth(500);
         $drawing->setWorksheet($sheet);
