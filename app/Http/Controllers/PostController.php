@@ -45,7 +45,8 @@ class PostController extends Controller
         $user = User::with(['companyUser', 'companyUser.company', 'companyUser.userAuth'])
             ->find($current_user->id);
 
-        $builder = User::select('name', 'username', 'id as code')->with(['companyUser']);
+        $builder = User::select('name', 'username', 'id as code')->with(['companyUser'])
+            ->whereRelation('companyUser.company', 'is_system_owner', false);
 
         if ($user->companyUser->userAuth->is_system_owner == false) {
             $builder->whereRelation('companyUser', 'company_id', '=', $user->companyUser->company_id);

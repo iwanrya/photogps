@@ -28,7 +28,7 @@
                         </div>
                         <!-- 2 -->
                         <div class="form-group row">
-                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.shoot_datetime')}}</label>
+                            <label class="col-form-label col-12 col-sm-2 text-right xs-text-left">{{ __('photogps.shoot_date')}}</label>
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="row">
                                     <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">

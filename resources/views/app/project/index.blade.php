@@ -68,6 +68,9 @@
                 <div class="card-body">
                     <a href="{{ URL::to('project/create') }}">{{ __('project.create_link')}}</a>
 
+                    <div class="mb-2 float-right">
+                        {!! $projects->render("pagination::custom-jpns-header") !!}
+                    </div>
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>

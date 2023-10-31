@@ -16,6 +16,9 @@
                 <div class="card-body">
                     <a href="{{ URL::to('area/create') }}">{{ __('area.create_link')}}</a>
 
+                    <div class="mb-2 float-right">
+                        {!! $areas->render("pagination::custom-jpns-header") !!}
+                    </div>
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>

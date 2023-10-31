@@ -16,6 +16,9 @@
                 <div class="card-body">
                     <a href="{{ URL::to('customer/create') }}">{{ __('customer.create_link')}}</a>
 
+                    <div class="mb-2 float-right">
+                        {!! $customers->render("pagination::custom-jpns-header") !!}
+                    </div>
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
