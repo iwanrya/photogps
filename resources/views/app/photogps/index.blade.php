@@ -220,7 +220,7 @@
 
                                             <div class='row'>
                                                 <div class='col-12 text-right'>
-                                                    <a href="{{ $post->report }}" class='btn btn-success'><i class="fa fa-file-excel-o" aria-hidden="true"></i> {{ __('photogps.download_report')}}</a>
+                                                    <a href="{{ $post->report }}"><img src="{{ asset('assets/icons/xls.svg') }}" height="40"></a>
                                                     <button data-bs-toggle='modal' data-id='{{ $post->id }}' data-bs-target='#popup_photo_mobile_detail' class='btn btn-primary'>{{ __('photogps.detail')}}</button>
                                                 </div>
                                             </div>
