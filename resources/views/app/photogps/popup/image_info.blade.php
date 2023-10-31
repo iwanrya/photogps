@@ -20,6 +20,8 @@
                             <div class="col-4">
                                 <div id="ppmii_no_gps_info" class="no-gps-info">{{ __('photogps.no_gps_info_1')}}<br>{{ __('photogps.no_gps_info_2')}}</div>
                                 <div id="ppmii_maps"></div>
+                                <p>緯度: <span id="ppmii_latitude"></span></p>
+                                <p>経度: <span id="ppmii_longitude"></span></p>
                                 <a id='ppmii_image_original' class="btn btn-primary button-small-font w-100 mt-2" download>{{ __('photogps.download_original_image')}}</a>
                                 <a id='ppmii_image_no_exif' class="btn btn-primary button-small-font w-100 mt-2" download>{{ __('photogps.download_noexif_image')}}</a>
                             </div>

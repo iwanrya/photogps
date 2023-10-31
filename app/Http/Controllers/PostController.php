@@ -47,7 +47,7 @@ class PostController extends Controller
             ->find($current_user->id);
 
         $builder = User::select('name', 'username', 'id as code')->with(['companyUser'])
-            ->whereRelation('companyUser.company', 'is_system_owner', false);
+            ->whereRelation('companyUser.company', 'is_hidden', false);
 
         if ($user->companyUser->userAuth->is_system_owner == false) {
             $builder->whereRelation('companyUser', 'company_id', '=', $user->companyUser->company_id);

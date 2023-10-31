@@ -8,6 +8,10 @@ function ppmiiDraw(item) {
 	$("#ppmii_image_original").attr('href', item.photo_original);
 	$("#ppmii_image_no_exif").attr('href', item.photo);
 
+	// gps location
+	$("#ppmii_latitude").html(item.latitude);
+	$("#ppmii_longitude").html(item.longitude);
+
 	// maps
 	if (item.latitude === 0.0 && item.longitude === 0.0) {
 		$("#ppmii_maps").addClass("d-none");
