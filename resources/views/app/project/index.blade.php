@@ -71,7 +71,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <td class="w-5 text-center">{{ __('project.id')}}</td>
+                                <td class="w-5 text-center">{{ __('project.no')}}</td>
                                 <td>{{ __('project.content')}}</td>
                                 <td class="w-20">{{ __('project.dates')}}</td>
                                 <td class="w-20">{{ __('project.actions')}}</td>
@@ -80,7 +80,7 @@
                         <tbody>
                             @foreach($projects as $key => $project)
                             <tr>
-                                <td class="text-center">{{ $project->id }}</td>
+                                <td class="text-center">{{ $projects->firstItem() + $key }}</td>
                                 <td>
                                     <div class='row mb-1'>
                                         <div class='col-4'>

@@ -27,6 +27,14 @@ class LoginController extends Controller
 
         Auth::login($user);
 
+        if ($request->get('rememberMe')) {
+            setcookie("username", $request->get('username'), time() + 999999999);
+            setcookie("password", $request->get('password'), time() + 999999999);
+        } else {
+            setcookie("username", "");
+            setcookie("password", "");
+        }
+
         return $this->authenticated();
     }
 

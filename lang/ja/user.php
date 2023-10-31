@@ -4,6 +4,7 @@ return [
     'title' => 'ユーザー',
 
     // columns / fields
+    'no' => 'no',
     'id' => 'ID',
     'actions' => 'アクション',
     'details' => '詳細',

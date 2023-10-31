@@ -5,10 +5,8 @@
                 {{ Str::upper(__('menu.menu')) }}
             </button>
             <ul class="dropdown-menu" aria-labelledby="ddmenu">
-                <li><a class="dropdown-item" href="{{ url('/') }}">{{ __('menu.home') }}</a></li>
                 <li><a class="dropdown-item" href="{{ url('/photo') }}">{{ __('menu.photo_sharing') }}</a></li>
                 @if (Auth::user()->isSystemOwner())
-                <!-- <li><a class="dropdown-item" href="{{ url('/customer') }}">{{ __('menu.customer') }}</a></li> -->
                 <li><a class="dropdown-item" href="{{ url('/project') }}">{{ __('menu.project') }}</a></li>
                 <li><a class="dropdown-item" href="{{ url('/area') }}">{{ __('menu.area') }}</a></li>
                 <li><a class="dropdown-item" href="{{ url('/user') }}">{{ __('menu.user') }}</a></li>

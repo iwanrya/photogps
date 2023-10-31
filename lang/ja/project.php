@@ -4,6 +4,7 @@ return [
     'title' => 'プロジェクト',
 
     // columns / fields
+    'no' => 'no',
     'id' => 'ID',
     'content' => '内容',
     'company' => '企業名',

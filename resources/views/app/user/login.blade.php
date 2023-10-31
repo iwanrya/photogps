@@ -17,7 +17,7 @@
 
                         <div class="mt-3">
                             <label for="username" class="form-label">{{ __('login.username')}} <span class="text-danger">*</span></label>
-                            <input type="text" name="username" class="form-control" value="{{ old('username') }}">
+                            <input type="text" name="username" class="form-control" @if(isset($_COOKIE["username"])) value="{{ $_COOKIE["username"] }}" @endif>
                         </div>
 
                         @if ($errors->has('username'))
@@ -27,7 +27,7 @@
                         @endif
                         <div class="mt-3">
                             <label for="password" class="form-label">{{ __('login.password')}} <span class="text-danger">*</span></label>
-                            <input type="password" name="password" class="form-control" value="{{ old('password') }}">
+                            <input type="password" name="password" class="form-control" @if(isset($_COOKIE["password"])) value="{{ $_COOKIE["password"] }}" @endif>
                         </div>
                         @if ($errors->has('password'))
                         <div>

@@ -19,7 +19,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <td class="w-5 text-center">{{ __('area.id')}}</td>
+                                <td class="w-5 text-center">{{ __('area.no')}}</td>
                                 <td>{{ __('area.name')}}</td>
                                 <td class="w-20">{{ __('area.dates')}}</td>
                                 <td class="w-15">{{ __('area.actions')}}</td>
@@ -28,7 +28,7 @@
                         <tbody>
                             @foreach($areas as $key => $value)
                             <tr>
-                                <td class="text-center">{{ $value->id }}</td>
+                                <td class="text-center">{{ $areas->firstItem() + $key }}</td>
                                 <td>{{ $value->name }}</td>
                                 <td>{{ __(('table.create_date_symbol'))}}: {{ $value->created_at_formatted }}
                                     <br>

@@ -9,6 +9,7 @@ class HomeController extends Controller
 {
     function index()
     {
-        return view("app/home/index");
+        return redirect()->to('photo');
+        // return view("app/home/index");
     }
 }

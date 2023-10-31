@@ -19,7 +19,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <td class="w-5 text-center">{{ __('user.id')}}</td>
+                                <td class="w-5 text-center">{{ __('user.no')}}</td>
                                 <td>{{ __('user.name')}}</td>
                                 <td class="w-30">{{ __('user.details')}}</td>
                                 <td class="w-20">{{ __('user.dates')}}</td>
@@ -29,7 +29,7 @@
                         <tbody>
                             @foreach($users as $key => $value)
                             <tr>
-                                <td class="text-center">{{ $value->id }}</td>
+                                <td class="text-center">{{ $users->firstItem() + $key }}</td>
                                 <td>{{ $value->name }}</td>
                                 <td>{{ __('user.email')}}: {{ $value->email }}
                                     <br />

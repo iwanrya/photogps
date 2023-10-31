@@ -19,7 +19,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <td class="w-5 text-center">{{ __('user_auth.id')}}</td>
+                                <td class="w-5 text-center">{{ __('user_auth.no')}}</td>
                                 <td>{{ __('user_auth.name')}}</td>
                                 <td class="w-10">{{ __('user_auth.system_owner')}}</td>
                                 <td class="w-20">{{ __('user_auth.dates')}}</td>
@@ -29,7 +29,7 @@
                         <tbody>
                             @foreach($user_auths as $key => $value)
                             <tr>
-                                <td class="text-center">{{ $value->id }}</td>
+                                <td class="text-center">{{ $user_auths->firstItem() + $key }}</td>
                                 <td>{{ $value->name }}</td>
                                 <td>{{ $value->is_system_owner ? __('app.yes') : __('app.no') }}</td>
                                 <td>{{ __(('table.create_date_symbol'))}}: {{ $value->created_at_formatted }}
