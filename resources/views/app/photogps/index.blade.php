@@ -140,6 +140,9 @@
                 <div class="col-12">
                     <div class="table-responsive-wrapper">
                         <div id="dvSearchResult">
+                            <div class="mb-2 float-right">
+                                {!! $posts->render("pagination::custom-jpns-header") !!}
+                            </div>
                             <table id="tblResult" class="table table-bordered table-soft-dark">
                                 <thead>
                                     <tr>

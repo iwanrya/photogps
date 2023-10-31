@@ -4,7 +4,7 @@ return [
     'title' => '企業名',
 
     // columns / fields
-    'no' => 'no',
+    'no' => 'No',
     'id' => 'ID',
     'actions' => 'アクション',
     'system_owner' => 'システム管理者権限',

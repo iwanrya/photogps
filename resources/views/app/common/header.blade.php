@@ -15,6 +15,7 @@
                 @endif
             </ul>
         </div>
+        {{ __('app.name') }}
         <div class="d-flex">
             <a class="btn btn-light btn-sm me-2" data-bs-toggle="modal" data-bs-target="#modal_user_info">{{ __('menu.user_info')}}</a>
             <a class="btn btn-light btn-sm" href="{{ url('/logout') }}">{{ __('menu.logout')}}</a>

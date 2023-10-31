@@ -13,7 +13,7 @@ return [
     'comment' => 'コメント',
 
     // table
-    'no' => 'no',
+    'no' => 'No',
     'content' => '内容',
     'photograph' => '写真',
     'location' => '撮影場所/位置情報',

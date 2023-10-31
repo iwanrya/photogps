@@ -4,7 +4,7 @@ return [
     'title' => '面積',
 
     // columns / fields
-    'no' => 'no',
+    'no' => 'No',
     'id' => 'ID',
     'actions' => 'アクション',
     'name' => '内容',

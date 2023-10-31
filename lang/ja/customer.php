@@ -4,7 +4,7 @@ return [
     'title' => 'お客様',
 
     // columns / fields
-    'no' => 'no',
+    'no' => 'No',
     'id' => 'ID',
     'actions' => 'アクション',
     'name' => 'お客様名',
