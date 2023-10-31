@@ -25,16 +25,7 @@ $(function () {
 		maxHeight: 400,
 		enableFiltering: true,
 		onChange: function (element, checked) {
-			$('*[data-company]').prop("disabled", true);
-
-			$("#company").select().val().forEach((value, index, arr) => {
-				var opts = $('*[data-company="' + value + '"]');
-				opts.prop('disabled', false);
-			});
-
-			$('*[data-company]:disabled').prop("selected", false);
-
-			$("#project").multiselect('refresh');
+			triggerSelectedCompaniesChange();
 		},
 		onSelectAll: function (options) {
 			showAllProjectSelection();
@@ -84,6 +75,8 @@ $(document).on('change', '[data-btn-date]', function (v) {
 		$("[data-date-end=" + $(this).attr('data-btn-date') + "]").datepicker('setDate', '');
 	}
 
+	triggerSelectedCompaniesChange();
+
 });
 
 $(document).on('click', '#b_clear', function () {
@@ -121,7 +114,26 @@ function reset_form() {
 	$("#comment").val('');
 }
 
-
 function showAllProjectSelection() {
 	$('*[data-company]').prop("disabled", false);
+
+	$("#project").multiselect('refresh');
+}
+
+function triggerSelectedCompaniesChange() {
+
+	if ($("#company").select().val().length > 0) {
+		$('*[data-company]').prop("disabled", true);
+	
+		$("#company").select().val().forEach((value, index, arr) => {
+			var opts = $('*[data-company="' + value + '"]');
+			opts.prop('disabled', false);
+		});
+	
+		$('*[data-company]:disabled').prop("selected", false);
+
+		$("#project").multiselect('refresh');
+	} else {
+		showAllProjectSelection();
+	}
 }
