@@ -35,7 +35,7 @@
                         </div>
                         @endif
                         <div class="mt-3">
-                            <input type="checkbox" class="label-remember" id="rememberMe" name="rememberMe" checked>
+                            <input type="checkbox" class="label-remember" id="rememberMe" name="rememberMe" @if(isset($_COOKIE["rememberMe"])) checked @endif>
                             <label for="rememberMe" class="label-remember">{{ __('login.remember_me')}}</label>
                         </div>
                         @if ($errors->has('unmatched'))

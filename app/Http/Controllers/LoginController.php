@@ -30,9 +30,11 @@ class LoginController extends Controller
         if ($request->get('rememberMe')) {
             setcookie("username", $request->get('username'), time() + 999999999);
             setcookie("password", $request->get('password'), time() + 999999999);
+            setcookie("rememberMe", $request->get('rememberMe'), time() + 999999999);
         } else {
             setcookie("username", "");
             setcookie("password", "");
+            setcookie("rememberMe", "");
         }
 
         return $this->authenticated();
