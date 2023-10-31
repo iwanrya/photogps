@@ -141,7 +141,9 @@
                     <div class="table-responsive-wrapper">
                         <div id="dvSearchResult">
                             <div class="mb-2 float-right">
-                                {!! $posts->render("pagination::custom-jpns-header") !!}
+                                @if(count($posts) > 0)
+                                {{ $posts->render("pagination::custom-jpns-header") }}
+                                @endif
                             </div>
                             <table id="tblResult" class="table table-bordered table-soft-dark">
                                 <thead>
@@ -231,7 +233,9 @@
                             </table>
 
                             <div class="mt-2">
-                                {!! $posts->render("pagination::custom-jpns") !!}
+                                @if(count($posts) > 0)
+                                {{ $posts->render("pagination::custom-jpns") }}
+                                @endif
                             </div>
                         </div>
                     </div>
