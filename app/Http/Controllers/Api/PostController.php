@@ -55,6 +55,7 @@ class PostController extends Controller
 
         try {
 
+            Log::error("Post Store");
             //define validation rules
             $validator = Validator::make($request->all(), [
                 'photo'                => ['required', new PostImages],
