@@ -2,7 +2,7 @@
 
 return [
     'close' => '閉じる',
-    'hidden' => '非表示',
+    'hidden' => '',
     'reset' => 'クリア',
     'search' => '検　索',
     'submit' => '送信',
